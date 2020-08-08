@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// import libs/other
+import React, { useState, useEffect } from "react";
+import { Switch, Route } from "react-router-dom";
+
+// import components
+
+// import pages
+import Landing from "./pages/Landing";
+
+// TODO: custom app css
+// import "./styles/css/App.css";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    // state to determine whether to display loader or page
+    const [loaded, setLoaded] = useState(false);
+    useEffect(() => setLoaded(true), []);
+
+    return (
+        <>
+            <p>THIS WORKS!</p>
+            <Landing />
+        </>
+    );
 }
 
 export default App;
