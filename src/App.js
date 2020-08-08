@@ -6,6 +6,7 @@ import { Switch, Route } from "react-router-dom";
 
 // import pages
 import Landing from "./pages/Landing";
+import UploadTrack from "./pages/UploadTrack";
 
 // TODO: custom app css
 // import "./styles/css/App.css";
@@ -17,8 +18,7 @@ function App() {
 
     return (
         <>
-            <p>THIS WORKS!</p>
-            <Landing />
+            <UploadTrack />
         </>
     );
 }
