@@ -2,7 +2,7 @@
 import React from "react";
 
 // import components
-import TrackForm from "../components/TrackForm";
+import TrackForm from "../components/TrackForm.jsx";
 
 const UploadTrack = () => {
     return (

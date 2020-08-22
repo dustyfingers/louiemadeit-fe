@@ -5,8 +5,9 @@ import { Switch, Route } from "react-router-dom";
 // import components
 
 // import pages
-import Landing from "./pages/Landing";
-import UploadTrack from "./pages/UploadTrack";
+import Menu from "./components/Menu";
+import UploadTrack from "./pages/UploadTrack.jsx";
+import SingleTrackPage from "./pages/SingleTrackPage.jsx";
 
 // TODO: custom app css
 // import "./styles/css/App.css";
@@ -18,6 +19,9 @@ function App() {
 
     return (
         <>
+            <Menu />
+            {/* <UploadTrack /> */}
+            <SingleTrackPage />
             <UploadTrack />
         </>
     );
