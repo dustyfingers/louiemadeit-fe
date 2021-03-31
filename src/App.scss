@@ -2,20 +2,24 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto+Mono&display=swap");
 
 // general styling
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: "Roboto Mono";
-}
-p,
-a {
-  font-family: "Montserrat";
-}
-a {
-  text-decoration: none;
+* {
+  box-sizing: border-box;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Roboto Mono";
+  }
+  p,
+  a {
+    font-family: "Montserrat";
+  }
+  a {
+    text-decoration: none;
+  }
 }
 
 // margin for top menu

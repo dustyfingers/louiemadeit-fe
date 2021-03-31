@@ -1,12 +1,13 @@
 // import libs/other
 import React from "react";
 
-const TrackPreview = () => {
+const TrackPreview = ({track}) => {
     return (
-        <div class="card" style="width: 18rem;">
-            <img src="..." class="card-img-top" alt="..." />
-            <div class="card-body">
-                <p class="card-text">The tracks title heremenu.</p>
+        <div className="card">
+            <img src={track.coverUrl} className="card-img-top" alt="..." />
+            <div className="card-body">
+                <p className="card-text">{track.title}</p>
+                <p className="card-text">Play track button</p>
             </div>
         </div>
     );

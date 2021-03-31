@@ -2,9 +2,9 @@
 import React, { useState, useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 
-// import pages
+// import pages and menu
 import Menu from "./components/Menu/Menu";
-import UploadTrack from "./pages/UploadTrack.jsx";
+import UploadTrack from "./pages/admin/UploadTrack.jsx";
 import SingleTrackPage from "./pages/SingleTrackPage.jsx";
 import StorePage from './pages/StorePage';
 
@@ -13,12 +13,15 @@ import "./App.scss";
 function App() {
     // state to determine whether to display loader or page
     const [loaded, setLoaded] = useState(false);
+    const [currentUser, setCurrentUser] = useState(null);
+
+    // TODO: build loader
     useEffect(() => setLoaded(true), []);
 
     return (
         <>
             <Menu />
-            <div className="app-container">
+            <div className="app-container container">
                 <Switch>
                     <Route exact path="/" component={StorePage} />
                     <Route path="/track" component={SingleTrackPage} />

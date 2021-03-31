@@ -7,12 +7,11 @@ import "./Menu.scss";
 const Menu = ({ history }) => (
     <>
         <nav className="navbar navbar-expand-lg navbar-light fixed-top" id="TopMenu">
-            <div className="container-fluid">
-
-                <Link to="/" id="logo"><h3>louiemadeit.</h3></Link>
+            <div className="container">
+                <Link to="/" id="logo"><h1>louiemadeit.</h1></Link>
 
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarDropdown" aria-controls="navbarDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                    <span className="navbar-toggler-icon"></span>
                 </button>
 
                 <div className="collapse navbar-collapse" id="navbarDropdown">
@@ -28,7 +27,6 @@ const Menu = ({ history }) => (
                         </li>
                     </ul>
                 </div>
-
             </div>
         </nav>
     </>
