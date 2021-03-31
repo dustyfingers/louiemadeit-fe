@@ -3,7 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 
-// bootstrap css
+// bootstrap
 import 'bootstrap/dist/css/bootstrap.css';
 import bootstrap from "bootstrap";
 
