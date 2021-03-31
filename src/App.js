@@ -2,12 +2,11 @@
 import React, { useState, useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 
-// import components
-
 // import pages
 import Menu from "./components/Menu";
 import UploadTrack from "./pages/UploadTrack.jsx";
 import SingleTrackPage from "./pages/SingleTrackPage.jsx";
+import StorePage from './pages/StorePage';
 
 // TODO: custom app css
 // import "./styles/css/App.css";
@@ -20,9 +19,11 @@ function App() {
     return (
         <>
             <Menu />
-            {/* <UploadTrack /> */}
-            <SingleTrackPage />
-            <UploadTrack />
+            <Switch>
+                <Route exact path="/" component={StorePage} />
+                <Route path="/track" component={SingleTrackPage} />
+                <Route path="/admin" component={UploadTrack} />
+            </Switch>
         </>
     );
 }
