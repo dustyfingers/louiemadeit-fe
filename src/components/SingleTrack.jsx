@@ -1,13 +1,13 @@
 // import libs/other
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { connect } from "react-redux";
 
-const SingleTrack = () => {
+const SingleTrack = ({dispatch}) => {
     // DONE: this component should have a text input and a submit button 
 
     // upon submit it takes the file name, fetches from s3 and displays it 
     const [name, setName] = useState("");
-    const [trackUrl, setTrackUrl] = useState("");
 
     // updates whenever trackUrl changes
     // useEffect(() => console.log(trackUrl), [trackUrl])
@@ -24,9 +24,10 @@ const SingleTrack = () => {
         };
 
         const urlResponse = await axios.get(url, options);
+        let getUrl = urlResponse.data.getUrl;
 
-        // ! this works!!! we just need to update the application state with this info to play thje track with the player in the footer
-        setTrackUrl(urlResponse.data.getUrl);
+        // set app state with given url
+        dispatch({ type: 'SET_CURRENT_TRACK', payload: getUrl });
     }
 
     return (
@@ -53,4 +54,5 @@ const SingleTrack = () => {
     );
 };
 
-export default SingleTrack;
+// passing connect with no props gives us the dispatch function passed in as a prop by default!
+export default connect()(SingleTrack);

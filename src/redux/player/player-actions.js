@@ -1,0 +1,1 @@
+export const setCurrentTrack = trackUrl => ({ type: 'SET_CURRENT_TRACK', payload: trackUrl });

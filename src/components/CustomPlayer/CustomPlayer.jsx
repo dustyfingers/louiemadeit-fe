@@ -1,17 +1,22 @@
 // import libs/other
 import React from "react";
 import ReactAudioPlayer from "react-audio-player";
+import { connect } from "react-redux";
 
 // takes in url and plays a track - to be used on the main shop page and the single track page
-const CustomPlayer = ({url}) => {
-    console.log(url);
+const CustomPlayer = ({currentTrack}) => {
     return (
         <ReactAudioPlayer
             className="w-100 py-0"
-            src={url}
+            src={currentTrack}
             autoPlay
             controls />
     );
 };
 
-export default CustomPlayer;
+// map state to props here
+const mapStateToProps = state => ({
+    currentTrack: state.player.currentTrack
+});
+
+export default connect(mapStateToProps)(CustomPlayer);

@@ -13,7 +13,9 @@ const StorePage = () => {
     return (
         <div>
             <h1>TRACKS:</h1>
-            {tracks.items.map(track => <TrackPreview track={track} key={track.id}/>)}
+            <div className="d-flex flex-wrap">
+                {tracks.items.map(track => <TrackPreview track={track} key={track.id}/>)}
+            </div>
         </div>
     );
 };
