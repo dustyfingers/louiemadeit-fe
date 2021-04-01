@@ -17,15 +17,10 @@ const TrackForm = () => {
 
     const handleSubmit = async evt => {
         evt.preventDefault();
-
         const formData = { name, description, sellType, exclusivePrice, leaseStemsPrice, leaseMasterOnlyPrice, taggedVersion, untaggedVersion, coverArt, trackStems };
         const url = 'http://localhost:5000/s3/generate-put-url';
 
-        console.log(formData);
-
-
-        // TODO: connect to s3 bucket, and upload all rich media
-
+        // * connect to s3 bucket, and upload all rich media
         // tagged version
         if (formData.taggedVersion) {
             let file = formData.taggedVersion[0];
@@ -42,29 +37,66 @@ const TrackForm = () => {
             // save this url in the db
             const uploadResponse = await axios.put(putUrl, file, { headers: { 'Content-Type': file.type } });
             console.log(uploadResponse.config.url);
+            console.log("tagged version upload successful");
         }
 
-        // TODO: rest of this
-        // // untagged version
-        // if (formData.untaggedVersion) {
 
-        // }
-        // // cover art
-        // if (formData.coverArt) {
+        // untagged version
+        if (formData.untaggedVersion) {
+            let file = formData.untaggedVersion[0];
+            const options = {
+                params: {
+                    Key: file.name,
+                    ContentType: file.type
+                }
+            }
+            // url the tagged version is stored at
+            const urlResponse = await axios.get(url, options);
+            const { putUrl } = urlResponse.data;
 
-        // }
-        // // track stems
-        // for (const [key, value] of Object.entries(formData.trackStems)) {
-        //     console.log(value);
-        //     const options = {
-        //         params: {
-        //             Key: value.name,
-        //             ContentType: value.type
-        //         }
-        //     }
-        //     const res = await axios.get(url, formData, options);
-        //     console.log(res);
-        // }
+            // save this url in the db
+            const uploadResponse = await axios.put(putUrl, file, { headers: { 'Content-Type': file.type } });
+            console.log(uploadResponse.config.url);
+            console.log("untagged version upload successful");
+        }
+
+        // cover art
+        if (formData.coverArt) {
+            let file = formData.coverArt[0];
+            const options = {
+                params: {
+                    Key: file.name,
+                    ContentType: file.type
+                }
+            }
+            // url the tagged version is stored at
+            const urlResponse = await axios.get(url, options);
+            const { putUrl } = urlResponse.data;
+
+            // save this url in the db
+            const uploadResponse = await axios.put(putUrl, file, { headers: { 'Content-Type': file.type } });
+            console.log(uploadResponse.config.url);
+            console.log("cover art upload successful");
+        }
+
+        // track stems
+        let stemsUrls = [];
+        for (const [key, file] of Object.entries(formData.trackStems)) {
+            console.log(file);
+            const options = {
+                params: {
+                    Key: file.name,
+                    ContentType: file.type
+                }
+            }
+            const urlResponse = await axios.get(url, options);
+            const { putUrl } = urlResponse.data;
+
+            const uploadResponse = await axios.put(putUrl, file, { headers: { 'Content-Type': file.type } });
+            console.log(uploadResponse.config.url);
+            stemsUrls.push(uploadResponse.config.url);
+        }
+        console.log("track stems upload successful");
 
         // TODO: if all uploads are successful call create track endpoint
     }
