@@ -4,6 +4,7 @@ import { Switch, Route } from "react-router-dom";
 
 // import pages and menu
 import Menu from "./components/Menu/Menu";
+import Footer from "./components/Footer";
 import UploadTrack from "./pages/admin/UploadTrack.jsx";
 import SingleTrackPage from "./pages/SingleTrackPage.jsx";
 import StorePage from './pages/StorePage';
@@ -19,16 +20,17 @@ function App() {
     useEffect(() => setLoaded(true), []);
 
     return (
-        <>
+        <div>
             <Menu />
-            <div className="app-container container">
+            <div className="page-container container">
                 <Switch>
                     <Route exact path="/" component={StorePage} />
                     <Route path="/track" component={SingleTrackPage} />
                     <Route path="/admin" component={UploadTrack} />
                 </Switch>
             </div>
-        </>
+            <Footer/>
+        </div>
     );
 }
 

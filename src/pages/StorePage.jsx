@@ -3,7 +3,6 @@ import React from "react";
 
 // import components
 import TrackPreview from "../components/TrackPreview/TrackPreview";
-import CustomPlayer from "../components/CustomPlayer/CustomPlayer";
 
 // placeholder data
 import SHOP_DATA from "../placeholder_data";
@@ -13,9 +12,8 @@ const StorePage = () => {
 
     return (
         <div>
-            {/* <h1>TRACKS:</h1>
-            {tracks.items.map(track => <TrackPreview track={track} key={track.id}/>)} */}
-            <CustomPlayer />
+            <h1>TRACKS:</h1>
+            {tracks.items.map(track => <TrackPreview track={track} key={track.id}/>)}
         </div>
     );
 };

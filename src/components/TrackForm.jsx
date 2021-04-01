@@ -35,15 +35,13 @@ const TrackForm = () => {
                     ContentType: file.type
                 }
             }
+            // url the tagged version is stored at
             const urlResponse = await axios.get(url, options);
             const { putUrl } = urlResponse.data;
 
-            // url the tagged version is stored at
-            console.log('put url', putUrl);
-
             // save this url in the db
             const uploadResponse = await axios.put(putUrl, file, { headers: { 'Content-Type': file.type } });
-            console.log(uploadResponse);
+            console.log(uploadResponse.config.url);
         }
 
         // TODO: rest of this
