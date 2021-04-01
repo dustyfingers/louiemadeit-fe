@@ -1,26 +1,22 @@
 // import libs/other
 import React, { useState } from "react";
+import { connect } from "react-redux"
 import axios from "axios";
 
-const TrackForm = () => {
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [sellType, setSellType] = useState("");
-    const [exclusivePrice, setExclusivePrice] = useState("");
-    const [leaseStemsPrice, setLeaseStemsPrice] = useState("");
-    const [leaseMasterOnlyPrice, setLeaseMasterOnlyPrice] = useState("");
-    const [taggedVersion, setTaggedVersion] = useState("");
-    const [untaggedVersion, setUntaggedVersion] = useState("");
-    const [coverArt, setCoverArt] = useState("");
-    const [trackStems, setTrackStems] = useState("");
-
-
+const TrackForm = ({name, description, sellType, exclusivePrice, leaseStemsPrice, leaseMasterOnlyPrice, taggedVersion, untaggedVersion, coverArt, trackStems, dispatch}) => {
     const handleSubmit = async evt => {
         evt.preventDefault();
         const formData = { name, description, sellType, exclusivePrice, leaseStemsPrice, leaseMasterOnlyPrice, taggedVersion, untaggedVersion, coverArt, trackStems };
-        const url = 'http://localhost:5000/s3/generate-put-url';
+        const s3GenPutUrl = 'http://localhost:5000/s3/generate-put-url';
 
-        // * connect to s3 bucket, and upload all rich media
+        let taggedVersionUrl = '',
+            untaggedVersionUrl = '',
+            coverArtUrl = '',
+            stemsUrl = '';
+
+            console.log('uploading files...!');
+
+        // * connect to s3 bucket, upload all rich media, get back urls
         // tagged version
         if (formData.taggedVersion) {
             let file = formData.taggedVersion[0];
@@ -31,12 +27,13 @@ const TrackForm = () => {
                 }
             }
             // url the tagged version is stored at
-            const urlResponse = await axios.get(url, options);
+            const urlResponse = await axios.get(s3GenPutUrl, options);
             const { putUrl } = urlResponse.data;
 
             // save this url in the db
             const uploadResponse = await axios.put(putUrl, file, { headers: { 'Content-Type': file.type } });
-            console.log(uploadResponse.config.url);
+            taggedVersionUrl = uploadResponse.config.url;
+            console.log(taggedVersionUrl);
             console.log("tagged version upload successful");
         }
 
@@ -51,12 +48,13 @@ const TrackForm = () => {
                 }
             }
             // url the tagged version is stored at
-            const urlResponse = await axios.get(url, options);
+            const urlResponse = await axios.get(s3GenPutUrl, options);
             const { putUrl } = urlResponse.data;
 
             // save this url in the db
             const uploadResponse = await axios.put(putUrl, file, { headers: { 'Content-Type': file.type } });
-            console.log(uploadResponse.config.url);
+            untaggedVersionUrl = uploadResponse.config.url;
+            console.log(untaggedVersionUrl);
             console.log("untagged version upload successful");
         }
 
@@ -70,35 +68,49 @@ const TrackForm = () => {
                 }
             }
             // url the tagged version is stored at
-            const urlResponse = await axios.get(url, options);
+            const urlResponse = await axios.get(s3GenPutUrl, options);
             const { putUrl } = urlResponse.data;
 
             // save this url in the db
             const uploadResponse = await axios.put(putUrl, file, { headers: { 'Content-Type': file.type } });
-            console.log(uploadResponse.config.url);
+            coverArtUrl = uploadResponse.config.url;
+            console.log(coverArtUrl);
             console.log("cover art upload successful");
         }
 
         // track stems
-        let stemsUrls = [];
-        for (const [key, file] of Object.entries(formData.trackStems)) {
-            console.log(file);
+        if (formData.trackStems) {
+            let file = formData.trackStems[0];
             const options = {
                 params: {
                     Key: file.name,
                     ContentType: file.type
                 }
             }
-            const urlResponse = await axios.get(url, options);
+            const urlResponse = await axios.get(s3GenPutUrl, options);
             const { putUrl } = urlResponse.data;
 
             const uploadResponse = await axios.put(putUrl, file, { headers: { 'Content-Type': file.type } });
-            console.log(uploadResponse.config.url);
-            stemsUrls.push(uploadResponse.config.url);
-        }
-        console.log("track stems upload successful");
+            stemsUrl = uploadResponse.config.url;
 
-        // TODO: if all uploads are successful call create track endpoint
+            console.log(stemsUrl);
+            console.log("track stems upload successful");
+        }
+
+        // if all uploads are successful call 'create track' endpoint and handle response
+        try {
+            const createTrackUrl = 'http://localhost:5000/track/new';
+            const options = {
+                taggedVersionUrl,
+                untaggedVersionUrl,
+                coverArtUrl,
+                stemsUrl
+            }
+            const res = await axios.post(createTrackUrl, options);
+            console.log(res);
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     return (
@@ -114,7 +126,7 @@ const TrackForm = () => {
                         className="form-control form-control-lg"
                         id="trackName"
                         aria-describedby="trackName"
-                        onChange={evt => setName(evt.target.value)} />
+                        onChange={evt => dispatch({ type: "SET_TRACK_NAME", payload: evt.target.value })} />
                 </div>
 
                 {/* description */}
@@ -126,7 +138,7 @@ const TrackForm = () => {
                         className="form-control form-control-lg"
                         id="trackDescription"
                         aria-describedby="trackDescription"
-                        onChange={evt => setDescription(evt.target.value)} />
+                        onChange={evt => dispatch({ type: "SET_TRACK_DESCRIPTION", payload: evt.target.value })} />
                     <div id="trackDescriptionHelp" className="form-text">A short description of the track.</div>
                 </div>
 
@@ -143,7 +155,7 @@ const TrackForm = () => {
                             id="taggedVersion"
                             name="taggedVersion"
                             accept="audio/*"
-                            onChange={evt => setTaggedVersion(evt.target.files)} />
+                            onChange={evt => dispatch({ type: "SET_TAGGED_VERSION", payload: evt.target.files })} />
                         <label className="form-file-label" htmlFor="taggedVersion">
                             <span className="form-file-text">Upload Tagged Version...</span>
                             <span className="form-file-button">Browse</span>
@@ -158,8 +170,8 @@ const TrackForm = () => {
                             className="form-file-input"
                             id="untaggedVersion"
                             name="untaggedVersion"
-                            accep="audio/*"
-                            onChange={evt => setUntaggedVersion(evt.target.files)} />
+                            accept="audio/*"
+                            onChange={evt => dispatch({ type: "SET_UNTAGGED_VERSION", payload: evt.target.files })} />
                         <label className="form-file-label" htmlFor="untaggedVersion">
                             <span className="form-file-text">Upload Untagged Version...</span>
                             <span className="form-file-button">Browse</span>
@@ -174,8 +186,8 @@ const TrackForm = () => {
                             className="form-file-input"
                             id="coverArt"
                             name="coverArt"
-                            accep="image/*"
-                            onChange={evt => setCoverArt(evt.target.files)} />
+                            accept="image/*"
+                            onChange={evt => dispatch({ type: "SET_COVER_ART", payload: evt.target.files })} />
                         <label className="form-file-label" htmlFor="coverArt">
                             <span className="form-file-text">Upload Cover Art...</span>
                             <span className="form-file-button">Browse</span>
@@ -189,10 +201,9 @@ const TrackForm = () => {
                             type="file"
                             className="form-file-input"
                             id="trackStems"
-                            name="trackStems[]"
-                            accep="audio/*"
-                            onChange={evt => setTrackStems(evt.target.files)}
-                            multiple />
+                            name="trackStems"
+                            accept=".zip,.rar,.7zip"
+                            onChange={evt => dispatch({ type: "SET_TRACK_STEMS", payload: evt.target.files })} />
                         <label className="form-file-label" htmlFor="trackStems">
                             <span className="form-file-text">Upload Track Stems...</span>
                             <span className="form-file-button">Browse</span>
@@ -227,7 +238,7 @@ const TrackForm = () => {
                             type="number"
                             name="exclusivePrice"
                             id="exclusivePrice"
-                            onChange={evt => setExclusivePrice(evt.target.value)} />
+                            onChange={evt => dispatch({ type: "SET_EXCLUSIVE_PRICE", payload: evt.target.value })} />
                     </label>
                     <br />
 
@@ -237,7 +248,7 @@ const TrackForm = () => {
                             type="number"
                             name="leaseStemsPrice"
                             id="leaseStemsPrice"
-                            onChange={evt => setLeaseStemsPrice(evt.target.value)} />
+                            onChange={evt => dispatch({ type: "SET_LEASE_STEMS_PRICE", payload: evt.target.value })} />
                     </label>
                     <br />
 
@@ -247,7 +258,7 @@ const TrackForm = () => {
                             type="number"
                             name="leaseMasterOnlyPrice"
                             id="leaseMasterOnlyPrice"
-                            onChange={evt => setLeaseMasterOnlyPrice(evt.target.value)} />
+                            onChange={evt => dispatch({ type: "SET_LEASE_MASTER_ONLY_PRICE", payload: evt.target.value })} />
                     </label>
                     <br />
                 </div>
@@ -263,4 +274,17 @@ const TrackForm = () => {
     );
 };
 
-export default TrackForm;
+const mapStateToProps = state => ({
+    name: state.upload.name, 
+    description: state.upload.description, 
+    sellType: state.upload.sellType,
+    exclusivePrice: state.upload.exclusivePrice,
+    leaseStemsPrice: state.upload.leaseStemsPrice, 
+    leaseMasterOnlyPrice: state.upload.leaseMasterOnlyPrice, 
+    taggedVersion: state.upload.taggedVersion,
+    untaggedVersion: state.upload.untaggedVersion, 
+    coverArt: state.upload.coverArt,
+    trackStems: state.upload.trackStems
+});
+
+export default connect(mapStateToProps)(TrackForm);

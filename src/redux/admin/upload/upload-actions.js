@@ -1,0 +1,10 @@
+export const setName = trackName => ({ type: 'SET_TRACK_NAME', payload: trackName });
+export const setDescription = trackDescription => ({ type: 'SET_TRACK_DESCRIPTION', payload: trackDescription });
+export const setSellType = trackSellType => ({ type: 'SET_SELL_TYPE', payload: trackSellType });
+export const setExclusivePrice = trackExclusivePrice => ({ type: 'SET_EXCLUSIVE_PRICE', payload: trackExclusivePrice });
+export const setLeaseStemsPrice = trackLeaseStemsPrice => ({ type: 'SET_LEASE_STEMS_PRICE', payload: trackLeaseStemsPrice });
+export const setLeaseMasterOnlyPrice = trackLeaseMasterOnlyPrice => ({ type: 'SET_LEASE_MASTER_ONLY_PRICE', payload: trackLeaseMasterOnlyPrice });
+export const setTaggedVersion = trackTaggedVersion => ({ type: 'SET_TAGGED_VERSION', payload: trackTaggedVersion });
+export const setUntaggedVersion = trackUntaggedVersion => ({ type: 'SET_UNTAGGED_VERSION', payload: trackUntaggedVersion });
+export const setCoverArt = trackCoverArt => ({ type: 'SET_COVER_ART', payload: trackCoverArt });
+export const setTrackStems = trackStems => ({ type: 'SET_TRACK_STEMS', payload: trackStems });
