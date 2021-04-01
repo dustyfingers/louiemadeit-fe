@@ -5,7 +5,7 @@ import { Switch, Route } from "react-router-dom";
 // import pages and menu
 import Menu from "./components/Menu/Menu";
 import Footer from "./components/Footer";
-import UploadTrack from "./pages/admin/UploadTrack.jsx";
+import UploadTrackPage from "./pages/admin/UploadTrackPage.jsx";
 import SingleTrackPage from "./pages/SingleTrackPage.jsx";
 import StorePage from './pages/StorePage';
 
@@ -26,7 +26,7 @@ function App() {
                 <Switch>
                     <Route exact path="/" component={StorePage} />
                     <Route path="/track" component={SingleTrackPage} />
-                    <Route path="/admin" component={UploadTrack} />
+                    <Route path="/admin" component={UploadTrackPage} />
                 </Switch>
             </div>
             <Footer/>
