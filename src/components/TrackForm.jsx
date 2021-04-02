@@ -1,13 +1,29 @@
 // import libs/other
-import React, { useState } from "react";
-import { connect } from "react-redux"
+import React from "react";
+import { connect } from "react-redux";
 import axios from "axios";
+
+import { 
+    setTrackName, 
+    setTrackDescription,
+    setTrackExclusivePrice, 
+    setTrackLeaseStemsPrice, 
+    setTrackLeaseMasterOnlyPrice,
+    setTrackTaggedVersion,
+    setTrackUntaggedVersion,
+    setTrackCoverArt,
+    setTrackStems
+} from '../redux/admin/upload/upload-actions';
 
 const TrackForm = ({name, description, sellType, exclusivePrice, leaseStemsPrice, leaseMasterOnlyPrice, taggedVersion, untaggedVersion, coverArt, trackStems, dispatch}) => {
     const handleSubmit = async evt => {
         evt.preventDefault();
         const formData = { name, description, sellType, exclusivePrice, leaseStemsPrice, leaseMasterOnlyPrice, taggedVersion, untaggedVersion, coverArt, trackStems };
         const s3GenPutUrl = 'http://localhost:5000/s3/generate-put-url';
+
+        // TODO:
+        // so we dont need to store the urls in mongo like i originally thought - we can store the file names and use those to request from s3.
+        // s3's requests time out any way so this is definitely the better way to go. honestly just a matter of wiring it up
 
         let taggedVersionUrl = '',
             untaggedVersionUrl = '',
@@ -16,7 +32,10 @@ const TrackForm = ({name, description, sellType, exclusivePrice, leaseStemsPrice
 
             console.log('uploading files...!');
 
-        // * connect to s3 bucket, upload all rich media, get back urls
+
+        // TODO: this file upload stuff can be pulled out and put into a single function to call
+        // * connect to s3 bucket, upload all rich media
+        // if success, upload all file names to mongo
         // tagged version
         if (formData.taggedVersion) {
             let file = formData.taggedVersion[0];
@@ -98,6 +117,7 @@ const TrackForm = ({name, description, sellType, exclusivePrice, leaseStemsPrice
         }
 
         // if all uploads are successful call 'create track' endpoint and handle response
+        // TODO: this request should be authenticated with the currentUser
         try {
             const createTrackUrl = 'http://localhost:5000/track/new';
             const options = {
@@ -126,7 +146,7 @@ const TrackForm = ({name, description, sellType, exclusivePrice, leaseStemsPrice
                         className="form-control form-control-lg"
                         id="trackName"
                         aria-describedby="trackName"
-                        onChange={evt => dispatch({ type: "SET_TRACK_NAME", payload: evt.target.value })} />
+                        onChange={evt => dispatch(setTrackName(evt.target.value))} />
                 </div>
 
                 {/* description */}
@@ -138,7 +158,7 @@ const TrackForm = ({name, description, sellType, exclusivePrice, leaseStemsPrice
                         className="form-control form-control-lg"
                         id="trackDescription"
                         aria-describedby="trackDescription"
-                        onChange={evt => dispatch({ type: "SET_TRACK_DESCRIPTION", payload: evt.target.value })} />
+                        onChange={evt => dispatch(setTrackDescription(evt.target.value))} />
                     <div id="trackDescriptionHelp" className="form-text">A short description of the track.</div>
                 </div>
 
@@ -155,7 +175,7 @@ const TrackForm = ({name, description, sellType, exclusivePrice, leaseStemsPrice
                             id="taggedVersion"
                             name="taggedVersion"
                             accept="audio/*"
-                            onChange={evt => dispatch({ type: "SET_TAGGED_VERSION", payload: evt.target.files })} />
+                            onChange={evt => dispatch(setTrackTaggedVersion(evt.target.files))} />
                         <label className="form-file-label" htmlFor="taggedVersion">
                             <span className="form-file-text">Upload Tagged Version...</span>
                             <span className="form-file-button">Browse</span>
@@ -171,7 +191,7 @@ const TrackForm = ({name, description, sellType, exclusivePrice, leaseStemsPrice
                             id="untaggedVersion"
                             name="untaggedVersion"
                             accept="audio/*"
-                            onChange={evt => dispatch({ type: "SET_UNTAGGED_VERSION", payload: evt.target.files })} />
+                            onChange={evt => dispatch(setTrackUntaggedVersion(evt.target.files))} />
                         <label className="form-file-label" htmlFor="untaggedVersion">
                             <span className="form-file-text">Upload Untagged Version...</span>
                             <span className="form-file-button">Browse</span>
@@ -187,7 +207,7 @@ const TrackForm = ({name, description, sellType, exclusivePrice, leaseStemsPrice
                             id="coverArt"
                             name="coverArt"
                             accept="image/*"
-                            onChange={evt => dispatch({ type: "SET_COVER_ART", payload: evt.target.files })} />
+                            onChange={evt => dispatch(setTrackCoverArt(evt.target.files))} />
                         <label className="form-file-label" htmlFor="coverArt">
                             <span className="form-file-text">Upload Cover Art...</span>
                             <span className="form-file-button">Browse</span>
@@ -203,7 +223,7 @@ const TrackForm = ({name, description, sellType, exclusivePrice, leaseStemsPrice
                             id="trackStems"
                             name="trackStems"
                             accept=".zip,.rar,.7zip"
-                            onChange={evt => dispatch({ type: "SET_TRACK_STEMS", payload: evt.target.files })} />
+                            onChange={evt => dispatch(setTrackStems(evt.target.files))} />
                         <label className="form-file-label" htmlFor="trackStems">
                             <span className="form-file-text">Upload Track Stems...</span>
                             <span className="form-file-button">Browse</span>
@@ -238,7 +258,7 @@ const TrackForm = ({name, description, sellType, exclusivePrice, leaseStemsPrice
                             type="number"
                             name="exclusivePrice"
                             id="exclusivePrice"
-                            onChange={evt => dispatch({ type: "SET_EXCLUSIVE_PRICE", payload: evt.target.value })} />
+                            onChange={evt => dispatch(setTrackExclusivePrice(evt.target.value))} />
                     </label>
                     <br />
 
@@ -248,7 +268,7 @@ const TrackForm = ({name, description, sellType, exclusivePrice, leaseStemsPrice
                             type="number"
                             name="leaseStemsPrice"
                             id="leaseStemsPrice"
-                            onChange={evt => dispatch({ type: "SET_LEASE_STEMS_PRICE", payload: evt.target.value })} />
+                            onChange={evt => dispatch(setTrackLeaseStemsPrice(evt.target.value))} />
                     </label>
                     <br />
 
@@ -258,7 +278,7 @@ const TrackForm = ({name, description, sellType, exclusivePrice, leaseStemsPrice
                             type="number"
                             name="leaseMasterOnlyPrice"
                             id="leaseMasterOnlyPrice"
-                            onChange={evt => dispatch({ type: "SET_LEASE_MASTER_ONLY_PRICE", payload: evt.target.value })} />
+                            onChange={evt => dispatch(setTrackLeaseMasterOnlyPrice(evt.target.value))} />
                     </label>
                     <br />
                 </div>

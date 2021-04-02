@@ -2,8 +2,12 @@ import { combineReducers } from "redux";
 
 import playerReducer from "./player/player-reducer";
 import uploadReducer from "./admin/upload/upload-reducer";
+import authReducer from "./auth/auth-reducer";
+import userReducer from "./user/user-reducer";
 
 export default combineReducers({
     player: playerReducer,
-    upload: uploadReducer
+    upload: uploadReducer,
+    auth: authReducer,
+    user: userReducer
 });

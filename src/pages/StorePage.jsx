@@ -11,9 +11,9 @@ const StorePage = () => {
     const { tracks } = SHOP_DATA;
 
     return (
-        <div>
-            <h1>TRACKS:</h1>
-            <div className="d-flex flex-wrap">
+        <div className="d-flex flex-column justify-content-center py-5 text-center">
+            <h1>TRACKS</h1>
+            <div className="d-flex flex-wrap justify-content-center">
                 {tracks.items.map(track => <TrackPreview track={track} key={track.id}/>)}
             </div>
         </div>

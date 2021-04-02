@@ -8,16 +8,12 @@ import Footer from "./components/Footer";
 import UploadTrackPage from "./pages/admin/UploadTrackPage.jsx";
 import SingleTrackPage from "./pages/SingleTrackPage.jsx";
 import StorePage from './pages/StorePage';
+import SignInAndSignUpPage from "./pages/SignInAndSignUpPage";
 
 import "./App.scss";
 
 function App() {
-    // state to determine whether to display loader or page
-    const [loaded, setLoaded] = useState(false);
-    const [currentUser, setCurrentUser] = useState(null);
-
-    // TODO: build loader
-    useEffect(() => setLoaded(true), []);
+    // TODO: determine whether to display loader or page
 
     return (
         <div>
@@ -27,6 +23,7 @@ function App() {
                     <Route exact path="/" component={StorePage} />
                     <Route path="/track" component={SingleTrackPage} />
                     <Route path="/admin" component={UploadTrackPage} />
+                    <Route path="/sign-in" component={SignInAndSignUpPage} />
                 </Switch>
             </div>
             <Footer/>

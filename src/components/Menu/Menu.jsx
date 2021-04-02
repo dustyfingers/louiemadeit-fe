@@ -4,6 +4,8 @@ import { Link, withRouter } from 'react-router-dom';
 import "./Menu.scss";
 
 
+// TODO: sign in should change based on the user state
+
 const Menu = ({ history }) => (
     <>
         <nav className="navbar navbar-expand-lg navbar-light fixed-top" id="TopMenu">
