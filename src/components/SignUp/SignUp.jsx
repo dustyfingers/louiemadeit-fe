@@ -2,6 +2,7 @@
 import React from "react";
 import axios from "axios";
 import { connect } from "react-redux";
+import Cookies from "js-cookie";
 
 import { setEmail, setPassword, setConfirmPassword } from "../../redux/auth/auth-actions";
 import { setCurrentUser } from "../../redux/user/user-actions";
@@ -21,14 +22,22 @@ const SignUp = ({email, password, confirmPassword, dispatch}) => {
                 };
         
                 const res = await axios.post(url, options);
+
+                console.log(res);
+                console.log(Cookies.get());
                 const currentUserObj = {
                     refreshToken: res.data.refreshToken,
                     accessToken: res.data.accessToken,
                     email
                 };
 
-                // dispatch an action to set app state with currentUserObj and log user in
+                // dispatch an action to set app state with currentUserObj to log user in
                 dispatch(setCurrentUser(currentUserObj));
+
+                // dispatch actions to clear all the auth state
+                dispatch(setEmail(null));
+                dispatch(setPassword(null));
+                dispatch(setConfirmPassword(null));
             } catch (err) {
                 console.log(err);
             }
@@ -36,7 +45,6 @@ const SignUp = ({email, password, confirmPassword, dispatch}) => {
             // TODO: dispatch an action to change the global state and make an error modal appear (using message-modal)
             console.log("passwords must match!");
         }
-
     }
 
     return (

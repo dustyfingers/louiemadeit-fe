@@ -1,12 +1,15 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import "./Menu.scss";
+import './Menu.scss';
+import { setCurrentUser } from '../../redux/user/user-actions';
 
 
 // TODO: sign in should change based on the user state
 
-const Menu = ({ history }) => (
+const Menu = ({ history, currentUser, dispatch }) => {
+    return (
     <>
         <nav className="navbar navbar-expand-lg navbar-light fixed-top" id="TopMenu">
             <div className="container">
@@ -21,9 +24,15 @@ const Menu = ({ history }) => (
                         <li className="nav-item d-flex flex-row-reverse">
                             <span className="nav-link" onClick={() => history.push("/contact")}>contact.</span>
                         </li>
-                        <li className="nav-item d-flex flex-row-reverse">
-                            <span className="nav-link" onClick={() => history.push("/sign-in")}>sign in.</span>
-                        </li>
+                        {currentUser === null ?
+                            <li className="nav-item d-flex flex-row-reverse">
+                                <span className="nav-link" onClick={() => history.push("/sign-in")}>sign in.</span>
+                            </li> :
+                            <li className="nav-item d-flex flex-row-reverse">
+                                <span className="nav-link" onClick={() => dispatch(setCurrentUser(null))}>sign out.</span>
+                            </li>
+                        }
+
                         <li className="nav-item d-flex flex-row-reverse">
                             <span className="nav-link" onClick={() => history.push("/cart")}><img src="/cart.svg" alt="shopping cart"/></span>
                         </li>
@@ -32,6 +41,10 @@ const Menu = ({ history }) => (
             </div>
         </nav>
     </>
-);
+)};
 
-export default withRouter(Menu);
+const mapStateToProps = state => ({
+    currentUser: state.user.currentUser
+});
+
+export default connect(mapStateToProps)(withRouter(Menu));
