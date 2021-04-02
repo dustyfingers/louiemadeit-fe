@@ -2,7 +2,6 @@
 import React from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-import Cookies from "js-cookie";
 
 import { setEmail, setPassword, setConfirmPassword } from "../../redux/auth/auth-actions";
 import { setCurrentUser } from "../../redux/user/user-actions";
@@ -15,19 +14,18 @@ const SignUp = ({email, password, confirmPassword, dispatch}) => {
 
         if (password === confirmPassword) {
             try {
-                const url = "http://localhost:5000/user/new";
+                const url = "http://.app.localhost:5000/user/new";
                 const options = {
                     email,
-                    password
+                    password,
+                    withCredentials: true, 
+                    credentials: 'include'
                 };
         
                 const res = await axios.post(url, options);
 
                 console.log(res);
-                console.log(Cookies.get());
                 const currentUserObj = {
-                    refreshToken: res.data.refreshToken,
-                    accessToken: res.data.accessToken,
                     email
                 };
 

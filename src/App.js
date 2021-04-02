@@ -1,6 +1,8 @@
 // import libs/other
-import React from "react";
+import React, { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
+import axios from "axios";
+import { connect } from "react-redux";
 
 // import pages and menu
 import Menu from "./components/Menu/Menu";
@@ -9,11 +11,32 @@ import UploadTrackPage from "./pages/admin/UploadTrackPage.jsx";
 import SingleTrackPage from "./pages/SingleTrackPage.jsx";
 import StorePage from './pages/StorePage';
 import SignInAndSignUpPage from "./pages/SignInAndSignUpPage";
+import { setCurrentUser } from "./redux/user/user-actions";
 
 import "./App.scss";
 
-function App() {
+const App = ({dispatch}) => {
     // TODO: determine whether to display loader or page
+
+    const checkAuth = async () => {
+        try {
+            console.log('checkAuth fired!');
+            const url = "http://127.0.0.1:5000/auth/sign-in";
+            const options = { withCredentials: true, credentials: 'include' };
+            let res = await axios.post(url, options);
+            console.log(res);
+
+            dispatch(setCurrentUser(res.data.user))
+        } catch (err) {
+            
+        }
+
+    }
+
+    // check for auth and sign user in on page load
+    useEffect(() => {
+        checkAuth()
+    }, [])
 
     return (
         <div>
@@ -31,4 +54,4 @@ function App() {
     );
 }
 
-export default App;
+export default connect()(App);
