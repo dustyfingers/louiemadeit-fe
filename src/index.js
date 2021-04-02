@@ -7,7 +7,6 @@ import store from "./redux/store";
 
 // bootstrap
 import 'bootstrap/dist/css/bootstrap.css';
-import bootstrap from "bootstrap";
 
 // import app
 import App from "./App";

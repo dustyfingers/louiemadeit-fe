@@ -19,13 +19,13 @@ const Menu = ({ history }) => (
                 <div className="collapse navbar-collapse" id="navbarDropdown">
                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li className="nav-item d-flex flex-row-reverse">
-                            <a className="nav-link" onClick={() => history.push("/contact")}>contact.</a>
+                            <span className="nav-link" onClick={() => history.push("/contact")}>contact.</span>
                         </li>
                         <li className="nav-item d-flex flex-row-reverse">
-                            <a className="nav-link" onClick={() => history.push("/sign-in")}>sign in.</a>
+                            <span className="nav-link" onClick={() => history.push("/sign-in")}>sign in.</span>
                         </li>
                         <li className="nav-item d-flex flex-row-reverse">
-                            <a className="nav-link" onClick={() => history.push("/cart")}><img src="/cart.svg" alt="shopping cart"/></a>
+                            <span className="nav-link" onClick={() => history.push("/cart")}><img src="/cart.svg" alt="shopping cart"/></span>
                         </li>
                     </ul>
                 </div>

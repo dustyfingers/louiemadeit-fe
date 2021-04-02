@@ -237,12 +237,12 @@ const TrackForm = ({name, description, sellType, exclusivePrice, leaseStemsPrice
                     Sell Type:
 
                     <div className="mb-3 form-check">
-                        <input type="checkbox" className="form-check-input" id="exclusive" id="exclusive" name="exclusive" defaultChecked />
+                        <input type="checkbox" className="form-check-input" id="exclusive" name="exclusive" defaultChecked />
                         <label className="form-check-label" htmlFor="exclusive">Exclusive</label>
                     </div>
 
                     <div className="mb-3 form-check">
-                        <input type="checkbox" className="form-check-input" id="lease" id="lease" name="lease" defaultChecked />
+                        <input type="checkbox" className="form-check-input" id="lease" name="lease" defaultChecked />
                         <label className="form-check-label" htmlFor="lease">Lease</label>
                     </div>
                 </div>
