@@ -14,17 +14,14 @@ const SignUp = ({email, password, confirmPassword, dispatch}) => {
 
         if (password === confirmPassword) {
             try {
-                const url = "http://.app.localhost:5000/user/new";
+                const url = "http://localhost:5000/user/new";
                 const options = {
                     email,
-                    password,
-                    withCredentials: true, 
-                    credentials: 'include'
+                    password
                 };
         
                 const res = await axios.post(url, options);
-
-                console.log(res);
+                console.log('response from sign up', res);
                 const currentUserObj = {
                     email
                 };
@@ -41,7 +38,7 @@ const SignUp = ({email, password, confirmPassword, dispatch}) => {
             }
         } else {
             // TODO: dispatch an action to change the global state and make an error modal appear (using message-modal)
-            console.log("passwords must match!");
+            console.log("must give email and password!");
         }
     }
 

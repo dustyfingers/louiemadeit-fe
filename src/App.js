@@ -21,9 +21,10 @@ const App = ({dispatch}) => {
     const checkAuth = async () => {
         try {
             console.log('checkAuth fired!');
-            const url = "http://127.0.0.1:5000/auth/sign-in";
-            const options = { withCredentials: true, credentials: 'include' };
-            let res = await axios.post(url, options);
+            const url = "http://localhost:5000/auth/sign-in";
+            const data = {};
+            const options = {withCredentials: true};
+            let res = await axios.post(url, data, options);
             console.log(res);
 
             dispatch(setCurrentUser(res.data.user))

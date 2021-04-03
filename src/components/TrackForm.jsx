@@ -125,8 +125,6 @@ const TrackForm = ({name, description, sellType, exclusivePrice, leaseStemsPrice
                 untaggedVersionUrl,
                 coverArtUrl,
                 stemsUrl,
-                withCredentials: true, 
-                credentials: 'include'
             }
             const res = await axios.post(createTrackUrl, options);
             console.log(res);
