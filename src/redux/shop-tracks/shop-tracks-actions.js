@@ -1,0 +1,1 @@
+export const setShopTracks = shopTracks => ({ type: 'SET_SHOP_TRACKS', payload: shopTracks });

@@ -25,7 +25,6 @@ const App = ({dispatch}) => {
             const data = {};
             const options = {withCredentials: true};
             let res = await axios.post(url, data, options);
-            console.log(res);
 
             dispatch(setCurrentUser(res.data.user))
         } catch (err) {

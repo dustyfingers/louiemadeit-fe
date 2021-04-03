@@ -6,9 +6,6 @@ import axios from "axios";
 import { 
     setTrackName, 
     setTrackDescription,
-    setTrackExclusivePrice, 
-    setTrackLeaseStemsPrice, 
-    setTrackLeaseMasterOnlyPrice,
     setTrackTaggedVersion,
     setTrackUntaggedVersion,
     setTrackCoverArt,
@@ -25,111 +22,120 @@ const TrackForm = ({name, description, sellType, exclusivePrice, leaseStemsPrice
         // so we dont need to store the urls in mongo like i originally thought - we can store the file names and use those to request from s3.
         // s3's requests time out any way so this is definitely the better way to go. honestly just a matter of wiring it up
 
-        let taggedVersionUrl = '',
-            untaggedVersionUrl = '',
-            coverArtUrl = '',
-            stemsUrl = '';
+        let taggedVersionFileName = '',
+            untaggedVersionFileName = '',
+            coverArtFileName = '',
+            stemsFileName = '';
 
-            console.log('uploading files...!');
+        console.log('uploading files to aws s3...!');
 
-
-        // TODO: this file upload stuff can be pulled out and put into a single function to call
-        // * connect to s3 bucket, upload all rich media
-        // if success, upload all file names to mongo
-        // tagged version
-        if (formData.taggedVersion) {
-            let file = formData.taggedVersion[0];
-            const options = {
-                params: {
-                    Key: file.name,
-                    ContentType: file.type
+        // try file upload
+        try {
+            // TODO: this file upload stuff can be pulled out and put into a single function to call
+            // * connect to s3 bucket, upload all rich media
+            // if success, upload all file names to mongo
+            // tagged version
+            if (formData.taggedVersion) {
+                let file = formData.taggedVersion[0];
+                const options = {
+                    params: {
+                        Key: file.name,
+                        ContentType: file.type
+                    }
                 }
-            }
-            // url the tagged version is stored at
-            const urlResponse = await axios.get(s3GenPutUrl, options);
-            const { putUrl } = urlResponse.data;
+                // url the tagged version is stored at
+                const urlResponse = await axios.get(s3GenPutUrl, options);
+                const { putUrl } = urlResponse.data;
 
-            // save this url in the db
-            const uploadResponse = await axios.put(putUrl, file, { headers: { 'Content-Type': file.type } });
-            taggedVersionUrl = uploadResponse.config.url;
-            console.log(taggedVersionUrl);
-            console.log("tagged version upload successful");
+                // save this url in the db
+                console.log('uploading tagged version to aws s3...!');
+                await axios.put(putUrl, file, { headers: { 'Content-Type': file.type } });
+                taggedVersionFileName = file.name;
+                console.log("tagged version upload to s3 successful");
+            }
+
+
+            // untagged version
+            if (formData.untaggedVersion) {
+                let file = formData.untaggedVersion[0];
+                const options = {
+                    params: {
+                        Key: file.name,
+                        ContentType: file.type
+                    }
+                }
+                // url the tagged version is stored at
+                const urlResponse = await axios.get(s3GenPutUrl, options);
+                const { putUrl } = urlResponse.data;
+
+                // save this url in the db
+                console.log('uploading untagged version to aws s3...!');
+                await axios.put(putUrl, file, { headers: { 'Content-Type': file.type } });
+                untaggedVersionFileName = file.name;
+                console.log("untagged version upload to s3 successful");
+            }
+
+            // cover art
+            if (formData.coverArt) {
+                let file = formData.coverArt[0];
+                const options = {
+                    params: {
+                        Key: file.name,
+                        ContentType: file.type
+                    }
+                }
+                // url the tagged version is stored at
+                const urlResponse = await axios.get(s3GenPutUrl, options);
+                const { putUrl } = urlResponse.data;
+
+                // save this url in the db
+                console.log('uploading cover art to aws s3...!');
+                await axios.put(putUrl, file, { headers: { 'Content-Type': file.type } });
+                coverArtFileName = file.name;
+                console.log("cover art upload to s3 successful");
+            }
+
+            // track stems
+            if (formData.trackStems) {
+                let file = formData.trackStems[0];
+                const options = {
+                    params: {
+                        Key: file.name,
+                        ContentType: file.type
+                    }
+                }
+                const urlResponse = await axios.get(s3GenPutUrl, options);
+                const { putUrl } = urlResponse.data;
+
+                console.log('uploading stems to aws s3...!');
+                await axios.put(putUrl, file, { headers: { 'Content-Type': file.type } });
+                stemsFileName = file.name;
+                console.log("track stems upload to s3 successful");
+            }
+            
+        } catch (err) {
+            console.log('error when uploading files to aws s3', err)
         }
 
-
-        // untagged version
-        if (formData.untaggedVersion) {
-            let file = formData.untaggedVersion[0];
-            const options = {
-                params: {
-                    Key: file.name,
-                    ContentType: file.type
-                }
-            }
-            // url the tagged version is stored at
-            const urlResponse = await axios.get(s3GenPutUrl, options);
-            const { putUrl } = urlResponse.data;
-
-            // save this url in the db
-            const uploadResponse = await axios.put(putUrl, file, { headers: { 'Content-Type': file.type } });
-            untaggedVersionUrl = uploadResponse.config.url;
-            console.log(untaggedVersionUrl);
-            console.log("untagged version upload successful");
-        }
-
-        // cover art
-        if (formData.coverArt) {
-            let file = formData.coverArt[0];
-            const options = {
-                params: {
-                    Key: file.name,
-                    ContentType: file.type
-                }
-            }
-            // url the tagged version is stored at
-            const urlResponse = await axios.get(s3GenPutUrl, options);
-            const { putUrl } = urlResponse.data;
-
-            // save this url in the db
-            const uploadResponse = await axios.put(putUrl, file, { headers: { 'Content-Type': file.type } });
-            coverArtUrl = uploadResponse.config.url;
-            console.log(coverArtUrl);
-            console.log("cover art upload successful");
-        }
-
-        // track stems
-        if (formData.trackStems) {
-            let file = formData.trackStems[0];
-            const options = {
-                params: {
-                    Key: file.name,
-                    ContentType: file.type
-                }
-            }
-            const urlResponse = await axios.get(s3GenPutUrl, options);
-            const { putUrl } = urlResponse.data;
-
-            const uploadResponse = await axios.put(putUrl, file, { headers: { 'Content-Type': file.type } });
-            stemsUrl = uploadResponse.config.url;
-
-            console.log(stemsUrl);
-            console.log("track stems upload successful");
-        }
+        console.log("all files uploaded to s3 successfully");
 
         // if all uploads are successful call 'create track' endpoint and handle response
-        // TODO: this request should be authenticated with the currentUser
         try {
             const createTrackUrl = 'http://localhost:5000/track/new';
             const options = {
-                taggedVersionUrl,
-                untaggedVersionUrl,
-                coverArtUrl,
-                stemsUrl,
+                trackName: name,
+                taggedVersion: taggedVersionFileName,
+                untaggedVersion: untaggedVersionFileName,
+                coverArt: coverArtFileName,
+                stems: stemsFileName,
+                meta: {
+                    description
+                }
             }
             const res = await axios.post(createTrackUrl, options);
             console.log(res);
         } catch (err) {
-            console.log(err)
+            console.log('error creating track, uploads to s3 went fine', err)
         }
     }
 
@@ -246,43 +252,6 @@ const TrackForm = ({name, description, sellType, exclusivePrice, leaseStemsPrice
                         <label className="form-check-label" htmlFor="lease">Lease</label>
                     </div>
                 </div>
-
-                {/* prices */}
-                <div className="mb-3">
-                    Prices:
-                    <br />
-
-                    <label>
-                        Exclusive Price:
-                        <input
-                            type="number"
-                            name="exclusivePrice"
-                            id="exclusivePrice"
-                            onChange={evt => dispatch(setTrackExclusivePrice(evt.target.value))} />
-                    </label>
-                    <br />
-
-                    <label>
-                        Lease Price - Stems:
-                        <input
-                            type="number"
-                            name="leaseStemsPrice"
-                            id="leaseStemsPrice"
-                            onChange={evt => dispatch(setTrackLeaseStemsPrice(evt.target.value))} />
-                    </label>
-                    <br />
-
-                    <label>
-                        Lease Price - Master:
-                        <input
-                            type="number"
-                            name="leaseMasterOnlyPrice"
-                            id="leaseMasterOnlyPrice"
-                            onChange={evt => dispatch(setTrackLeaseMasterOnlyPrice(evt.target.value))} />
-                    </label>
-                    <br />
-                </div>
-                <br />
 
                 {/* submit button */}
                 <input type="submit" className="btn btn-primary" value="Publish Track" />
