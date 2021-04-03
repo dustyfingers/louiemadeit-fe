@@ -9,14 +9,10 @@ import { setShopTracks } from '../redux/shop-tracks/shop-tracks-actions';
 
 const StorePage = ({shopTracks, dispatch}) => {
     useEffect(() => {
-
         let url = 'http://localhost:5000/track/all';
 
         axios.get(url).then(res => {
-            const { tracks } = res.data;
-
-            // update the beats store state
-            dispatch(setShopTracks(tracks));
+            dispatch(setShopTracks(res.data.tracks));
         });
 
 
@@ -26,7 +22,7 @@ const StorePage = ({shopTracks, dispatch}) => {
         <div className="d-flex flex-column justify-content-center py-5 text-center">
             <h1>TRACKS</h1>
             <div className="d-flex flex-wrap justify-content-center">
-                {shopTracks ? shopTracks.map(track => <TrackPreview track={track} key={track.id}/>) : 'No tracks found...'}
+                {shopTracks ? shopTracks.map(track => <TrackPreview track={track} key={track.trackName}/>) : 'No tracks found...'}
             </div>
         </div>
     );
