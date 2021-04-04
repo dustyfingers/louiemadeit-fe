@@ -3,13 +3,15 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 
+import "./TrackPreview.scss";
 import { setCurrentTrack } from "../../redux/player/player-actions";
 
-const TrackPreview = ({track, dispatch}) => {
-    let [coverUrl, setCoverUrl] = useState('');
-    let [trackUrl, setTrackUrl] = useState('');
-
-    console.log(track)
+// TODO: make playIcon change back when different track is played
+const TrackPreview = ({track, currentPlayerTrack, dispatch}) => {
+    const [coverUrl, setCoverUrl] = useState('');
+    const [trackUrl, setTrackUrl] = useState('');
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [playIcon, setPlayIcon] = useState('/play-btn.svg');
 
     useEffect(() => {
         const fetchTrackData = async () => {
@@ -29,7 +31,7 @@ const TrackPreview = ({track, dispatch}) => {
                 };
         
                 const trackRes = await axios.get(url, trackFileOptions);
-                const coverArtRes = await axios.get(url, coverArtOptions)
+                const coverArtRes = await axios.get(url, coverArtOptions);
                 const trackFileUrl = trackRes.data.getUrl;
                 const coverArtUrl = coverArtRes.data.getUrl;
                 setCoverUrl(coverArtUrl);
@@ -42,22 +44,33 @@ const TrackPreview = ({track, dispatch}) => {
         fetchTrackData();
     }, []);
 
+    useEffect(() => {
+        if (trackUrl === currentPlayerTrack) setPlayIcon('/play-btn-fill.svg');
+    }, [isPlaying])
+
     const handleClick = evt => {
-        // set app state with given url
+        setIsPlaying(true);
         dispatch(setCurrentTrack(trackUrl));
-    }
+    };
 
     return (
         <div className="card col-sm-6 col-md-4 col-lg-2 m-3">
             <img src={coverUrl} className="card-img-top" alt="..." />
             <div className="card-body">
-                <p className="card-text">{track.title}</p>
-
-                {/* when button pressed dispatch action to setCurrentTrack */}
-                <span className="card-text" onClick={handleClick}>Play track button</span>
+                <p className="card-text">{track.trackName}</p>
+                <span type="button" className="play-btn" onClick={handleClick}>
+                    {isPlaying ? 
+                        (<img className='play-btn-icon' src={playIcon}/>) :
+                        (<img className='play-btn-icon' src={playIcon}/>)
+                    }
+                </span>
             </div>
         </div>
     );
 };
 
-export default connect()(TrackPreview);
+const mapStateToProps = state => ({
+    currentPlayerTrack: state.player.currentTrack
+});
+
+export default connect(mapStateToProps)(TrackPreview);

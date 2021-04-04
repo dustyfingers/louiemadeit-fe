@@ -1,3 +1,5 @@
+import AuthActionTypes from './auth-types';
+
 const INITIAL_STATE = {
     email: null,
     password: null,
@@ -6,17 +8,17 @@ const INITIAL_STATE = {
 
 const authReducer = (currentState = INITIAL_STATE, action) => {
     switch (action.type) {
-        case 'SET_EMAIL':
+        case AuthActionTypes.SET_EMAIL:
             return {
                 ...currentState,
                 email: action.payload
             }
-        case 'SET_PASSWORD':
+        case AuthActionTypes.SET_PASSWORD:
             return {
                 ...currentState,
                 password: action.payload
             }
-        case 'SET_CONFIRM_PASSWORD':
+        case AuthActionTypes.SET_CONFIRM_PASSWORD:
             return {
                 ...currentState,
                 confirmPassword: action.payload

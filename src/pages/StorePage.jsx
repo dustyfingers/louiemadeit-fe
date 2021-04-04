@@ -14,8 +14,6 @@ const StorePage = ({shopTracks, dispatch}) => {
         axios.get(url).then(res => {
             dispatch(setShopTracks(res.data.tracks));
         });
-
-
     }, []);
 
     return (

@@ -26,7 +26,7 @@ const App = ({dispatch}) => {
             const options = {withCredentials: true};
             let res = await axios.post(url, data, options);
 
-            dispatch(setCurrentUser(res.data.user));
+            if (res.user !== undefined) dispatch(setCurrentUser(res.data.user));
         } catch (err) {
             console.log('error authenticating');
         }
