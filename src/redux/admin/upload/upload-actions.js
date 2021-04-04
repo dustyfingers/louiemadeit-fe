@@ -1,10 +1,8 @@
-export const setTrackName = trackName => ({ type: 'SET_TRACK_NAME', payload: trackName });
-export const setTrackDescription = trackDescription => ({ type: 'SET_TRACK_DESCRIPTION', payload: trackDescription });
-export const setTrackSellType = trackSellType => ({ type: 'SET_SELL_TYPE', payload: trackSellType });
-export const setTrackExclusivePrice = trackExclusivePrice => ({ type: 'SET_EXCLUSIVE_PRICE', payload: trackExclusivePrice });
-export const setTrackLeaseStemsPrice = trackLeaseStemsPrice => ({ type: 'SET_LEASE_STEMS_PRICE', payload: trackLeaseStemsPrice });
-export const setTrackLeaseMasterOnlyPrice = trackLeaseMasterOnlyPrice => ({ type: 'SET_LEASE_MASTER_ONLY_PRICE', payload: trackLeaseMasterOnlyPrice });
-export const setTrackTaggedVersion = trackTaggedVersion => ({ type: 'SET_TAGGED_VERSION', payload: trackTaggedVersion });
-export const setTrackUntaggedVersion = trackUntaggedVersion => ({ type: 'SET_UNTAGGED_VERSION', payload: trackUntaggedVersion });
-export const setTrackCoverArt = trackCoverArt => ({ type: 'SET_COVER_ART', payload: trackCoverArt });
-export const setTrackStems = trackStems => ({ type: 'SET_TRACK_STEMS', payload: trackStems });
+import UploadActionTypes from './upload-types';
+
+export const setTrackName = trackName => ({ type: UploadActionTypes.SET_TRACK_NAME, payload: trackName });
+export const setTrackDescription = trackDescription => ({ type: UploadActionTypes.SET_TRACK_DESCRIPTION, payload: trackDescription });
+export const setTrackTaggedVersion = trackTaggedVersion => ({ type: UploadActionTypes.SET_TAGGED_VERSION, payload: trackTaggedVersion });
+export const setTrackUntaggedVersion = trackUntaggedVersion => ({ type: UploadActionTypes.SET_UNTAGGED_VERSION, payload: trackUntaggedVersion });
+export const setTrackCoverArt = trackCoverArt => ({ type: UploadActionTypes.SET_COVER_ART, payload: trackCoverArt });
+export const setTrackStems = trackStems => ({ type: UploadActionTypes.SET_TRACK_STEMS, payload: trackStems });

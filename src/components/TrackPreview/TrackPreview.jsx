@@ -45,7 +45,20 @@ const TrackPreview = ({track, currentPlayerTrack, dispatch}) => {
     }, []);
 
     useEffect(() => {
-        if (trackUrl === currentPlayerTrack) setPlayIcon('/play-btn-fill.svg');
+        // if there is no track currently playing
+        if (currentPlayerTrack === null) {
+            console.log('track url:  ' + trackUrl);
+            console.log('currentPlayerTrack:  ' + currentPlayerTrack);
+    
+            if (isPlaying) setPlayIcon('/play-btn-fill.svg');
+
+        } else {
+            console.log('track url:  ' + trackUrl);
+            console.log('currentPlayerTrack:  ' + currentPlayerTrack);
+            if (trackUrl === currentPlayerTrack) setPlayIcon('/play-btn-fill.svg');
+        }
+
+
     }, [isPlaying])
 
     const handleClick = evt => {
@@ -55,13 +68,13 @@ const TrackPreview = ({track, currentPlayerTrack, dispatch}) => {
 
     return (
         <div className="card col-sm-6 col-md-4 col-lg-2 m-3">
-            <img src={coverUrl} className="card-img-top" alt="..." />
+            <img src={coverUrl} className="card-img-top" alt={`${track.trackName}-cover`} />
             <div className="card-body">
                 <p className="card-text">{track.trackName}</p>
                 <span type="button" className="play-btn" onClick={handleClick}>
                     {isPlaying ? 
-                        (<img className='play-btn-icon' src={playIcon}/>) :
-                        (<img className='play-btn-icon' src={playIcon}/>)
+                        (<img className='play-btn-icon' alt="currently playing" src={playIcon}/>) :
+                        (<img className='play-btn-icon' alt="not currently playing" src={playIcon}/>)
                     }
                 </span>
             </div>
