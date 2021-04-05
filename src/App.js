@@ -14,6 +14,8 @@ import SignInAndSignUpPage from "./pages/SignInAndSignUpPage";
 import CheckoutPage from './pages/CheckoutPage';
 import { setCurrentUser } from "./redux/user/user-actions";
 
+import baseLink from "./env";
+
 import "./App.scss";
 
 const App = ({dispatch}) => {
