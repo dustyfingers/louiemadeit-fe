@@ -21,22 +21,25 @@ const SignUp = ({email, password, confirmPassword, dispatch}) => {
                 };
         
                 const res = await axios.post(url, options);
+                console.log('response from sign up', res);
                 const currentUserObj = {
-                    refreshToken: res.data.refreshToken,
-                    accessToken: res.data.accessToken,
                     email
                 };
 
-                // dispatch an action to set app state with currentUserObj and log user in
+                // dispatch an action to set app state with currentUserObj to log user in
                 dispatch(setCurrentUser(currentUserObj));
+
+                // dispatch actions to clear all the auth state
+                dispatch(setEmail(null));
+                dispatch(setPassword(null));
+                dispatch(setConfirmPassword(null));
             } catch (err) {
                 console.log(err);
             }
         } else {
             // TODO: dispatch an action to change the global state and make an error modal appear (using message-modal)
-            console.log("passwords must match!");
+            console.log("must give email and password!");
         }
-
     }
 
     return (

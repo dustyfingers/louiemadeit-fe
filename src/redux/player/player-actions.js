@@ -1,1 +1,3 @@
-export const setCurrentTrack = trackUrl => ({ type: 'SET_CURRENT_TRACK', payload: trackUrl });
+import PlayerActionTypes from './player-types';
+
+export const setCurrentTrack = trackUrl => ({ type: PlayerActionTypes.SET_CURRENT_TRACK, payload: trackUrl });
