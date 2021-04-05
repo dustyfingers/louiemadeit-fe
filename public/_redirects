@@ -1,4 +1,3 @@
 #what browser requests -> what netlify serves
 
-/admin      /
-/checkout   /
+/*          /index.html
