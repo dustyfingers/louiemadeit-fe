@@ -23,19 +23,19 @@ const Menu = ({ history, currentUser, cartHidden, dispatch }) => {
 
                 <div className="collapse navbar-collapse" id="navbarDropdown">
                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li className="nav-item d-flex flex-row-reverse">
+                        <li className="nav-item">
                             <span className="nav-link" onClick={() => history.push("/contact")}>contact.</span>
                         </li>
                         {currentUser === null ?
-                            <li className="nav-item d-flex flex-row-reverse">
+                            <li className="nav-item">
                                 <span className="nav-link" onClick={() => history.push("/sign-in")}>sign in.</span>
                             </li> :
-                            <li className="nav-item d-flex flex-row-reverse">
+                            <li className="nav-item">
                                 <span className="nav-link" onClick={() => dispatch(setCurrentUser(null))}>sign out.</span>
                             </li>
                         }
 
-                        <li className="nav-item d-flex flex-row-reverse">
+                        <li className="nav-item">
                             <span className="nav-link" onClick={() => dispatch((toggleCartHidden()))}><img src="/cart.svg" height='32px' width='32px' alt="shopping cart"/></span>
                         </li>
                     </ul>

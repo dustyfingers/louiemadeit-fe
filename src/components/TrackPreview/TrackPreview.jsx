@@ -1,13 +1,14 @@
 // import libs/other
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { connect } from "react-redux";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { connect } from 'react-redux';
 
-import "./TrackPreview.scss";
-import { setCurrentTrack } from "../../redux/player/player-actions";
+import './TrackPreview.scss';
+import { setCurrentTrack } from '../../redux/player/player-actions';
+import { addCartItem } from '../../redux/cart/cart-actions';
 
 // TODO: make playIcon change back when different track is played
-const TrackPreview = ({track, currentPlayerTrack, dispatch}) => {
+const TrackPreview = ({track, cartItems, currentPlayerTrack, dispatch}) => {
     const [coverUrl, setCoverUrl] = useState('');
     const [trackUrl, setTrackUrl] = useState('');
     const [isPlaying, setIsPlaying] = useState(false);
@@ -16,7 +17,7 @@ const TrackPreview = ({track, currentPlayerTrack, dispatch}) => {
     useEffect(() => {
         const fetchTrackData = async () => {
             try {
-                const url = "http://localhost:5000/s3/generate-get-url";
+                const url = 'http://localhost:5000/s3/generate-get-url';
     
                 const trackFileOptions = {
                     params: {
@@ -32,10 +33,8 @@ const TrackPreview = ({track, currentPlayerTrack, dispatch}) => {
         
                 const trackRes = await axios.get(url, trackFileOptions);
                 const coverArtRes = await axios.get(url, coverArtOptions);
-                const trackFileUrl = trackRes.data.getUrl;
-                const coverArtUrl = coverArtRes.data.getUrl;
-                setCoverUrl(coverArtUrl);
-                setTrackUrl(trackFileUrl);
+                setCoverUrl(coverArtRes.data.getUrl);
+                setTrackUrl(trackRes.data.getUrl);
             } catch (err) {
                 console.log(err);
             }
@@ -44,46 +43,51 @@ const TrackPreview = ({track, currentPlayerTrack, dispatch}) => {
         fetchTrackData();
     }, []);
 
+    // this watches the global track being played and sets local state accordingly
     useEffect(() => {
-        // if there is no track currently playing
-        if (currentPlayerTrack === null) {
-            console.log('track url:  ' + trackUrl);
-            console.log('currentPlayerTrack:  ' + currentPlayerTrack);
-    
-            if (isPlaying) setPlayIcon('/play-btn-fill.svg');
+        if (currentPlayerTrack === null && isPlaying) setPlayIcon('/play-btn-fill.svg');
+        else if (trackUrl === currentPlayerTrack) setPlayIcon('/play-btn-fill.svg');
+        else if (trackUrl !== currentPlayerTrack) setPlayIcon('/play-btn.svg');
 
-        } else {
-            console.log('track url:  ' + trackUrl);
-            console.log('currentPlayerTrack:  ' + currentPlayerTrack);
-            if (trackUrl === currentPlayerTrack) setPlayIcon('/play-btn-fill.svg');
-        }
+    }, [currentPlayerTrack]);
 
-
-    }, [isPlaying])
-
-    const handleClick = evt => {
+    const handleClickPlayButton = evt => {
         setIsPlaying(true);
         dispatch(setCurrentTrack(trackUrl));
     };
 
+    const handleClickAddToCartButton = evt => {
+        if (!cartItems.includes(track)) {
+            dispatch(addCartItem(track))
+        } else {
+            console.log('item already in cart!')
+        }
+    };
+
     return (
-        <div className="card col-sm-6 col-md-4 col-lg-2 m-3">
-            <img src={coverUrl} className="card-img-top" alt={`${track.trackName}-cover`} />
-            <div className="card-body">
-                <p className="card-text">{track.trackName}</p>
-                <span type="button" className="play-btn" onClick={handleClick}>
-                    {isPlaying ? 
-                        (<img className='play-btn-icon' alt="currently playing" src={playIcon}/>) :
-                        (<img className='play-btn-icon' alt="not currently playing" src={playIcon}/>)
-                    }
-                </span>
+        <div className='card col-sm-6 col-md-4 col-lg-2 m-3'>
+            <img src={coverUrl} className='card-img-top' alt={`${track.trackName}-cover`} />
+            <div className='card-body'>
+                <p className='card-text'>{track.trackName}</p>
+                <div className='track-card-btns d-flex align-items-end justify-content-between'>
+                    <span type='button' className='play-btn' onClick={handleClickPlayButton}>
+                        {isPlaying ? 
+                            (<img className='play-btn-icon' alt='currently playing' src={playIcon}/>) :
+                            (<img className='play-btn-icon' alt='not currently playing' src={playIcon}/>)
+                        }
+                    </span>
+                    <span type='button' className='add-to-cart-btn' onClick={handleClickAddToCartButton}>
+                        <img className='add-to-cart-icon' alt='add to cart' src='/plus-square.svg' />
+                    </span>
+                </div>
             </div>
         </div>
     );
 };
 
 const mapStateToProps = state => ({
-    currentPlayerTrack: state.player.currentTrack
+    currentPlayerTrack: state.player.currentTrack,
+    cartItems: state.cart.cartItems
 });
 
 export default connect(mapStateToProps)(TrackPreview);
