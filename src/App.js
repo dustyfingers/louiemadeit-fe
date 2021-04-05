@@ -11,6 +11,7 @@ import UploadTrackPage from "./pages/admin/UploadTrackPage.jsx";
 import SingleTrackPage from "./pages/SingleTrackPage.jsx";
 import StorePage from './pages/StorePage';
 import SignInAndSignUpPage from "./pages/SignInAndSignUpPage";
+import CheckoutPage from './pages/CheckoutPage';
 import { setCurrentUser } from "./redux/user/user-actions";
 
 import "./App.scss";
@@ -41,12 +42,13 @@ const App = ({dispatch}) => {
     return (
         <div>
             <Menu />
-            <div className="page-container container">
+            <div className="page-container container d-flex flex-column align-items-center justify-content-center">
                 <Switch>
                     <Route exact path="/" component={StorePage} />
                     <Route path="/track" component={SingleTrackPage} />
-                    <Route path="/admin" component={UploadTrackPage} />
-                    <Route path="/sign-in" component={SignInAndSignUpPage} />
+                    <Route exact path="/admin" component={UploadTrackPage} />
+                    <Route exact path="/sign-in" component={SignInAndSignUpPage} />
+                    <Route exact path="/checkout" component={CheckoutPage} />
                 </Switch>
             </div>
             <Footer/>

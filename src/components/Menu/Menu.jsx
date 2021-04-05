@@ -34,7 +34,6 @@ const Menu = ({ history, currentUser, cartHidden, dispatch }) => {
                                 <span className="nav-link" onClick={() => dispatch(setCurrentUser(null))}>sign out.</span>
                             </li>
                         }
-
                         <li className="nav-item">
                             <span className="nav-link" onClick={() => dispatch((toggleCartHidden()))}><img src="/cart.svg" height='32px' width='32px' alt="shopping cart"/></span>
                         </li>
