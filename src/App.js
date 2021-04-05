@@ -22,7 +22,7 @@ const App = ({dispatch}) => {
     const checkAuth = async () => {
         try {
             console.log('checkAuth fired!');
-            const url = "http://localhost:5000/auth/sign-in";
+            const url = "https://louiemadeit-test.herokuapp.com/auth/sign-in";
             const data = {};
             const options = {withCredentials: true};
             let res = await axios.post(url, data, options);
