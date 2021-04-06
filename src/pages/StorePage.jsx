@@ -9,6 +9,7 @@ import { setShopTracks } from '../redux/shop-tracks/shop-tracks-actions';
 
 const StorePage = ({shopTracks, dispatch}) => {
     useEffect(() => {
+        // TODO: this link should change based on env
         let url = 'http://localhost:5000/track/all';
 
         axios.get(url).then(res => {
