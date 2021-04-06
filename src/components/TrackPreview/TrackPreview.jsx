@@ -17,6 +17,7 @@ const TrackPreview = ({track, cartItems, currentPlayerTrack, dispatch}) => {
     useEffect(() => {
         const fetchTrackData = async () => {
             try {
+                // TODO: this link should change based on env
                 const url = 'http://localhost:5000/s3/generate-get-url';
     
                 const trackFileOptions = {

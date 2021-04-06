@@ -1,2 +1,2 @@
-<!-- deployed to netlify for dev (full ci) -->
-<!-- considering deploying to netlify for production, too -->
+<!-- deployed to aws amplify for dev (full ci) -->
+<!-- considering deploying to aws amplify for production, too -->

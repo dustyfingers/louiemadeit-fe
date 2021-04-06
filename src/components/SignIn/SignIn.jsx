@@ -14,6 +14,7 @@ const SignIn = ({email, password, dispatch}) => {
 
         if (password && email) {
             try {
+                // TODO: this link should change based on env
                 const url = "http://localhost:5000/auth/sign-in";
                 const options = {
                     email,

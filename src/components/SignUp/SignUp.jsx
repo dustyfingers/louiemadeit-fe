@@ -14,6 +14,7 @@ const SignUp = ({email, password, confirmPassword, dispatch}) => {
 
         if (password === confirmPassword) {
             try {
+                // TODO: this link should change based on env
                 const url = "http://localhost:5000/user/new";
                 const options = {
                     email,
