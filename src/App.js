@@ -12,9 +12,10 @@ import SingleTrackPage from "./pages/SingleTrackPage.jsx";
 import StorePage from './pages/StorePage';
 import SignInAndSignUpPage from "./pages/SignInAndSignUpPage";
 import CheckoutPage from './pages/CheckoutPage';
+import CartPage from './pages/CartPage';
 import { setCurrentUser } from "./redux/user/user-actions";
 
-import { apiLink, env } from "./env";
+import { apiLink } from "./env";
 
 import "./App.scss";
 
@@ -49,9 +50,10 @@ const App = ({dispatch}) => {
                 <Switch>
                     <Route exact path="/" component={StorePage} />
                     <Route path="/track" component={SingleTrackPage} />
-                    <Route exact path="/admin" component={UploadTrackPage} />
-                    <Route exact path="/sign-in" component={SignInAndSignUpPage} />
-                    <Route exact path="/checkout" component={CheckoutPage} />
+                    <Route path="/admin" component={UploadTrackPage} />
+                    <Route path="/sign-in" component={SignInAndSignUpPage} />
+                    <Route path="/cart" component={CartPage} />
+                    <Route path="/checkout" component={CheckoutPage} />
                 </Switch>
             </div>
             <Footer/>
