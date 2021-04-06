@@ -12,6 +12,8 @@ if (hostname === "localhost" || hostname === "127.0.0.1") {
 } else if (hostname === "www.louiemadeit.com") {
     console.log('environment is prod!');
     env = "prod";
+} else {
+    console.log('environment is ' + hostname);
 }
 
 // assign api link based on env
