@@ -2,4 +2,22 @@
   .nav-item {
     cursor: pointer;
   }
+
+  .cart-counter-wrapper {
+    position: relative;
+
+    .cart-counter {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      top: 2px;
+      right: -3px;
+      background-color: red;
+      border-radius: 100%;
+      width: 1.1rem;
+      height: 1.1rem;
+      color: white;
+    }
+  }
 }
