@@ -66,7 +66,7 @@ const TrackPreview = ({track, cartItems, currentPlayerTrack, dispatch}) => {
     };
 
     return (
-        <div className='card col-sm-6 col-md-4 col-lg-2 m-3'>
+        <div className='card col-md-4 col-lg-2 m-3'>
             <img src={coverUrl} className='card-img-top' alt={`${track.trackName}-cover`} />
             <div className='card-body'>
                 <p className='card-text'>{track.trackName}</p>
