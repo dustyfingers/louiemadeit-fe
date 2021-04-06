@@ -14,7 +14,7 @@ import SignInAndSignUpPage from "./pages/SignInAndSignUpPage";
 import CheckoutPage from './pages/CheckoutPage';
 import { setCurrentUser } from "./redux/user/user-actions";
 
-import baseLink from "./env";
+import { apiLink, env } from "./env";
 
 import "./App.scss";
 
@@ -24,7 +24,8 @@ const App = ({dispatch}) => {
     const checkAuth = async () => {
         try {
             console.log('checkAuth fired!');
-            const url = "/auth/sign-in";
+            const url = apiLink + "/auth/sign-in";
+            console.log("making api request to " + url);
             const data = {};
             const options = {withCredentials: true};
             let res = await axios.post(url, data, options);

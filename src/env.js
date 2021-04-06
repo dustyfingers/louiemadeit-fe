@@ -1,14 +1,33 @@
 // env can be 'local' 'test' or 'prod'
-const env = "test";
-let baseLink;
+let env, apiLink;
+let { hostname } = window.location;
 
-switch (env) {
-    case "test":
-        baseLink = "https://louiemadeit-test.herokuapp.com/";
-    case "local":
-        baseLink = "http://localhost:5000/";
-    default:
-        baseLink = "http://localhost:5000/";
+// check host and assign env
+if (hostname === "localhost" || hostname === "127.0.0.1") {
+    console.log('environment is local!');
+    env = "local";
+} else {
+    console.log('environment is NOT local!');
+    console.log(hostname);
 }
 
-export default baseLink;
+// assign api link based on env
+switch (env) {
+    case "test":
+        apiLink = "https://louiemadeit-test.herokuapp.com";
+        break;
+    case "local":
+        apiLink = "http://localhost:5000";
+        break;
+    case "prod":
+        apiLink = "prod-backend-link.com";
+        break;
+    //  default to test env
+    default:
+        apiLink = "https://louiemadeit-test.herokuapp.com";
+}
+
+export {
+    apiLink,
+    env
+};
