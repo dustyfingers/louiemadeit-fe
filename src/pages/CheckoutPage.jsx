@@ -1,29 +1,65 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { connect } from 'react-redux';
 
 import CheckoutItem from '../components/CheckoutItem/CheckoutItem';
+import { apiLink } from '../env';
 
 const CheckoutPage = ({cartItems}) => {
     const stripe = useStripe();
     const elements = useElements();
+    const [clientSecret, setClientSecret] = useState('');
+    const [succeeded, setSucceeded] = useState(false);
+    const [error, setError] = useState(null);
+    const [processing, setProcessing] = useState('');
+    const [disabled, setDisabled] = useState(false);
 
+    // Create PaymentIntent as soon as the page loads
+    useEffect(() => {
+        window
+            .fetch(apiLink + "/stripe/new-payment-intent", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            // TODO: put in actual items from cart!
+            body: JSON.stringify({items: [{ id: "xl-tshirt" }]})
+            })
+            .then(res => res.json())
+            .then(data => setClientSecret(data.clientSecret));
+    }, []);
+
+    // handle form submit (completing purchase with stripe)
     const handleSubmit = async evt => {
         evt.preventDefault();
+        setProcessing(true);
 
         // is stripe has not loaded do not allow submit
         if (!stripe || !elements) return;
 
-        const cardElement = elements.getElement(CardElement);
-
-        const { err, paymentMethod } = await stripe.createPaymentMethod({
-            type: 'card',
-            card: cardElement
+        const payload = await stripe.confirmCardPayment(clientSecret, {
+            payment_method: {
+                card: elements.getElement(CardElement)
+            }
         });
-
-        if (err) console.log('error:  ', err);
-        else console.log('payment method:  ', paymentMethod);
+        console.log(clientSecret);
+        console.log(payload);
+        if (payload.error) {
+            setError(`Payment failed ${payload.error.message}`);
+            setProcessing(false);
+        } else {
+            setError(null);
+            setProcessing(false);
+            setSucceeded(true);
+        }
     };
+
+    const handleChange = async evt => {
+        // Listen for changes in the CardElement
+        // and display any errors as the customer types their card details
+        setDisabled(evt.empty);
+        setError(evt.error ? evt.error.message : "");
+      };
 
     return (
         <div className="d-flex flex-column justify-content-center align-items-center w-100">
@@ -31,8 +67,17 @@ const CheckoutPage = ({cartItems}) => {
                 {cartItems.length ? cartItems.map(item => <CheckoutItem item={item}/>) : 'No items in cart...'}
             </div>
             <form onSubmit={handleSubmit} className="w-50 d-flex flex-column">
-                <CardElement />
-                <button type="submit" disabled={!stripe}>Complete Purchase</button>
+                <CardElement onChange={handleChange} />
+                <button
+                    disabled={processing || disabled || succeeded}
+                    id="submit"
+                    >
+                    <span id="button-text">
+                        {processing ? "Processing Payment..." : "Complete Purchase"}
+                    </span>
+                </button>
+                {/* Show any error that happens when processing the payment */}
+                {error && (<div className="card-error" role="alert">{error}</div>)}
             </form>
         </div>
     );
