@@ -32,8 +32,8 @@ const Menu = ({ history, currentUser, cartItems, dispatch }) => {
                                 <span className="nav-link" onClick={() => dispatch(setCurrentUser(null))}>sign out.</span>
                             </li>
                         }
-                        <li className="nav-item cart-counter-wrapper">
-                            <span className="nav-link" onClick={() => history.push("/cart")}><img src="/cart.svg" height='24px' width='24px' alt="shopping cart"/></span>
+                        <li className="nav-item cart-counter-wrapper" onClick={() => history.push("/cart")}>
+                            <span className="nav-link"><img src="/cart.svg" height='24px' width='24px' alt="shopping cart"/></span>
                             {cartItems.length > 0 && (<span className="cart-counter">{cartItems.length}</span>)}
                         </li>
                     </ul>

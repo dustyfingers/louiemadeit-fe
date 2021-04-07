@@ -20,10 +20,6 @@ const TrackForm = ({name, description, sellType, exclusivePrice, leaseStemsPrice
         // TODO: this link should change based on env
         const s3GenPutUrl = 'http://localhost:5000/s3/generate-put-url';
 
-        // TODO:
-        // so we dont need to store the urls in mongo like i originally thought - we can store the file names and use those to request from s3.
-        // s3's requests time out any way so this is definitely the better way to go. honestly just a matter of wiring it up
-
         let taggedVersionFileName = '',
             untaggedVersionFileName = '',
             coverArtFileName = '',
