@@ -21,19 +21,19 @@ const Menu = ({ history, currentUser, cartItems, dispatch }) => {
 
                 <div className="collapse navbar-collapse" id="navbarDropdown">
                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li className="nav-item">
+                        <li className="nav-item d-flex justify-content-end">
                             <span className="nav-link" onClick={() => history.push("/contact")}>contact.</span>
                         </li>
                         {currentUser === null ?
-                            <li className="nav-item">
+                            <li className="nav-item d-flex justify-content-end">
                                 <span className="nav-link" onClick={() => history.push("/sign-in")}>sign in.</span>
                             </li> :
-                            <li className="nav-item">
+                            <li className="nav-item d-flex justify-content-end">
                                 <span className="nav-link" onClick={() => dispatch(setCurrentUser(null))}>sign out.</span>
                             </li>
                         }
                         <li className="nav-item cart-counter-wrapper" onClick={() => history.push("/cart")}>
-                            <span className="nav-link"><img src="/cart.svg" height='24px' width='24px' alt="shopping cart"/></span>
+                            <span className="nav-link d-flex justify-content-end"><img src="/cart.svg" height='24px' width='24px' alt="shopping cart"/></span>
                             {cartItems.length > 0 && (<span className="cart-counter">{cartItems.length}</span>)}
                         </li>
                     </ul>
