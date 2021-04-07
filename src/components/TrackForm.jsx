@@ -17,8 +17,6 @@ const TrackForm = ({name, description, sellType, exclusivePrice, leaseStemsPrice
     const handleSubmit = async evt => {
         evt.preventDefault();
         const formData = { name, description, sellType, exclusivePrice, leaseStemsPrice, leaseMasterOnlyPrice, taggedVersion, untaggedVersion, coverArt, trackStems };
-
-        // TODO: this link should change based on env
         const s3GenPutUrl = apiLink + '/s3/generate-put-url';
 
         let taggedVersionFileName = '',
@@ -120,7 +118,6 @@ const TrackForm = ({name, description, sellType, exclusivePrice, leaseStemsPrice
 
         // if all uploads are successful call 'create track' endpoint and handle response
         try {
-            // TODO: this link should change based on env
             const createTrackUrl = apiLink + '/track/new';
             const options = {
                 trackName: name,

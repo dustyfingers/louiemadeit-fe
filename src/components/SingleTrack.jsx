@@ -16,8 +16,6 @@ const SingleTrack = ({dispatch}) => {
 
     const handleSubmit = async evt => {
         evt.preventDefault();
-
-        // TODO: this link should change based on env
         const url = apiLink + "/s3/generate-get-url";
 
         const options = {
