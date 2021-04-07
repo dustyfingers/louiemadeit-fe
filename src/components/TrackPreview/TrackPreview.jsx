@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import './TrackPreview.scss';
 import { setCurrentTrack } from '../../redux/player/player-actions';
 import { addCartItem } from '../../redux/cart/cart-actions';
+import { apiLink } from '../../env';
 
 // TODO: make playIcon change back when different track is played
 const TrackPreview = ({track, cartItems, currentPlayerTrack, dispatch}) => {
@@ -18,7 +19,7 @@ const TrackPreview = ({track, cartItems, currentPlayerTrack, dispatch}) => {
         const fetchTrackData = async () => {
             try {
                 // TODO: this link should change based on env
-                const url = 'http://localhost:5000/s3/generate-get-url';
+                const url = apiLink + '/s3/generate-get-url';
     
                 const trackFileOptions = {
                     params: {

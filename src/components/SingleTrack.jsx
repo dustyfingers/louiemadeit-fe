@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 
+import { apiLink } from "../env";
+
 const SingleTrack = ({dispatch}) => {
     // DONE: this component should have a text input and a submit button 
 
@@ -16,7 +18,7 @@ const SingleTrack = ({dispatch}) => {
         evt.preventDefault();
 
         // TODO: this link should change based on env
-        const url = "http://localhost:5000/s3/generate-get-url";
+        const url = apiLink + "/s3/generate-get-url";
 
         const options = {
             params: {

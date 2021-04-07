@@ -5,17 +5,15 @@ import { connect } from "react-redux";
 
 import { setEmail, setPassword } from "../../redux/auth/auth-actions";
 import { setCurrentUser } from "../../redux/user/user-actions";
+import { apiLink } from "../../env";
 
 const SignIn = ({email, password, dispatch}) => {
     const handleSubmit = async evt => {
         evt.preventDefault();
 
-        console.log(password, email)
-
         if (password && email) {
             try {
-                // TODO: this link should change based on env
-                const url = "http://localhost:5000/auth/sign-in";
+                const url = apiLink + "/auth/sign-in";
                 const options = {
                     email,
                     password

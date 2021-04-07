@@ -11,6 +11,7 @@ import {
     setTrackCoverArt,
     setTrackStems
 } from '../redux/admin/upload/upload-actions';
+import { apiLink } from '../env';
 
 const TrackForm = ({name, description, sellType, exclusivePrice, leaseStemsPrice, leaseMasterOnlyPrice, taggedVersion, untaggedVersion, coverArt, trackStems, dispatch}) => {
     const handleSubmit = async evt => {
@@ -18,7 +19,7 @@ const TrackForm = ({name, description, sellType, exclusivePrice, leaseStemsPrice
         const formData = { name, description, sellType, exclusivePrice, leaseStemsPrice, leaseMasterOnlyPrice, taggedVersion, untaggedVersion, coverArt, trackStems };
 
         // TODO: this link should change based on env
-        const s3GenPutUrl = 'http://localhost:5000/s3/generate-put-url';
+        const s3GenPutUrl = apiLink + '/s3/generate-put-url';
 
         let taggedVersionFileName = '',
             untaggedVersionFileName = '',
@@ -120,7 +121,7 @@ const TrackForm = ({name, description, sellType, exclusivePrice, leaseStemsPrice
         // if all uploads are successful call 'create track' endpoint and handle response
         try {
             // TODO: this link should change based on env
-            const createTrackUrl = 'http://localhost:5000/track/new';
+            const createTrackUrl = apiLink + '/track/new';
             const options = {
                 trackName: name,
                 taggedVersion: taggedVersionFileName,

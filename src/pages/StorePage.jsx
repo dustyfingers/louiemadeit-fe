@@ -6,11 +6,11 @@ import { connect } from "react-redux";
 // import components
 import TrackPreview from '../components/TrackPreview/TrackPreview';
 import { setShopTracks } from '../redux/shop-tracks/shop-tracks-actions';
+import { apiLink } from '../env';
 
 const StorePage = ({shopTracks, dispatch}) => {
     useEffect(() => {
-        // TODO: this link should change based on env
-        let url = 'http://localhost:5000/track/all';
+        let url = apiLink + '/track/all';
 
         axios.get(url).then(res => {
             dispatch(setShopTracks(res.data.tracks));

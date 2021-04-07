@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 
 import { setEmail, setPassword, setConfirmPassword } from "../../redux/auth/auth-actions";
 import { setCurrentUser } from "../../redux/user/user-actions";
+import { apiLink } from "../../env";
 
 const SignUp = ({email, password, confirmPassword, dispatch}) => {
 
@@ -15,7 +16,7 @@ const SignUp = ({email, password, confirmPassword, dispatch}) => {
         if (password === confirmPassword) {
             try {
                 // TODO: this link should change based on env
-                const url = "http://localhost:5000/user/new";
+                const url = apiLink + "/user/new";
                 const options = {
                     email,
                     password
