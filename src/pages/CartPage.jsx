@@ -7,8 +7,8 @@ import CartItem from '../components/CartItem/CartItem';
 const CartPage = ({cartItems, history}) => {
 
     return (
-        <div className={`d-flex ${!cartItems.length && 'flex-column'} align-items-center justify-content-center`}>
-            <div className='cart-items'>
+        <div className={`d-flex w-100 ${!cartItems.length && 'flex-column'} align-items-center justify-content-${cartItems.length ? 'between' : 'center'}`}>
+            <div className={`cart-items ${cartItems.length && 'w-75'} py-2`}>
                 {cartItems.length ? cartItems.map(item => (<CartItem item={item} key={item._id}/>)) : 'No items in your cart.'}
             </div>
             <div className={`${cartItems.length && 'ps-4'}`}>
