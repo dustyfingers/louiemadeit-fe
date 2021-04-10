@@ -29,6 +29,24 @@ const CheckoutPage = ({cartItems}) => {
             .then(data => setClientSecret(data.clientSecret));
     }, []);
 
+    const cardStyle = {
+        style: {
+            base: {
+                color: "#32325d",
+                fontSmoothing: "antialiased",
+                fontSize: "16px",
+                "::placeholder": {
+                    color: "#32325d"
+                }
+            },
+            invalid: {
+                color: "#fa755a",
+                iconColor: "#fa755a"
+            }
+        }
+    };
+        
+
     // handle form submit (completing purchase with stripe)
     const handleSubmit = async evt => {
         evt.preventDefault();
@@ -67,7 +85,7 @@ const CheckoutPage = ({cartItems}) => {
                 {cartItems.length ? cartItems.map(item => <CheckoutItem item={item}/>) : 'No items in cart...'}
             </div>
             <form onSubmit={handleSubmit} className="w-50 d-flex flex-column">
-                <CardElement onChange={handleChange} />
+                <CardElement onChange={handleChange} options={cardStyle} />
                 <button
                     disabled={processing || disabled || succeeded}
                     id="submit"

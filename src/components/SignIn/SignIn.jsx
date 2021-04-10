@@ -20,9 +20,10 @@ const SignIn = ({email, password, dispatch}) => {
                 };
         
                 const res = await axios.post(url, options);
-                console.log('response from sign in', res);
+                console.log('response from sign in', res.data.user);
                 const currentUserObj = {
-                    email
+                    email: res.data.user.email,
+                    isAdmin: res.data.user.isAdmin
                 };
 
                 // dispatch an action to set app state with currentUserObj to log user in

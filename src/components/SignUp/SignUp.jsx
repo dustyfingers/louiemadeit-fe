@@ -8,8 +8,6 @@ import { setCurrentUser } from "../../redux/user/user-actions";
 import { apiLink } from "../../env";
 
 const SignUp = ({email, password, confirmPassword, dispatch}) => {
-
-    // TODO: handle sign up here
     const handleSubmit = async evt => {
         evt.preventDefault();
 
@@ -24,7 +22,8 @@ const SignUp = ({email, password, confirmPassword, dispatch}) => {
                 const res = await axios.post(url, options);
                 console.log('response from sign up', res);
                 const currentUserObj = {
-                    email
+                    email: res.data.user.email,
+                    isAdmin: res.data.user.isAdmin
                 };
 
                 // dispatch an action to set app state with currentUserObj to log user in
