@@ -8,7 +8,7 @@ import { setCurrentUser } from "../../redux/user/user-actions";
 import { apiLink } from "../../env";
 
 const SignIn = ({email, password, dispatch}) => {
-    const handleSubmit = async evt => {
+    const handleSignIn = async evt => {
         evt.preventDefault();
 
         if (password && email) {
@@ -20,6 +20,7 @@ const SignIn = ({email, password, dispatch}) => {
                 };
         
                 const res = await axios.post(url, options);
+                console.log(res);
                 console.log('response from sign in', res.data.user);
                 const currentUserObj = {
                     email: res.data.user.email,
@@ -42,7 +43,7 @@ const SignIn = ({email, password, dispatch}) => {
     }
 
     return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSignIn}>
         <h1>Sign In</h1>
         <div className="mb-3">
             <label htmlFor="exampleInputEmail1" className="form-label">Email Address</label>

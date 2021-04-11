@@ -8,12 +8,12 @@ import { setCurrentUser } from "../../redux/user/user-actions";
 import { apiLink } from "../../env";
 
 const SignUp = ({email, password, confirmPassword, dispatch}) => {
-    const handleSubmit = async evt => {
+    const handleSignUp = async evt => {
         evt.preventDefault();
 
         if (password === confirmPassword) {
             try {
-                const url = apiLink + "/user/new";
+                const url = `${apiLink}/user/new`;
                 const options = {
                     email,
                     password
@@ -43,7 +43,7 @@ const SignUp = ({email, password, confirmPassword, dispatch}) => {
     }
 
     return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSignUp}>
         <h1>Sign Up</h1>
         <div className="mb-3">
             <label htmlFor="exampleInputEmail1" className="form-label">Email Address</label>
