@@ -13,7 +13,9 @@ import { apiLink } from '../../env';
 const Menu = ({ history, currentUser, cartItems, dispatch }) => {
 
     const handleSignOut = async () => {
-        await axios.post(`${apiLink}/auth/sign-out`);
+        console.log('handling sign out!');
+        let res = await axios.post(`${apiLink}/auth/sign-out`);
+        console.log(res);
         dispatch(setCurrentUser(null));
     };
 
