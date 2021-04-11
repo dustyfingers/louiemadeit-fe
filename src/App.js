@@ -24,27 +24,20 @@ import "./App.scss";
 const App = ({ dispatch }) => {
     // TODO: determine whether to display loader or page
 
-    // const checkAuth = async () => {
-    //     try {
-    //         let res = await axios.post(`${apiLink}/auth/sign-in`, {}, {withCredentials: true});
+    const checkAuth = async () => {
+        try {
+            let res = await axios.get(`${apiLink}/user/user`, {}, {withCredentials: true});
 
-    //         console.log(res);
+            console.log({data:res.data});
 
-    //         if (res.data.user !== undefined) dispatch(setCurrentUser(res.data.user));
-    //     } catch (error) {
-    //         console.log({ error });
-    //     }
-    // }
+            if (res.data.user !== undefined) dispatch(setCurrentUser(res.data.user));
+        } catch (error) {
+            console.log({ error });
+        }
+    }
 
-    // // check for auth and sign user in on app load
-    // useEffect(() => { checkAuth() }, []);
-
-    // ? test!
-    const getUser = async () => {
-        let res = await axios.get(`${apiLink}/user/user`);
-        console.log(res);
-    };
-    useEffect(() => { getUser() }, []);
+    // check for auth and sign user in on app load
+    useEffect(() => { checkAuth() }, []);
 
     return (
         <div>
