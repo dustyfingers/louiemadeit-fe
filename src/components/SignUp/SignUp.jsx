@@ -13,7 +13,7 @@ const SignUp = ({email, password, confirmPassword, dispatch}) => {
 
         if (password === confirmPassword) {
             try {
-                const url = `${apiLink}/sign-up`;
+                const url = `${apiLink}/auth/sign-up`;
                 const options = {
                     email,
                     password

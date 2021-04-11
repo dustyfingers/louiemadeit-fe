@@ -28,17 +28,15 @@ const App = ({ dispatch }) => {
 
     const checkAuth = async () => {
         try {
-            let res = await axios.get(`${apiLink}/current-user`);
+            let { data: { user } } = await axios.get(`${apiLink}/auth/current-user`);
 
-            console.log({data:res.data});
-
-            if (res.data.user !== undefined) dispatch(setCurrentUser(res.data.user));
+            if (user !== undefined) dispatch(setCurrentUser(user));
         } catch (error) {
             console.log({ error });
         }
     }
 
-    // check for auth and sign user in on app load
+    // check for current user on app load
     useEffect(() => { checkAuth() }, []);
 
     return (

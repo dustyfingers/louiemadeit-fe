@@ -1,14 +1,22 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import axios from 'axios';
 
 import './Menu.scss';
 import { setCurrentUser } from '../../redux/user/user-actions';
+import { apiLink } from '../../env';
 
 
 // TODO: sign in should change based on the user state
 
 const Menu = ({ history, currentUser, cartItems, dispatch }) => {
+
+    const handleSignOut = async () => {
+        await axios.post(`${apiLink}/auth/sign-out`);
+        dispatch(setCurrentUser(null));
+    };
+
     return (
     <>
         <nav className="navbar navbar-expand-lg navbar-light fixed-top" id="TopMenu">
@@ -29,7 +37,7 @@ const Menu = ({ history, currentUser, cartItems, dispatch }) => {
                                 <span className="nav-link" onClick={() => history.push("/sign-in")}>sign in.</span>
                             </li> :
                             <li className="nav-item d-flex justify-content-end">
-                                <span className="nav-link" onClick={() => dispatch(setCurrentUser(null))}>sign out.</span>
+                                <span className="nav-link" onClick={handleSignOut}>sign out.</span>
                             </li>
                         }
                         <li className="nav-item cart-counter-wrapper" onClick={() => history.push("/cart")}>

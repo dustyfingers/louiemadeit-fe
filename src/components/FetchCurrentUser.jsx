@@ -1,23 +1,16 @@
 import React, {useState} from 'react';
-import axios from 'axios';
+import { connect } from 'react-redux';
 
-import { apiLink } from '../env';
-
-const FetchCurrentUser = () => {
-    const [sessionUser, setSessionUser] = useState();
-
-    // for testing sessions
-    const fetchCurrentUser = async () => {
-        let res = await axios.get(`${apiLink}/current-user`, {}, {withCredentials: true});
-        console.log({ data: res.data})
-        await setSessionUser(res.data.user);
-    }
-
+const FetchCurrentUser = ({ currentUser }) => {
     return (
         <div>
-            <p>{sessionUser}</p>
-            <button className="btn btn-primary" onClick={fetchCurrentUser}>Fetch Current User</button>
+            <p>{currentUser && currentUser.email}</p>
+            <p>{currentUser && currentUser.isAdmin && 'admin'}</p>
         </div>);
 };
 
-export default FetchCurrentUser;
+const mapStateToProps = state => ({
+    currentUser: state.user.currentUser
+});
+
+export default connect(mapStateToProps)(FetchCurrentUser);

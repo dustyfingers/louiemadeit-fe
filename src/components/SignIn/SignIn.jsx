@@ -13,7 +13,7 @@ const SignIn = ({email, password, dispatch}) => {
 
         if (password && email) {
             try {
-                const url = apiLink + "/sign-in";
+                const url = `${apiLink}/auth/sign-in`;
                 const options = {
                     email,
                     password
