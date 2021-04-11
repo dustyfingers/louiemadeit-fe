@@ -1,12 +1,10 @@
 // import libs/other
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
 
 import './TrackPreview.scss';
 import { setCurrentTrack } from '../../redux/player/player-actions';
 import { addCartItem } from '../../redux/cart/cart-actions';
-import { apiLink } from '../../env';
 
 // TODO: make playIcon change back when different track is played or when clicked again (to pause)
 const TrackPreview = ({track, cartItems, currentPlayerTrack, dispatch}) => {
@@ -25,12 +23,9 @@ const TrackPreview = ({track, cartItems, currentPlayerTrack, dispatch}) => {
         dispatch(setCurrentTrack(track.taggedVersionUrl));
     };
 
-    const handleClickAddToCartButton = evt => {
-        if (!cartItems.includes(track)) dispatch(addCartItem(track));
-        else {
-            // TODO: error handling here
-            console.log('item already in cart!')
-        }
+    const handleClickAddToCartButton = () => {
+        if (cartItems.some(item => item._id === track._id)) console.log('item already in cart!');
+        else dispatch(addCartItem(track));
     };
 
     return (
@@ -45,7 +40,39 @@ const TrackPreview = ({track, cartItems, currentPlayerTrack, dispatch}) => {
                             (<img className='play-btn-icon' alt='not currently playing' src={playIcon}/>)
                         }
                     </span>
-                    <span type='button' className='add-to-cart-btn' onClick={handleClickAddToCartButton}>
+                    {/* MODAL */}
+                    <div className="modal fade" id="addToCartModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h5 className="modal-title">Choose License Type</h5>
+                                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div className="modal-body">
+                                    <div>
+                                        {track.prices.exclusivePrice} - 
+                                        <span type='button' className='add-to-cart-btn' onClick={handleClickAddToCartButton}>
+                                            <img className='add-to-cart-icon' alt='add to cart' src='/plus-square.svg' />
+                                        </span>
+                                    </div>
+                                    <div>
+                                        {track.prices.exclusivePrice} - 
+                                        <span type='button' className='add-to-cart-btn' onClick={handleClickAddToCartButton}>
+                                            <img className='add-to-cart-icon' alt='add to cart' src='/plus-square.svg' />
+                                        </span>
+                                    </div>
+                                    <div>
+                                        {track.prices.exclusivePrice} - 
+                                        <span type='button' className='add-to-cart-btn' onClick={handleClickAddToCartButton}>
+                                            <img className='add-to-cart-icon' alt='add to cart' src='/plus-square.svg' />
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {/* END MODAL */}
+                    <span type='button' className='add-to-cart-btn' data-bs-toggle="modal" data-bs-target="#addToCartModal">
                         <img className='add-to-cart-icon' alt='add to cart' src='/plus-square.svg' />
                     </span>
                 </div>

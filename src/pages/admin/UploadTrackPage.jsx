@@ -14,7 +14,7 @@ const UploadTrack = ({ currentUser }) => {
                 <TrackForm />
             </div>) : 
             <Redirect to="/" />;
-    } else { return <Redirect to="/" />;}
+    } else { return <Redirect to="/sign-in" />;}
 
 };
 
