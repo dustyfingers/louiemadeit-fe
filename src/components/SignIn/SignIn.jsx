@@ -13,14 +13,13 @@ const SignIn = ({email, password, dispatch}) => {
 
         if (password && email) {
             try {
-                const url = apiLink + "/auth/sign-in";
+                const url = apiLink + "/sign-in";
                 const options = {
                     email,
                     password
                 };
         
                 const res = await axios.post(url, options);
-                console.log(res);
                 console.log('response from sign in', res.data.user);
                 const currentUserObj = {
                     email: res.data.user.email,

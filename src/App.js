@@ -21,12 +21,14 @@ import { setCurrentUser } from "./redux/user/user-actions";
 import { apiLink } from "./env";
 import "./App.scss";
 
+axios.defaults.withCredentials = true;
+
 const App = ({ dispatch }) => {
     // TODO: determine whether to display loader or page
 
     const checkAuth = async () => {
         try {
-            let res = await axios.get(`${apiLink}/user/user`, {}, {withCredentials: true});
+            let res = await axios.get(`${apiLink}/current-user`);
 
             console.log({data:res.data});
 
