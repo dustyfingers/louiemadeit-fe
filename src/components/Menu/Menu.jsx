@@ -5,7 +5,7 @@ import axios from 'axios';
 
 import './Menu.scss';
 import { setCurrentUser } from '../../redux/user/user-actions';
-import Search from '../Search';
+import Search from '../Search/Search';
 import { apiLink } from '../../env';
 
 
@@ -14,9 +14,7 @@ import { apiLink } from '../../env';
 const Menu = ({ history, currentUser, cartItems, dispatch }) => {
 
     const handleSignOut = async () => {
-        console.log('handling sign out!');
         let res = await axios.post(`${apiLink}/auth/sign-out`);
-        console.log(res);
         dispatch(setCurrentUser(null));
     };
 
