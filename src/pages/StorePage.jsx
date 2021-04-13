@@ -6,14 +6,16 @@ import { connect } from "react-redux";
 // import components
 import TrackPreview from '../components/TrackPreview/TrackPreview';
 import { setShopTracks } from '../redux/shop-tracks/shop-tracks-actions';
+import { setDisplayedTracks } from '../redux/displayed-tracks/displayed-tracks-actions';
 import { apiLink } from '../env';
 
-const StorePage = ({shopTracks, dispatch}) => {
+const StorePage = ({ displayedTracks, dispatch }) => {
     useEffect(() => {
         let url = apiLink + '/track/all';
 
         axios.get(url).then(res => {
             dispatch(setShopTracks(res.data.tracks));
+            dispatch(setDisplayedTracks(res.data.tracks));
         });
     }, []);
 
@@ -21,14 +23,14 @@ const StorePage = ({shopTracks, dispatch}) => {
         <div className="d-flex flex-column justify-content-center py-5 text-center">
             <h1>TRACKS</h1>
             <div className="d-flex flex-wrap justify-content-center">
-                {shopTracks ? shopTracks.map(track => <TrackPreview track={track} key={track.trackName}/>) : 'No tracks found...'}
+                {displayedTracks ? displayedTracks.map(track => <TrackPreview track={track} key={track._id}/>) : 'No tracks found...'}
             </div>
         </div>
     );
 };
 
 const mapStateToProps = state => ({
-    shopTracks: state.shopTracks.shopTracks
+    displayedTracks: state.displayedTracks.displayedTracks
 });
 
 export default connect(mapStateToProps)(StorePage);
