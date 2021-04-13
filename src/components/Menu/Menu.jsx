@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import './Menu.scss';
 import { setCurrentUser } from '../../redux/user/user-actions';
+import Search from '../Search';
 import { apiLink } from '../../env';
 
 
@@ -20,7 +21,6 @@ const Menu = ({ history, currentUser, cartItems, dispatch }) => {
     };
 
     return (
-    <>
         <nav className="navbar navbar-expand-lg navbar-light fixed-top" id="TopMenu">
             <div className="container">
                 <Link to="/" id="logo"><h1>louiemadeit.</h1></Link>
@@ -42,6 +42,7 @@ const Menu = ({ history, currentUser, cartItems, dispatch }) => {
                                 <span className="nav-link" onClick={handleSignOut}>sign out.</span>
                             </li>
                         }
+                        <Search />
                         <li className="nav-item cart-counter-wrapper" onClick={() => history.push("/cart")}>
                             <span className="nav-link d-flex justify-content-end"><img src="/cart.svg" height='24px' width='24px' alt="shopping cart"/></span>
                             {cartItems.length > 0 && (<span className="cart-counter">{cartItems.length}</span>)}
@@ -51,11 +52,11 @@ const Menu = ({ history, currentUser, cartItems, dispatch }) => {
                                 <span className="nav-link" onClick={() => history.push("/admin")}>upload.</span>
                             </li>
                         }
+
                     </ul>
                 </div>
             </div>
         </nav>
-    </>
 )};
 
 const mapStateToProps = state => ({
