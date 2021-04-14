@@ -23,6 +23,7 @@ const StorePage = ({ displayedTracks, dispatch }) => {
         <div className="d-flex flex-column justify-content-center py-5 text-center">
             <h1>TRACKS</h1>
             <div className="d-flex flex-wrap justify-content-center">
+                {console.log(displayedTracks)}
                 {displayedTracks ? displayedTracks.map(track => <TrackPreview track={track} key={track._id}/>) : 'No tracks found...'}
             </div>
         </div>

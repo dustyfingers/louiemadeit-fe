@@ -24,8 +24,6 @@ import "./App.scss";
 axios.defaults.withCredentials = true;
 
 const App = ({ dispatch }) => {
-    // TODO: determine whether to display loader or page
-
     const checkAuth = async () => {
         try {
             let { data: { user } } = await axios.get(`${apiLink}/auth/current-user`);

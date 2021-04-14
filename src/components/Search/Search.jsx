@@ -39,7 +39,7 @@ const Search = ({ shopTracks, searchResults, dispatch}) => {
     };
 
     return (
-        <form className="d-flex" onSubmit={handleSubmit}>
+        <form className="ms-2 d-flex justify-content-end" onSubmit={handleSubmit}>
             <div className="search-container">
                 <input className="form-control me-2 dropdown-toggle" data-bs-toggle="dropdown-menu" type="search" placeholder="Search" aria-label="Search" onChange={handleInputChange} />
                 {searchResults && (

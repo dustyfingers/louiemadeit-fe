@@ -17,7 +17,7 @@ const TrackForm = ({name, description, sellType, exclusivePrice, leaseStemsPrice
     const handleSubmit = async evt => {
         evt.preventDefault();
         const formData = { name, description, sellType, exclusivePrice, leaseStemsPrice, leaseMasterOnlyPrice, taggedVersion, untaggedVersion, coverArt, trackStems };
-        const s3GenPutUrl = apiLink + '/s3/generate-put-url';
+        const s3GenPutUrl = `${apiLink}/s3/generate-put-url`;
 
         let taggedVersionFileName = '',
             untaggedVersionFileName = '',
@@ -114,8 +114,6 @@ const TrackForm = ({name, description, sellType, exclusivePrice, leaseStemsPrice
             console.log('error when uploading files to aws s3', err)
         }
 
-        console.log("all files uploaded to s3 successfully");
-
         // if all uploads are successful call 'create track' endpoint and handle response
         try {
             const createTrackUrl = apiLink + '/track/new';
@@ -132,7 +130,7 @@ const TrackForm = ({name, description, sellType, exclusivePrice, leaseStemsPrice
             const res = await axios.post(createTrackUrl, options);
             console.log(res);
         } catch (err) {
-            console.log('error creating track, uploads to s3 went fine', err)
+            console.log('error creating track', err)
         }
     }
 
