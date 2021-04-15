@@ -9,7 +9,7 @@ import {loadStripe} from '@stripe/stripe-js';
 
 // import bootstrap 
 import 'bootstrap/dist/css/bootstrap.css';
-import bootstrap from 'bootstrap'
+import bootstrap from 'bootstrap';
 
 // import app
 import App from './App';
