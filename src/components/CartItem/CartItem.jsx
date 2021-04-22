@@ -10,8 +10,7 @@ const CartItem = ({item, dispatch}) => {
                 <div className="card-header col-md-4"><img className="h-100 w-100" src={item.coverArtUrl}/></div>
                 <div className="card-body col-md-8 d-flex justify-content-between">
                     <div>
-                        <h5 className="card-title">{item.trackName} - {item.prices.leasePriceStems}</h5>
-                        <p className="card-text">{item.meta.description}</p>
+                        <h5 className="card-title">{item.trackName} - {item.price}</h5>
                     </div>
                     <div className="d-flex align-items-center justify-content-end">
                         <img src="/x-square.svg" height='24px' width='24px' alt={`remove ${item.trackName} from cart`} onClick={() => dispatch(removeCartItem(item))}/>

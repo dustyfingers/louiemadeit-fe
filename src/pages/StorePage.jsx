@@ -11,7 +11,7 @@ import { apiLink } from '../env';
 
 const StorePage = ({ displayedTracks, dispatch }) => {
     useEffect(() => {
-        let url = apiLink + '/track/all';
+        let url = `${apiLink}/track/all`;
 
         axios.get(url).then(res => {
             dispatch(setShopTracks(res.data.tracks));
@@ -23,7 +23,9 @@ const StorePage = ({ displayedTracks, dispatch }) => {
         <div className="d-flex flex-column justify-content-center py-5 text-center">
             <h1>TRACKS</h1>
             <div className="d-flex flex-wrap justify-content-center">
-                {displayedTracks ? (displayedTracks.length ? (displayedTracks.map(track => <TrackPreview track={track} key={track._id}/>)) : 'No tracks found...') : 'No tracks found...'}
+                {displayedTracks ? 
+                    (displayedTracks.length ? (displayedTracks.map(track => <TrackPreview track={track} key={track._id}/>)) : 'No tracks found...')
+                    : 'No tracks found...'}
             </div>
         </div>
     );

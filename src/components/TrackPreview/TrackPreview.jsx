@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 
 import './TrackPreview.scss';
 import { setCurrentTrack } from '../../redux/player/player-actions';
-import { addCartItem } from '../../redux/cart/cart-actions';
+import AddToCartModal from '../AddToCartModal/AddToCartModal';
 
 // TODO: make playIcon change back when different track is played or when clicked again (to pause)
-const TrackPreview = ({track, cartItems, currentPlayerTrack, dispatch}) => {
+const TrackPreview = ({track, currentPlayerTrack, dispatch}) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [playIcon, setPlayIcon] = useState('/play-btn.svg');
 
@@ -19,13 +19,8 @@ const TrackPreview = ({track, cartItems, currentPlayerTrack, dispatch}) => {
     }, [currentPlayerTrack]);
 
     const handleClickPlayButton = () => {
-        setIsPlaying(true);
-        dispatch(setCurrentTrack(track.taggedVersionUrl));
-    };
-
-    const handleClickAddToCartButton = () => {
-        if (cartItems.some(item => item._id === track._id)) console.log('item already in cart!');
-        else dispatch(addCartItem(track));
+        setIsPlaying(!isPlaying);
+        dispatch(currentPlayerTrack === track.taggedVersionUrl ? setCurrentTrack('') : setCurrentTrack(track.taggedVersionUrl));
     };
 
     return (
@@ -41,36 +36,7 @@ const TrackPreview = ({track, cartItems, currentPlayerTrack, dispatch}) => {
                         }
                     </span>
                     {/* MODAL */}
-                    <div className="modal fade" id="addToCartModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                            <div className="modal-content">
-                                <div className="modal-header">
-                                    <h5 className="modal-title">Choose License Type</h5>
-                                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div className="modal-body">
-                                    <div>
-                                        {track.prices.exclusivePrice} - 
-                                        <span type='button' className='add-to-cart-btn' onClick={handleClickAddToCartButton}>
-                                            <img className='add-to-cart-icon' alt='add to cart' src='/plus-square.svg' />
-                                        </span>
-                                    </div>
-                                    <div>
-                                        {track.prices.exclusivePrice} - 
-                                        <span type='button' className='add-to-cart-btn' onClick={handleClickAddToCartButton}>
-                                            <img className='add-to-cart-icon' alt='add to cart' src='/plus-square.svg' />
-                                        </span>
-                                    </div>
-                                    <div>
-                                        {track.prices.exclusivePrice} - 
-                                        <span type='button' className='add-to-cart-btn' onClick={handleClickAddToCartButton}>
-                                            <img className='add-to-cart-icon' alt='add to cart' src='/plus-square.svg' />
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <AddToCartModal track={track} />
                     {/* END MODAL */}
                     <span type='button' className='add-to-cart-btn' data-bs-toggle="modal" data-bs-target="#addToCartModal">
                         <img className='add-to-cart-icon' alt='add to cart' src='/plus-square.svg' />
@@ -82,8 +48,7 @@ const TrackPreview = ({track, cartItems, currentPlayerTrack, dispatch}) => {
 };
 
 const mapStateToProps = state => ({
-    currentPlayerTrack: state.player.currentTrack,
-    cartItems: state.cart.cartItems
+    currentPlayerTrack: state.player.currentTrack
 });
 
 export default connect(mapStateToProps)(TrackPreview);
