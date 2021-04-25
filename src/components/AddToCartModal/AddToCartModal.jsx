@@ -23,21 +23,21 @@ const AddToCartModal = ({track, cartItems, dispatch}) => {
                         <span className='col-8 text-start'>ADD TO CART AS EXCLUSIVE</span> 
                         <span className='col'>{track.prices.exclusivePrice}</span>
                         <span type='button' className='add-to-cart-btn col' onClick={() => handleAddToCartButtonClicked(track.prices.exclusiveStripePrice, track.prices.exclusivePrice)}>
-                            <img className='add-to-cart-icon' alt='add to cart' src='/plus-square.svg' />
+                            <img className='add-to-cart-icon' alt='add to cart' src='/bag-plus.svg' />
                         </span>
                     </div>
                     <div className="row">
                         <span className='col-8 text-start'>ADD TO CART AS LEASE</span>
                         <span className='col'>{track.prices.leasePriceStems}</span>
                         <span type='button' className='add-to-cart-btn col' onClick={() => handleAddToCartButtonClicked(track.prices.leaseStripePriceMaster, track.prices.leasePriceStems)}>
-                            <img className='add-to-cart-icon' alt='add to cart' src='/plus-square.svg' />
+                            <img className='add-to-cart-icon' alt='add to cart' src='/bag-plus.svg' />
                         </span>
                     </div>
                     <div className="row">
                         <span className='col-8 text-start'>ADD TO CART AS LEASE (master only)</span>
                         <span className='col'>{track.prices.leasePriceMaster}</span>
                         <span type='button' className='add-to-cart-btn col' onClick={() => handleAddToCartButtonClicked(track.prices.leaseStripePriceStems, track.prices.leasePriceMaster)}>
-                            <img className='add-to-cart-icon' alt='add to cart' src='/plus-square.svg' />
+                            <img className='add-to-cart-icon' alt='add to cart' src='/bag-plus.svg' />
                         </span>
                     </div>
                 </div>

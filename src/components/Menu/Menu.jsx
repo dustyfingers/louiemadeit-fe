@@ -41,7 +41,7 @@ const Menu = ({ history, currentUser, cartItems, dispatch }) => {
                             </li>
                         }
                         <li className="nav-item cart-counter-wrapper" onClick={() => history.push("/cart")}>
-                            <span className="nav-link d-flex justify-content-end"><img src="/cart.svg" height='24px' width='24px' alt="shopping cart"/></span>
+                            <span className="nav-link d-flex justify-content-end"><img src="/bag.svg" height='24px' width='24px' alt="shopping cart"/></span>
                             {cartItems.length > 0 && (<span className="cart-counter">{cartItems.length}</span>)}
                         </li>
                         <Search />

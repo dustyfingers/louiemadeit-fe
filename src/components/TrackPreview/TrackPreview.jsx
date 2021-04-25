@@ -14,7 +14,7 @@ const TrackPreview = ({track, currentPlayerTrack, dispatch}) => {
     // this watches the global track being played and sets local state accordingly
     useEffect(() => {
         if (currentPlayerTrack === null && isPlaying) setPlayIcon('/play-btn-fill.svg');
-        else if (track.taggedVersionUrl === currentPlayerTrack) setPlayIcon('/play-btn-fill.svg');
+        else if (track.taggedVersionUrl === currentPlayerTrack) setPlayIcon('/pause-btn.svg');
         else if (track.taggedVersionUrl !== currentPlayerTrack) setPlayIcon('/play-btn.svg');
     }, [currentPlayerTrack]);
 
@@ -39,7 +39,7 @@ const TrackPreview = ({track, currentPlayerTrack, dispatch}) => {
                         <AddToCartModal track={track} />
                     {/* END MODAL */}
                     <span type='button' className='add-to-cart-btn' data-bs-toggle="modal" data-bs-target="#addToCartModal">
-                        <img className='add-to-cart-icon' alt='add to cart' src='/plus-square.svg' />
+                        <img className='add-to-cart-icon' alt='add to cart' src='/bag-plus.svg' />
                     </span>
                 </div>
             </div>

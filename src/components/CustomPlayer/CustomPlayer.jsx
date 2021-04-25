@@ -4,17 +4,18 @@ import ReactAudioPlayer from "react-audio-player";
 import { connect } from "react-redux";
 
 import "./CustomPlayer.scss";
+import { setCurrentTrack } from "../../redux/player/player-actions";
 
 // takes in url and plays a track - to be used on the main shop page and the single track page
-const CustomPlayer = ({currentTrack, dispatch}) => {
-    // we need an 'onEnded', 'onPause' and an 'onAbort' to fully flesh out the functionality of this player
+const CustomPlayer = ({currentTrack}) => {
+    // TODO: looks like we would need an onEnded and an onAbort to flesh out the functionality of this player
     return (
         currentTrack && (<ReactAudioPlayer
             className="w-100 py-0"
             src={currentTrack}
             autoPlay
             controls
-            // backgroundColor is the default bg color for the html audio element color #f8f9fa!important
+            onPause={() => setCurrentTrack('')}
             style={{ 'borderTop': '1px solid grey'}} />)
     );
 };
