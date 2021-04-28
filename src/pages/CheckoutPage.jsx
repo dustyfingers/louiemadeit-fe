@@ -16,17 +16,21 @@ const CheckoutPage = ({cartItems}) => {
 
     // Create PaymentIntent as soon as the page loads
     useEffect(() => {
-        window
-            .fetch(apiLink + "/stripe/new-payment-intent", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            // TODO: put in actual items from cart!
-            body: JSON.stringify({items: [{ id: "xl-tshirt" }]})
-            })
-            .then(res => res.json())
-            .then(data => setClientSecret(data.clientSecret));
+        if (cartItems.length) {
+            let cartInfo = [];
+            cartItems.forEach(item => cartInfo.push({ trackID: item.trackID, priceID: item.priceID }));
+    
+            window
+                .fetch(`${apiLink}/stripe/new-payment-intent`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({items: cartInfo})
+                })
+                .then(res => res.json())
+                .then(data => setClientSecret(data.clientSecret));
+        }
     }, []);
 
     const cardStyle = {
@@ -82,7 +86,7 @@ const CheckoutPage = ({cartItems}) => {
     return (
         <div className="d-flex flex-column justify-content-center align-items-center w-100">
             <div className="cart-items">
-                {cartItems.length ? cartItems.map(item => <CheckoutItem item={item}/>) : 'No items in cart...'}
+                {cartItems.length ? cartItems.map(item => <CheckoutItem key={item.trackID} item={item}/>) : 'No items in cart...'}
             </div>
             <form onSubmit={handleSubmit} className="w-50 d-flex flex-column">
                 <CardElement onChange={handleChange} options={cardStyle} />
