@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import CheckoutItem from '../components/CheckoutItem/CheckoutItem';
 import { apiLink } from '../env';
 
-const CheckoutPage = ({cartItems}) => {
+const CheckoutPage = ({cartItems, currentUser}) => {
     const stripe = useStripe();
     const elements = useElements();
     const [clientSecret, setClientSecret] = useState('');
@@ -26,7 +26,7 @@ const CheckoutPage = ({cartItems}) => {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({items: cartInfo})
+                body: JSON.stringify({items: cartInfo, user: currentUser.email })
                 })
                 .then(res => res.json())
                 .then(data => setClientSecret(data.clientSecret));
@@ -106,7 +106,8 @@ const CheckoutPage = ({cartItems}) => {
 };
 
 const mapStateToProps = state => ({
-    cartItems: state.cart.cartItems
+    cartItems: state.cart.cartItems,
+    currentUser: state.user.currentUser
 });
 
 export default connect(mapStateToProps)(CheckoutPage);
