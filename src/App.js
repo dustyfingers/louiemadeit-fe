@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 // import pages, components
 import Menu from "./components/Menu/Menu";
 import Footer from "./components/Footer/Footer";
+import ToastContainer from "./components/ToastContainer/ToastContainer";
 import UploadTrackPage from "./pages/admin/TrackUploadPage.jsx";
 import StorePage from './pages/StorePage';
 import SignInAndSignUpPage from "./pages/SignInAndSignUpPage";
@@ -37,7 +38,7 @@ const App = ({ dispatch }) => {
     useEffect(() => { checkAuth() }, []);
 
     return (
-        <div>
+        <div className="position-relative">
             <Menu />
             <div className="page-container container d-flex flex-column align-items-center justify-content-center">
                 <Switch>
@@ -48,6 +49,7 @@ const App = ({ dispatch }) => {
                     <Route path="/checkout" component={CheckoutPage} />
                 </Switch>
             </div>
+            <ToastContainer />
             <Footer/>
         </div>
     );
