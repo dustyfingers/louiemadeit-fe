@@ -1,6 +1,6 @@
 import React from "react";
 
-import CustomPlayer from "./CustomPlayer/CustomPlayer";
+import CustomPlayer from "../CustomPlayer/CustomPlayer";
 
 const Footer = () => {
     return (

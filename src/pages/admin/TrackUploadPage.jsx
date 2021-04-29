@@ -4,14 +4,14 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router";
 
 // import components
-import TrackForm from "../../components/TrackForm.jsx";
+import TrackUploadForm from "../../components/TrackUploadForm/TrackUploadForm.jsx";
 
-const UploadTrack = ({ currentUser }) => {
+const TrackUploadPage = ({ currentUser }) => {
     if(currentUser) {
         return currentUser.isAdmin ?
             (<div>
                 <h1>Upload a Track</h1>
-                <TrackForm />
+                <TrackUploadForm />
             </div>) : 
             <Redirect to="/" />;
     } else { return <Redirect to="/sign-in" />;}
@@ -22,4 +22,4 @@ const mapStateToProps = state => ({
     currentUser: state.user.currentUser 
 });
 
-export default connect(mapStateToProps)(UploadTrack);
+export default connect(mapStateToProps)(TrackUploadPage);

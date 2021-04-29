@@ -10,10 +10,10 @@ import {
     setTrackUntaggedVersion,
     setTrackCoverArt,
     setTrackStems
-} from '../redux/admin/upload/upload-actions';
-import { apiLink } from '../env';
+} from '../../redux/admin/upload/upload-actions';
+import { apiLink } from '../../env';
 
-const TrackForm = ({name, description, sellType, exclusivePrice, leaseStemsPrice, leaseMasterOnlyPrice, taggedVersion, untaggedVersion, coverArt, trackStems, dispatch}) => {
+const TrackUploadForm = ({name, description, sellType, exclusivePrice, leaseStemsPrice, leaseMasterOnlyPrice, taggedVersion, untaggedVersion, coverArt, trackStems, dispatch}) => {
     const handleSubmit = async evt => {
         evt.preventDefault();
         const formData = { name, description, sellType, exclusivePrice, leaseStemsPrice, leaseMasterOnlyPrice, taggedVersion, untaggedVersion, coverArt, trackStems };
@@ -255,4 +255,4 @@ const mapStateToProps = state => ({
     trackStems: state.upload.trackStems
 });
 
-export default connect(mapStateToProps)(TrackForm);
+export default connect(mapStateToProps)(TrackUploadForm);

@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 import "./CustomPlayer.scss";
 import { setCurrentTrack } from "../../redux/player/player-actions";
 
-// takes in url and plays a track - to be used on the main shop page and the single track page
 const CustomPlayer = ({currentTrack}) => {
     // TODO: looks like we would need an onEnded and an onAbort to flesh out the functionality of this player
     return (

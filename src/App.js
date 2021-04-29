@@ -6,9 +6,8 @@ import { connect } from "react-redux";
 
 // import pages, components
 import Menu from "./components/Menu/Menu";
-import Footer from "./components/Footer";
-import UploadTrackPage from "./pages/admin/UploadTrackPage.jsx";
-import SingleTrackPage from "./pages/SingleTrackPage.jsx";
+import Footer from "./components/Footer/Footer";
+import UploadTrackPage from "./pages/admin/TrackUploadPage.jsx";
 import StorePage from './pages/StorePage';
 import SignInAndSignUpPage from "./pages/SignInAndSignUpPage";
 import CheckoutPage from './pages/CheckoutPage';
@@ -43,7 +42,6 @@ const App = ({ dispatch }) => {
             <div className="page-container container d-flex flex-column align-items-center justify-content-center">
                 <Switch>
                     <Route exact path="/" component={StorePage} />
-                    <Route path="/track" component={SingleTrackPage} />
                     <Route path="/admin" component={UploadTrackPage} />
                     <Route path="/sign-in" component={SignInAndSignUpPage} />
                     <Route path="/cart" component={CartPage} />
