@@ -1,11 +1,11 @@
 import React from "react";
 
-import Toast from '../Toast/Toast';
+import CustomToast from '../CustomToast/CustomToast';
 
 const ToastContainer = () => {
     return (
-        <div class="toast-container position-absolute p-5 bottom-0 end-0">
-            <Toast lead='Bootstrap Toast' body='See? Just like this.' type='info'/>
+        <div className="toast-container position-absolute p-3 bottom-0 end-0">
+            <CustomToast lead='Bootstrap Toast' body='See? Just like this.' type='info'/>
         </div>
     );
 }

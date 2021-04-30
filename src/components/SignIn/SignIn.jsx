@@ -20,7 +20,6 @@ const SignIn = ({email, password, dispatch}) => {
                 };
         
                 const res = await axios.post(url, options);
-                console.log('response from sign in', res.data.user);
                 const currentUserObj = {
                     email: res.data.user.email,
                     isAdmin: res.data.user.isAdmin
@@ -36,7 +35,7 @@ const SignIn = ({email, password, dispatch}) => {
                 console.log(err);
             }
         } else {
-            // TODO: dispatch an action to change the global state and make an error modal appear (using message-modal)
+            // TODO: dispatch an action to change the global state and make an error toast appear
             console.log("must pass email and password!");
         }
     }
