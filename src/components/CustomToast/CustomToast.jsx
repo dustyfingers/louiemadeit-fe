@@ -3,32 +3,26 @@ import { Toast } from "bootstrap";
 
 // type will determine color
 const CustomToast = ({ lead, body, type }) => {
-    let [toast, setToast] = useState(false);
+    let [toast, setToast] = useState(true);
     const toastRef = useRef();
 
     useEffect(() => {
         var myToast = toastRef.current
-        console.log(myToast);
         var bsToast = Toast.getInstance(myToast)
         console.log(bsToast);
 
-        if (!bsToast) {
-            // initialize Toast
-            bsToast = new Toast(myToast, {autohide: false})
-        }
-        else{
-            // toggle
-            toast ? bsToast.show() : bsToast.hide()
-
-        }
+        if (!bsToast) bsToast = new Toast(myToast, { 
+            animation: true,
+            autohide: true,
+            delay: 750
+        });
+        else toast ? bsToast.show() : bsToast.hide();
+        console.log(bsToast);
     });
 
     return (
         <div className="py-2">
-            <button className="btn btn-success" onClick={() => setToast(!toast)}>
-                Toast {toast ? 'hide' : 'show'}
-            </button>
-            <div className="toast show" role="alert" aria-live="assertive" aria-atomic="true" ref={toastRef}>
+            <div className={`toast ${toast ? 'show' : ''}`} role="alert" aria-live="assertive" aria-atomic="true" ref={toastRef}>
                 <div className="toast-header">
                     <strong className="me-auto">{lead}</strong>
                     <small className="text-muted">just now</small>
