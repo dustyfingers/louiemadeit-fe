@@ -3,9 +3,10 @@ import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { connect } from 'react-redux';
 
 import CheckoutItem from '../components/CheckoutItem/CheckoutItem';
+import { setCartEmpty } from '../redux/cart/cart-actions';
 import { apiLink } from '../env';
 
-const CheckoutPage = ({cartItems, currentUser}) => {
+const CheckoutPage = ({ cartItems, currentUser, dispatch, history }) => {
     const stripe = useStripe();
     const elements = useElements();
     const [clientSecret, setClientSecret] = useState('');
@@ -16,7 +17,7 @@ const CheckoutPage = ({cartItems, currentUser}) => {
 
     // Create PaymentIntent as soon as the page loads
     useEffect(() => {
-        if (cartItems.length) {
+        if (cartItems.length && currentUser) {
             let cartInfo = [];
             cartItems.forEach(item => cartInfo.push({ trackID: item.trackID, priceID: item.priceID }));
     
@@ -30,7 +31,7 @@ const CheckoutPage = ({cartItems, currentUser}) => {
                 })
                 .then(res => res.json())
                 .then(data => setClientSecret(data.clientSecret));
-        }
+        } else history.push('/');
     }, []);
 
     const cardStyle = {
@@ -56,7 +57,6 @@ const CheckoutPage = ({cartItems, currentUser}) => {
         evt.preventDefault();
         setProcessing(true);
 
-        // is stripe has not loaded do not allow submit
         if (!stripe || !elements) return;
 
         const payload = await stripe.confirmCardPayment(clientSecret, {
@@ -64,8 +64,6 @@ const CheckoutPage = ({cartItems, currentUser}) => {
                 card: elements.getElement(CardElement)
             }
         });
-        console.log(clientSecret);
-        console.log(payload);
         if (payload.error) {
             setError(`Payment failed ${payload.error.message}`);
             setProcessing(false);
@@ -73,6 +71,7 @@ const CheckoutPage = ({cartItems, currentUser}) => {
             setError(null);
             setProcessing(false);
             setSucceeded(true);
+            dispatch(setCartEmpty());
         }
     };
 
