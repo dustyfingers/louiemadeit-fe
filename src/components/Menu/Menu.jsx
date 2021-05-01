@@ -8,13 +8,10 @@ import { setCurrentUser } from '../../redux/user/user-actions';
 import Search from '../Search/Search';
 import { apiLink } from '../../env';
 
-
-// TODO: sign in should change based on the user state
-
 const Menu = ({ history, currentUser, cartItems, dispatch }) => {
-
+    
     const handleSignOut = async () => {
-        let res = await axios.post(`${apiLink}/auth/sign-out`);
+        await axios.post(`${apiLink}/auth/sign-out`);
         dispatch(setCurrentUser(null));
     };
 
@@ -46,7 +43,7 @@ const Menu = ({ history, currentUser, cartItems, dispatch }) => {
                         </li>
                         <Search />
 
-                        {currentUser && currentUser.isAdmin &&
+                        {(currentUser && currentUser.isAdmin) &&
                             <li className="nav-item d-flex justify-content-end">
                                 <span className="nav-link" onClick={() => history.push("/admin")}>upload.</span>
                             </li>

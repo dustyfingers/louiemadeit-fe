@@ -1,17 +1,33 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
+import { Modal } from "bootstrap";
 
 import { addCartItem } from '../../redux/cart/cart-actions';
 
 const AddToCartModal = ({track, cartItems, dispatch}) => {
+    const modalRef = useRef()
 
     const handleAddToCartButtonClicked = (priceID, price) => {
         if (cartItems.some(item => item._id === track._id)) console.log('item already in cart!');
-        else dispatch(addCartItem({trackName: track.trackName, trackID: track.stripeProduct, price, priceID, coverArtUrl: track.coverArtUrl, _id: track._id }));
+        else {
+            dispatch(addCartItem({
+                trackName: track.trackName, 
+                trackID: track.stripeProduct, 
+                price, priceID, 
+                coverArtUrl: track.coverArtUrl, 
+                _id: track._id 
+            }));
+
+            // close modal
+            const modalElement = modalRef.current;
+            const bsModal = Modal.getInstance(modalElement);
+            bsModal.hide();
+        }
     };
 
     return (
-    <div className="modal fade" id="addToCartModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div ref={modalRef}
+    className="modal fade" id="addToCartModal" tabIndex="-1" aria-labelledby="addToCartModalLabel" aria-hidden="true">
         <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div className="modal-content">
                 <div className="modal-header">
