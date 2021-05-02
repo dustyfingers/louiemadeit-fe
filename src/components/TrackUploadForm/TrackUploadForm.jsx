@@ -154,10 +154,11 @@ const TrackUploadForm = ({ name, description, sellType, exclusivePrice, leaseSte
                     <input
                         type="text"
                         name="trackName"
-                        className="form-control form-control-lg"
+                        className={`form-control form-control-lg`}
                         id="trackName"
                         aria-describedby="trackName"
-                        onChange={evt => dispatch(setTrackName(evt.target.value))} />
+                        onChange={evt => dispatch(setTrackName(evt.target.value))} 
+                        disabled={uploading ? true : false} />
                 </div>
 
                 {/* description */}
@@ -166,10 +167,11 @@ const TrackUploadForm = ({ name, description, sellType, exclusivePrice, leaseSte
                     <input
                         type="text"
                         name="trackDescription"
-                        className="form-control form-control-lg"
+                        className={`form-control form-control-lg`}
                         id="trackDescription"
                         aria-describedby="trackDescription"
-                        onChange={evt => dispatch(setTrackDescription(evt.target.value))} />
+                        onChange={evt => dispatch(setTrackDescription(evt.target.value))}
+                        disabled={uploading ? true : false} />
                     <div id="trackDescriptionHelp" className="form-text">A short description of the track.</div>
                 </div>
 
@@ -182,14 +184,14 @@ const TrackUploadForm = ({ name, description, sellType, exclusivePrice, leaseSte
                     <div className="form-file form-file-lg mb-2">
                         <input
                             type="file"
-                            className="form-file-input"
+                            className={`form-file-input`}
                             id="taggedVersion"
                             name="taggedVersion"
                             accept="audio/*"
-                            onChange={evt => dispatch(setTrackTaggedVersion(evt.target.files))} />
+                            onChange={evt => dispatch(setTrackTaggedVersion(evt.target.files))}
+                            disabled={uploading ? true : false} />
                         <label className="form-file-label" htmlFor="taggedVersion">
                             <span className="form-file-text">Upload Tagged Version...</span>
-                            <span className="form-file-button">Browse</span>
                         </label>
                     </div>
 
@@ -198,14 +200,14 @@ const TrackUploadForm = ({ name, description, sellType, exclusivePrice, leaseSte
                     <div className="form-file form-file-lg mb-2">
                         <input
                             type="file"
-                            className="form-file-input"
+                            className={`form-file-input`}
                             id="untaggedVersion"
                             name="untaggedVersion"
                             accept="audio/*"
-                            onChange={evt => dispatch(setTrackUntaggedVersion(evt.target.files))} />
+                            onChange={evt => dispatch(setTrackUntaggedVersion(evt.target.files))}
+                            disabled={uploading ? true : false} />
                         <label className="form-file-label" htmlFor="untaggedVersion">
                             <span className="form-file-text">Upload Untagged Version...</span>
-                            <span className="form-file-button">Browse</span>
                         </label>
                     </div>
 
@@ -214,14 +216,14 @@ const TrackUploadForm = ({ name, description, sellType, exclusivePrice, leaseSte
                     <div className="form-file form-file-lg mb-2">
                         <input
                             type="file"
-                            className="form-file-input"
+                            className={`form-file-input`}
                             id="coverArt"
                             name="coverArt"
                             accept="image/*"
-                            onChange={evt => dispatch(setTrackCoverArt(evt.target.files))} />
+                            onChange={evt => dispatch(setTrackCoverArt(evt.target.files))} 
+                            disabled={uploading ? true : false} />
                         <label className="form-file-label" htmlFor="coverArt">
                             <span className="form-file-text">Upload Cover Art...</span>
-                            <span className="form-file-button">Browse</span>
                         </label>
                     </div>
 
@@ -230,14 +232,14 @@ const TrackUploadForm = ({ name, description, sellType, exclusivePrice, leaseSte
                     <div className="form-file form-file-lg mb-2">
                         <input
                             type="file"
-                            className="form-file-input"
+                            className={`form-file-input`}
                             id="trackStems"
                             name="trackStems"
                             accept=".zip,.rar,.7zip"
-                            onChange={evt => dispatch(setTrackStems(evt.target.files))} />
+                            onChange={evt => dispatch(setTrackStems(evt.target.files))}
+                            disabled={uploading ? true : false} />
                         <label className="form-file-label" htmlFor="trackStems">
                             <span className="form-file-text">Upload Track Stems...</span>
-                            <span className="form-file-button">Browse</span>
                         </label>
                     </div>
                 </div>
