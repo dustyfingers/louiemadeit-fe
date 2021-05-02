@@ -25,7 +25,6 @@ const AddToCartModal = ({track, cartItems, dispatch}) => {
             }));
             ToastsStore.success('Item added to cart!');
             
-            // close modal
             const modalElement = modalRef.current;
             const bsModal = Modal.getInstance(modalElement);
             bsModal.hide();
