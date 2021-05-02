@@ -1,7 +1,8 @@
 // import libs/other
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import axios from "axios";
+import { ToastsStore } from 'react-toasts';
 
 import { 
     setTrackName, 
@@ -13,10 +14,22 @@ import {
 } from '../../redux/admin/upload/upload-actions';
 import { apiLink } from '../../env';
 
-const TrackUploadForm = ({name, description, sellType, exclusivePrice, leaseStemsPrice, leaseMasterOnlyPrice, taggedVersion, untaggedVersion, coverArt, trackStems, dispatch}) => {
+const TrackUploadForm = ({ name, description, sellType, exclusivePrice, leaseStemsPrice, leaseMasterOnlyPrice, taggedVersion,untaggedVersion, coverArt, trackStems, dispatch }) => {
+    const [allFilesUploaded, setAllFilesUploaded] = useState(false);
+    
     const handleSubmit = async evt => {
         evt.preventDefault();
-        const formData = { name, description, sellType, exclusivePrice, leaseStemsPrice, leaseMasterOnlyPrice, taggedVersion, untaggedVersion, coverArt, trackStems };
+        const formData = { 
+            name, 
+            description, 
+            sellType, 
+            exclusivePrice, 
+            leaseStemsPrice, 
+            leaseMasterOnlyPrice, 
+            taggedVersion, untaggedVersion, 
+            coverArt, 
+            trackStems 
+        };
         const s3GenPutUrl = `${apiLink}/s3/generate-put-url`;
 
         let taggedVersionFileName = '',
@@ -24,13 +37,11 @@ const TrackUploadForm = ({name, description, sellType, exclusivePrice, leaseStem
             coverArtFileName = '',
             stemsFileName = '';
 
-        console.log('uploading files to aws s3...!');
+        ToastsStore.success('Uploading track files!');
 
-        // try file upload
         try {
             // TODO: this file upload stuff can be pulled out and put into a single function to call
-            // * connect to s3 bucket, upload all rich media
-            // if success, upload all file names to mongo
+
             // tagged version
             if (formData.taggedVersion) {
                 let file = formData.taggedVersion[0];
@@ -44,11 +55,9 @@ const TrackUploadForm = ({name, description, sellType, exclusivePrice, leaseStem
                 const urlResponse = await axios.get(s3GenPutUrl, options);
                 const { putUrl } = urlResponse.data;
 
-                // save this url in the db
-                console.log('uploading tagged version to aws s3...!');
                 await axios.put(putUrl, file, { headers: { 'Content-Type': file.type } });
                 taggedVersionFileName = file.name;
-                console.log("tagged version upload to s3 successful");
+                ToastsStore.success('Tagged version uploaded to AWS S3 successfully.');
             }
 
 
@@ -65,11 +74,9 @@ const TrackUploadForm = ({name, description, sellType, exclusivePrice, leaseStem
                 const urlResponse = await axios.get(s3GenPutUrl, options);
                 const { putUrl } = urlResponse.data;
 
-                // save this url in the db
-                console.log('uploading untagged version to aws s3...!');
                 await axios.put(putUrl, file, { headers: { 'Content-Type': file.type } });
                 untaggedVersionFileName = file.name;
-                console.log("untagged version upload to s3 successful");
+                ToastsStore.success('Untagged version uploaded to AWS S3 successfully.');
             }
 
             // cover art
@@ -85,11 +92,9 @@ const TrackUploadForm = ({name, description, sellType, exclusivePrice, leaseStem
                 const urlResponse = await axios.get(s3GenPutUrl, options);
                 const { putUrl } = urlResponse.data;
 
-                // save this url in the db
-                console.log('uploading cover art to aws s3...!');
                 await axios.put(putUrl, file, { headers: { 'Content-Type': file.type } });
                 coverArtFileName = file.name;
-                console.log("cover art upload to s3 successful");
+                ToastsStore.success('Cover art uploaded to AWS S3 successfully.');
             }
 
             // track stems
@@ -104,33 +109,38 @@ const TrackUploadForm = ({name, description, sellType, exclusivePrice, leaseStem
                 const urlResponse = await axios.get(s3GenPutUrl, options);
                 const { putUrl } = urlResponse.data;
 
-                console.log('uploading stems to aws s3...!');
                 await axios.put(putUrl, file, { headers: { 'Content-Type': file.type } });
                 stemsFileName = file.name;
-                console.log("track stems upload to s3 successful");
+                ToastsStore.success('Track stems uploaded to s3 successfully.');
+                setAllFilesUploaded(true);
             }
             
-        } catch (err) {
-            console.log('error when uploading files to aws s3', err)
+        } catch (error) {
+            console.log({error});
+            ToastsStore.error('There was an error while uploading your track.');
         }
 
         // if all uploads are successful call 'create track' endpoint and handle response
-        try {
-            const createTrackUrl = apiLink + '/track/new';
-            const options = {
-                trackName: name,
-                taggedVersion: taggedVersionFileName,
-                untaggedVersion: untaggedVersionFileName,
-                coverArt: coverArtFileName,
-                stems: stemsFileName,
-                meta: {
-                    description
+        if (allFilesUploaded) {
+            try {
+                const createTrackUrl = apiLink + '/track/new';
+                const options = {
+                    trackName: name,
+                    taggedVersion: taggedVersionFileName,
+                    untaggedVersion: untaggedVersionFileName,
+                    coverArt: coverArtFileName,
+                    stems: stemsFileName,
+                    meta: {
+                        description
+                    }
                 }
+                await axios.post(createTrackUrl, options);
+                ToastsStore.success('Track created successfully.');
+    
+            } catch (error) {
+                console.log({error});
+                ToastsStore.error('There was an error while uploading your track.');
             }
-            const res = await axios.post(createTrackUrl, options);
-            console.log(res);
-        } catch (err) {
-            console.log('error creating track', err)
         }
     }
 
