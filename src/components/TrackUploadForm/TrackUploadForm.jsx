@@ -1,5 +1,5 @@
 // import libs/other
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import axios from "axios";
 import { ToastsStore } from 'react-toasts';
@@ -15,9 +15,10 @@ import {
 import { apiLink } from '../../env';
 
 const TrackUploadForm = ({ name, description, sellType, exclusivePrice, leaseStemsPrice, leaseMasterOnlyPrice, taggedVersion,untaggedVersion, coverArt, trackStems, dispatch }) => {
-    const [allFilesUploaded, setAllFilesUploaded] = useState(false);
-    
+    const [uploading, setUploading] = useState(false);
+
     const handleSubmit = async evt => {
+        setUploading(true);
         evt.preventDefault();
         const formData = { 
             name, 
@@ -112,7 +113,6 @@ const TrackUploadForm = ({ name, description, sellType, exclusivePrice, leaseSte
                 await axios.put(putUrl, file, { headers: { 'Content-Type': file.type } });
                 stemsFileName = file.name;
                 ToastsStore.success('Track stems uploaded to s3 successfully.');
-                setAllFilesUploaded(true);
             }
             
         } catch (error) {
@@ -120,28 +120,28 @@ const TrackUploadForm = ({ name, description, sellType, exclusivePrice, leaseSte
             ToastsStore.error('There was an error while uploading your track.');
         }
 
-        // if all uploads are successful call 'create track' endpoint and handle response
-        if (allFilesUploaded) {
-            try {
-                const createTrackUrl = apiLink + '/track/new';
-                const options = {
-                    trackName: name,
-                    taggedVersion: taggedVersionFileName,
-                    untaggedVersion: untaggedVersionFileName,
-                    coverArt: coverArtFileName,
-                    stems: stemsFileName,
-                    meta: {
-                        description
-                    }
+
+        try {
+            const createTrackUrl = apiLink + '/track/new';
+            const options = {
+                trackName: name,
+                taggedVersion: taggedVersionFileName,
+                untaggedVersion: untaggedVersionFileName,
+                coverArt: coverArtFileName,
+                stems: stemsFileName,
+                meta: {
+                    description
                 }
-                await axios.post(createTrackUrl, options);
-                ToastsStore.success('Track created successfully.');
-    
-            } catch (error) {
-                console.log({error});
-                ToastsStore.error('There was an error while uploading your track.');
             }
+            await axios.post(createTrackUrl, options);
+            ToastsStore.success('Track created successfully.');
+
+        } catch (error) {
+            console.log({error});
+            ToastsStore.error('There was an error while uploading your track.');
         }
+    
+        setUploading(false);
     }
 
     return (
@@ -243,7 +243,10 @@ const TrackUploadForm = ({ name, description, sellType, exclusivePrice, leaseSte
                 </div>
 
                 {/* submit button */}
-                <input type="submit" className="btn btn-primary" value="Publish Track" />
+                <input 
+                    type="submit" 
+                    className={`btn btn-primary ${uploading ? 'disabled' : ''}`} 
+                    value={`${uploading ? 'Uploading Track...' : 'Publish Track'}`} />
             </form>
             <form>
 
