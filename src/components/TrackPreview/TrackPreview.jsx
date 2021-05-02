@@ -6,7 +6,6 @@ import './TrackPreview.scss';
 import { setCurrentTrack } from '../../redux/player/player-actions';
 import AddToCartModal from '../AddToCartModal/AddToCartModal';
 
-// TODO: make playIcon change back when different track is played or when clicked again (to pause)
 const TrackPreview = ({track, currentPlayerTrack, dispatch}) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [playIcon, setPlayIcon] = useState('/play-btn.svg');
