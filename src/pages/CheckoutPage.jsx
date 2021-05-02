@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { connect } from 'react-redux';
+import { ToastsStore } from 'react-toasts';
+import { Redirect } from 'react-router-dom';
 
 import CheckoutItem from '../components/CheckoutItem/CheckoutItem';
 import { setCartEmpty } from '../redux/cart/cart-actions';
@@ -11,7 +13,6 @@ const CheckoutPage = ({ cartItems, currentUser, dispatch, history }) => {
     const elements = useElements();
     const [clientSecret, setClientSecret] = useState('');
     const [succeeded, setSucceeded] = useState(false);
-    const [error, setError] = useState(null);
     const [processing, setProcessing] = useState('');
     const [disabled, setDisabled] = useState(false);
 
@@ -34,52 +35,39 @@ const CheckoutPage = ({ cartItems, currentUser, dispatch, history }) => {
         } else history.push('/');
     }, []);
 
-    const cardStyle = {
-        style: {
-            base: {
-                color: "#32325d",
-                fontSmoothing: "antialiased",
-                fontSize: "16px",
-                "::placeholder": {
-                    color: "#32325d"
-                }
-            },
-            invalid: {
-                color: "#fa755a",
-                iconColor: "#fa755a"
-            }
-        }
-    };
-        
-
-    // handle form submit (completing purchase with stripe)
     const handleSubmit = async evt => {
-        evt.preventDefault();
-        setProcessing(true);
-
-        if (!stripe || !elements) return;
-
-        const payload = await stripe.confirmCardPayment(clientSecret, {
-            payment_method: {
-                card: elements.getElement(CardElement)
+        try {
+            evt.preventDefault();
+            setProcessing(true);
+    
+            if (!stripe || !elements) return;
+    
+            const payload = await stripe.confirmCardPayment(clientSecret, {
+                payment_method: {
+                    card: elements.getElement(CardElement)
+                }
+            });
+            if (payload.error) {
+                ToastsStore.error('There was an error completing your payment. Please try again.');
+                setProcessing(false);
+            } else {
+                setProcessing(false);
+                setSucceeded(true);
+                ToastsStore.success('Payment successful. Thank you!');
+                dispatch(setCartEmpty());
+                history.push("/purchase-completed");
             }
-        });
-        if (payload.error) {
-            setError(`Payment failed ${payload.error.message}`);
-            setProcessing(false);
-        } else {
-            setError(null);
-            setProcessing(false);
-            setSucceeded(true);
-            dispatch(setCartEmpty());
+        } catch (error) {
+            ToastsStore.error('There was an error completing your payment. Please try again.');
         }
+
     };
 
     const handleChange = async evt => {
         // Listen for changes in the CardElement
         // and display any errors as the customer types their card details
         setDisabled(evt.empty);
-        setError(evt.error ? evt.error.message : "");
+        if (evt.error) ToastsStore.error(evt.error.message);
       };
 
     return (
@@ -88,7 +76,24 @@ const CheckoutPage = ({ cartItems, currentUser, dispatch, history }) => {
                 {cartItems.length ? cartItems.map(item => <CheckoutItem key={item.trackID} item={item}/>) : 'No items in cart...'}
             </div>
             <form onSubmit={handleSubmit} className="w-50 d-flex flex-column">
-                <CardElement onChange={handleChange} options={cardStyle} />
+                <CardElement 
+                    onChange={handleChange} 
+                    options={{
+                        style: {
+                            base: {
+                                color: "#32325d",
+                                fontSmoothing: "antialiased",
+                                fontSize: "16px",
+                                "::placeholder": {
+                                    color: "#32325d"
+                                }
+                            },
+                            invalid: {
+                                color: "#fa755a",
+                                iconColor: "#fa755a"
+                            }
+                        }
+                    }} />
                 <button
                     disabled={processing || disabled || succeeded}
                     id="submit"
@@ -97,8 +102,6 @@ const CheckoutPage = ({ cartItems, currentUser, dispatch, history }) => {
                         {processing ? "Processing Payment..." : "Complete Purchase"}
                     </span>
                 </button>
-                {/* Show any error that happens when processing the payment */}
-                {error && (<div className="card-error" role="alert">{error}</div>)}
             </form>
         </div>
     );

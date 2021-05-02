@@ -13,6 +13,7 @@ import StorePage from './pages/StorePage';
 import SignInAndSignUpPage from "./pages/SignInAndSignUpPage";
 import CheckoutPage from './pages/CheckoutPage';
 import CartPage from './pages/CartPage';
+import PurchaseCompletedPage from './pages/PurchaseCompletedPage';
 
 // import redux actions
 import { setCurrentUser } from "./redux/user/user-actions";
@@ -47,6 +48,7 @@ const App = ({ dispatch }) => {
                     <Route path="/sign-in" component={SignInAndSignUpPage} />
                     <Route path="/cart" component={CartPage} />
                     <Route path="/checkout" component={CheckoutPage} />
+                    <Route path="/purchase-completed" component={PurchaseCompletedPage} />
                 </Switch>
             </div>
             <ToastsContainer store={ToastsStore} classNames='toast' />
