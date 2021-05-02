@@ -4,19 +4,7 @@ import { connect } from 'react-redux';
 import { setSearchQuery } from '../../redux/search/search-actions';
 import { setDisplayedTracks } from '../../redux/displayed-tracks/displayed-tracks-actions'; 
 import { setSearchResults } from '../../redux/search-results/search-results-actions';
-
 import './Search.scss';
-
-// TODO: requirements
-// DONE - needs more robustificaion: Search suggestions/“auto-complete” results appear below the search bar dynamically as you type (implement this first)
-// DONE - needs more robustification: Hitting enter/pressing the search button on a search query filters your beats
-// TODO: edge case 'No tracks found...' disappears if no tracks are found when searching
-// TODO: If time permits, add a sorting feature to sort your beats by track name
-
-// if a user begins typing, drop down should appear with any matching tracks
-// take search query, check it against track titles in state
-// display the tracks that match in the dropdown
-
 
 const Search = ({ shopTracks, searchResults, dispatch}) => {
 
