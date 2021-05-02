@@ -10,8 +10,6 @@ import { addCartItem } from '../../redux/cart/cart-actions';
 // ? loaded becomes the one that keeps getting added to the store
 // ? causing the 'Item already in cart!' error to show
 const AddToCartModal = ({track, cartItems, dispatch}) => {
-    console.log(track);
-
     const modalRef = useRef();
 
     const handleAddToCartButtonClicked = (priceID, price) => {
