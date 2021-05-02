@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { connect } from 'react-redux';
 import { Modal } from "bootstrap";
 import { ToastsStore } from 'react-toasts';
@@ -10,6 +10,8 @@ import { addCartItem } from '../../redux/cart/cart-actions';
 // ? loaded becomes the one that keeps getting added to the store
 // ? causing the 'Item already in cart!' error to show
 const AddToCartModal = ({track, cartItems, dispatch}) => {
+    console.log(track);
+
     const modalRef = useRef();
 
     const handleAddToCartButtonClicked = (priceID, price) => {
@@ -34,11 +36,11 @@ const AddToCartModal = ({track, cartItems, dispatch}) => {
 
     return (
     <div ref={modalRef}
-    className="modal fade" id="addToCartModal" tabIndex="-1" aria-labelledby="addToCartModalLabel" aria-hidden="true">
+    className="modal fade" id={`add${track.trackName.replace(/ /g, "_")}ToCartModal`} tabIndex="-1" aria-labelledby="addToCartModalLabel" aria-hidden="true">
         <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div className="modal-content">
                 <div className="modal-header">
-                    <h5 className="modal-title">Choose License Type</h5>
+                    <h5 className="modal-title">Choose License Type - {track.trackName}</h5>
                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div className="modal-body container">
