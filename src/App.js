@@ -3,11 +3,11 @@ import React, { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import axios from "axios";
 import { connect } from "react-redux";
+import { ToastsContainer, ToastsStore } from 'react-toasts';
 
 // import pages, components
 import Menu from "./components/Menu/Menu";
 import Footer from "./components/Footer/Footer";
-import ToastContainer from "./components/ToastContainer/ToastContainer";
 import UploadTrackPage from "./pages/admin/TrackUploadPage.jsx";
 import StorePage from './pages/StorePage';
 import SignInAndSignUpPage from "./pages/SignInAndSignUpPage";
@@ -49,7 +49,7 @@ const App = ({ dispatch }) => {
                     <Route path="/checkout" component={CheckoutPage} />
                 </Switch>
             </div>
-            <ToastContainer />
+            <ToastsContainer store={ToastsStore} classNames='toast' />
             <Footer/>
         </div>
     );

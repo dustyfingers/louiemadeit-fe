@@ -1,6 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import { connect } from 'react-redux';
 import { Modal } from "bootstrap";
+import { ToastsStore } from 'react-toasts';
 
 import { addCartItem } from '../../redux/cart/cart-actions';
 
@@ -17,7 +18,9 @@ const AddToCartModal = ({track, cartItems, dispatch}) => {
                 coverArtUrl: track.coverArtUrl, 
                 _id: track._id 
             }));
-
+            
+            ToastsStore.success('Item added to cart!');
+            
             // close modal
             const modalElement = modalRef.current;
             const bsModal = Modal.getInstance(modalElement);
