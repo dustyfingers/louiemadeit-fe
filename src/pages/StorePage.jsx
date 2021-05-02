@@ -9,7 +9,7 @@ import { setShopTracks } from '../redux/shop-tracks/shop-tracks-actions';
 import { setDisplayedTracks } from '../redux/displayed-tracks/displayed-tracks-actions';
 import { apiLink } from '../env';
 
-const StorePage = ({ currentUser, displayedTracks, dispatch }) => {
+const StorePage = ({ displayedTracks, dispatch }) => {
     useEffect(() => {
         let url = `${apiLink}/track/all`;
 
@@ -18,8 +18,6 @@ const StorePage = ({ currentUser, displayedTracks, dispatch }) => {
             dispatch(setDisplayedTracks(res.data.tracks));
         });
     }, []);
-
-    console.log(currentUser);
 
     return (
         <div className="d-flex flex-column justify-content-center text-center">

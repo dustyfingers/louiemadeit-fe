@@ -1,21 +1,13 @@
-// import libs/other
 import React from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { Redirect } from "react-router";
 
-// import components
 import TrackUploadForm from "../../components/TrackUploadForm/TrackUploadForm.jsx";
 
-const TrackUploadPage = ({ currentUser, history }) => {
-    console.log(currentUser);
-    if(currentUser === null) {
-        history.push('/sign-in');
-        return null;
-    }
-    if(!currentUser.isAdmin) {
-        history.push('/');
-        return null;
-    }
+const TrackUploadPage = ({ currentUser }) => {
+    if(currentUser === null) return <Redirect to="/sign-in" />;
+    if(!currentUser.isAdmin) return <Redirect to="/" />;
+
     return (
         <div>
             <h1>Upload a Track</h1>
@@ -28,4 +20,4 @@ const mapStateToProps = state => ({
     currentUser: state.user.currentUser 
 });
 
-export default connect(mapStateToProps)(withRouter(TrackUploadPage));
+export default connect(mapStateToProps)(TrackUploadPage);

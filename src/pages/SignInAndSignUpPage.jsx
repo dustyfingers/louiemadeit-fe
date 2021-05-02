@@ -1,12 +1,14 @@
+// import libs/other
 import React from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router";
 
 import SignUp from '../components/SignUp/SignUp';
 import SignIn from '../components/SignIn/SignIn';
 
-const SignInAndSignUpPage = ({ currentUser }) => {
-    console.log(currentUser);
-    
+const SignInAndSignUpPage = ({ currentUser }) => {   
+    if(currentUser !== null) return <Redirect to="/" />;
+
     return (
         <div className="w-100 d-flex flex-column justify-content-center align-items-center">
             <h1 className="py-4">Welcome!</h1>
