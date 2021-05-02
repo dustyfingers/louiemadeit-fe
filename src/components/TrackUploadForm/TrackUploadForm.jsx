@@ -116,7 +116,6 @@ const TrackUploadForm = ({ name, description, sellType, exclusivePrice, leaseSte
             }
             
         } catch (error) {
-            console.log({error});
             ToastsStore.error('There was an error while uploading your track.');
         }
 
@@ -137,7 +136,6 @@ const TrackUploadForm = ({ name, description, sellType, exclusivePrice, leaseSte
             ToastsStore.success('Track created successfully.');
 
         } catch (error) {
-            console.log({error});
             ToastsStore.error('There was an error while uploading your track.');
         }
     

@@ -37,11 +37,10 @@ const SignIn = ({email, password, dispatch, history}) => {
                 if (res.data.user.isAdmin) history.push('/admin');
                 else history.push('/');
             } catch (err) {
-                console.log(err);
+                ToastsStore.error('There was an error sigining you in. Please check your credentials and try again.');
             }
         } else {
-            // TODO: dispatch an action to change the global state and make an error toast appear
-            console.log("must pass email and password!");
+            ToastsStore.warning("Must give email and password!");
         }
     }
 

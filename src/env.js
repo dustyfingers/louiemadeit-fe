@@ -3,16 +3,9 @@ let env, apiLink;
 let { hostname } = window.location;
 
 // check host and assign env
-if (hostname === "localhost" || hostname === "127.0.0.1") {
-    console.log('environment is local!');
-    env = "local";
-} else if (hostname === "dev.louiemadeit.com") {
-    console.log('environment is test!');
-    env = "test";
-} else if (hostname === "www.louiemadeit.com") {
-    console.log('environment is prod!');
-    env = "prod";
-}
+if (hostname === "localhost" || hostname === "127.0.0.1") env = "local";
+else if (hostname === "dev.louiemadeit.com") env = "test";
+else if (hostname === "www.louiemadeit.com") env = "prod";
 
 // assign api link based on env
 switch (env) {

@@ -1,16 +1,21 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Modal } from "bootstrap";
 import { ToastsStore } from 'react-toasts';
 
 import { addCartItem } from '../../redux/cart/cart-actions';
 
+// TODO: user cannot add more than one item to their cart
+// ? modal is loaded for each track in the store and the last one
+// ? loaded becomes the one that keeps getting added to the store
+// ? causing the 'Item already in cart!' error to show
 const AddToCartModal = ({track, cartItems, dispatch}) => {
-    const modalRef = useRef()
+    const modalRef = useRef();
 
     const handleAddToCartButtonClicked = (priceID, price) => {
-        if (cartItems.some(item => item._id === track._id)) console.log('item already in cart!');
-        else {
+        if (cartItems.some(item => item._id === track._id)) {
+            ToastsStore.warning('Item already in cart!');
+        } else {
             dispatch(addCartItem({
                 trackName: track.trackName, 
                 trackID: track.stripeProduct, 
@@ -18,7 +23,6 @@ const AddToCartModal = ({track, cartItems, dispatch}) => {
                 coverArtUrl: track.coverArtUrl, 
                 _id: track._id 
             }));
-            
             ToastsStore.success('Item added to cart!');
             
             // close modal

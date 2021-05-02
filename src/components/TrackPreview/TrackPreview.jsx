@@ -35,9 +35,7 @@ const TrackPreview = ({track, currentPlayerTrack, dispatch}) => {
                             (<img className='play-btn-icon' alt='not currently playing' src={playIcon}/>)
                         }
                     </span>
-                    {/* MODAL */}
-                        <AddToCartModal track={track} />
-                    {/* END MODAL */}
+                    <AddToCartModal track={track} />
                     <span type='button' className='add-to-cart-btn' data-bs-toggle="modal" data-bs-target="#addToCartModal">
                         <img className='add-to-cart-icon' alt='add to cart' src='/bag-plus.svg' />
                     </span>

@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { setEmail, setPassword, setConfirmPassword } from "../../redux/auth/auth-actions";
 import { setCurrentUser } from "../../redux/user/user-actions";
 import { apiLink } from "../../env";
+import { ToastsStore } from "react-toasts";
 
 const SignUp = ({email, password, confirmPassword, dispatch}) => {
     const handleSignUp = async evt => {
@@ -20,7 +21,6 @@ const SignUp = ({email, password, confirmPassword, dispatch}) => {
                 };
         
                 const res = await axios.post(url, options);
-                console.log('response from sign up', res);
                 const currentUserObj = {
                     email: res.data.user.email,
                     isAdmin: res.data.user.isAdmin
@@ -34,11 +34,10 @@ const SignUp = ({email, password, confirmPassword, dispatch}) => {
                 dispatch(setPassword(null));
                 dispatch(setConfirmPassword(null));
             } catch (err) {
-                console.log(err);
+                ToastsStore.error('There was an error when creating a user with your information. Please try again.')
             }
         } else {
-            // TODO: dispatch an action to change the global state and make an error modal appear (using message-modal)
-            console.log("must give email and password!");
+            ToastsStore.warning("Must give email and password!");
         }
     }
 

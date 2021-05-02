@@ -30,7 +30,7 @@ const App = ({ dispatch }) => {
 
             if (user !== undefined) dispatch(setCurrentUser(user));
         } catch (error) {
-            console.log({ error });
+            ToastsStore.error('There was an error logging you in.');
         }
     }
 
