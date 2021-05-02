@@ -5,10 +5,6 @@ import { ToastsStore } from 'react-toasts';
 
 import { addCartItem } from '../../redux/cart/cart-actions';
 
-// TODO: user cannot add more than one item to their cart
-// ? modal is loaded for each track in the store and the last one
-// ? loaded becomes the one that keeps getting added to the store
-// ? causing the 'Item already in cart!' error to show
 const AddToCartModal = ({track, cartItems, dispatch}) => {
     const modalRef = useRef();
 
