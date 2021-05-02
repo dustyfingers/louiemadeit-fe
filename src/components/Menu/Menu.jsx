@@ -44,13 +44,6 @@ const Menu = ({ history, currentUser, cartItems, dispatch }) => {
                             {cartItems.length > 0 && (<span className="cart-counter">{cartItems.length}</span>)}
                         </li>
                         <Search />
-
-                        {(currentUser && currentUser.isAdmin) &&
-                            <li className="nav-item d-flex justify-content-end">
-                                <span className="nav-link" onClick={() => history.push("/admin")}>upload.</span>
-                            </li>
-                        }
-
                     </ul>
                 </div>
             </div>

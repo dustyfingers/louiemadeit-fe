@@ -34,7 +34,7 @@ const SignIn = ({email, password, dispatch, history}) => {
                 dispatch(setEmail(null));
                 dispatch(setPassword(null));
 
-                if (res.data.user.isAdmin) history.push('/admin');
+                if (res.data.user.isAdmin) history.push('/upload');
                 else history.push('/');
             } catch (err) {
                 ToastsStore.error('There was an error sigining you in. Please check your credentials and try again.');

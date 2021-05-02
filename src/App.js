@@ -43,7 +43,7 @@ const App = ({ dispatch }) => {
             <div className="page-container container d-flex flex-column align-items-center justify-content-center">
                 <Switch>
                     <Route exact path="/" component={StorePage} />
-                    <Route path="/admin" component={UploadTrackPage} />
+                    <Route path="/upload" component={UploadTrackPage} />
                     <Route path="/sign-in" component={SignInAndSignUpPage} />
                     <Route path="/cart" component={CartPage} />
                     <Route path="/checkout" component={CheckoutPage} />

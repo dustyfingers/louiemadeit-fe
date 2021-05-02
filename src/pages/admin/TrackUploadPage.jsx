@@ -7,8 +7,15 @@ import { withRouter } from "react-router-dom";
 import TrackUploadForm from "../../components/TrackUploadForm/TrackUploadForm.jsx";
 
 const TrackUploadPage = ({ currentUser, history }) => {
-    if(!currentUser) history.push('/sign-in');
-    if(!currentUser.isAdmin) history.push('/');
+    console.log(currentUser);
+    if(currentUser === null) {
+        history.push('/sign-in');
+        return null;
+    }
+    if(!currentUser.isAdmin) {
+        history.push('/');
+        return null;
+    }
     return (
         <div>
             <h1>Upload a Track</h1>

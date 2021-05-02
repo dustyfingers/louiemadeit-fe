@@ -140,10 +140,10 @@ const TrackUploadForm = ({ name, description, sellType, exclusivePrice, leaseSte
                 </div>
 
                 <div id="filesSection" className="mb-4">
-                    <div class="mb-2">
-                        <label for="taggedVersion" class="form-label">Tagged Version</label>
+                    <div className="mb-2">
+                        <label htmlFor="taggedVersion" className="form-label">Tagged Version</label>
                         <input 
-                            class="form-control"
+                            className="form-control"
                             type="file"
                             id="taggedVersion"
                             name="taggedVersion"
@@ -152,10 +152,10 @@ const TrackUploadForm = ({ name, description, sellType, exclusivePrice, leaseSte
                             disabled={uploading ? true : false} />
                     </div>
 
-                    <div class="mb-2">
-                        <label for="untaggedVersion" class="form-label">Untagged Version</label>
+                    <div className="mb-2">
+                        <label htmlFor="untaggedVersion" className="form-label">Untagged Version</label>
                         <input 
-                            class="form-control" 
+                            className="form-control" 
                             type="file"
                             id="untaggedVersion"
                             name="untaggedVersion"
@@ -164,10 +164,10 @@ const TrackUploadForm = ({ name, description, sellType, exclusivePrice, leaseSte
                             disabled={uploading ? true : false} />
                     </div>
 
-                    <div class="mb-2">
-                        <label for="coverArt" class="form-label">Cover Art</label>
+                    <div className="mb-2">
+                        <label htmlFor="coverArt" className="form-label">Cover Art</label>
                         <input 
-                            class="form-control" 
+                            className="form-control" 
                             type="file"
                             id="coverArt"
                             name="coverArt"
@@ -176,10 +176,10 @@ const TrackUploadForm = ({ name, description, sellType, exclusivePrice, leaseSte
                             disabled={uploading ? true : false} />
                     </div>
 
-                    <div class="mb-3">
-                        <label for="formFile" class="form-label">Default file input example</label>
+                    <div className="mb-3">
+                        <label htmlFor="formFile" className="form-label">Stems</label>
                         <input 
-                            class="form-control" 
+                            className="form-control" 
                             type="file"
                             id="trackStems"
                             name="trackStems"

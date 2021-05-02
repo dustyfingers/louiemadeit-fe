@@ -26,6 +26,8 @@ const SignUp = ({email, password, confirmPassword, dispatch}) => {
                     isAdmin: res.data.user.isAdmin
                 };
 
+                console.log(res);
+
                 // dispatch an action to set app state with currentUserObj to log user in
                 dispatch(setCurrentUser(currentUserObj));
 
