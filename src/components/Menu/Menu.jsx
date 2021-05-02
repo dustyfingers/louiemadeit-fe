@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import { ToastsStore } from 'react-toasts';
 
 import './Menu.scss';
 import { setCurrentUser } from '../../redux/user/user-actions';
@@ -13,6 +14,7 @@ const Menu = ({ history, currentUser, cartItems, dispatch }) => {
     const handleSignOut = async () => {
         await axios.post(`${apiLink}/auth/sign-out`);
         dispatch(setCurrentUser(null));
+        ToastsStore.success('Signed out successfully!');
     };
 
     return (
