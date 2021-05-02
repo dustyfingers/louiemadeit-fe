@@ -64,8 +64,6 @@ const CheckoutPage = ({ cartItems, currentUser, dispatch, history }) => {
     };
 
     const handleChange = async evt => {
-        // Listen for changes in the CardElement
-        // and display any errors as the customer types their card details
         setDisabled(evt.empty);
         if (evt.error) ToastsStore.error(evt.error.message);
       };

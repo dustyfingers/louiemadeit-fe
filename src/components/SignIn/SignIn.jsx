@@ -28,7 +28,7 @@ const SignIn = ({email, password, dispatch, history}) => {
                     email: res.data.user.email,
                     isAdmin: res.data.user.isAdmin
                 }));
-                ToastsStore.success('Signed in successfully.');
+                ToastsStore.success('Signed in successfully!');
 
                 // dispatch actions to clear all the auth state
                 dispatch(setEmail(null));

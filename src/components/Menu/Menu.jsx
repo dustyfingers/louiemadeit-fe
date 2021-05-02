@@ -14,7 +14,7 @@ const Menu = ({ history, currentUser, cartItems, dispatch }) => {
     const handleSignOut = async () => {
         await axios.post(`${apiLink}/auth/sign-out`);
         dispatch(setCurrentUser(null));
-        ToastsStore.success('Signed out successfully!');
+        ToastsStore.success('Signed out successfully.');
     };
 
     return (
