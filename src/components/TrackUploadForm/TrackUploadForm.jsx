@@ -13,9 +13,22 @@ import {
     setTrackStems
 } from '../../redux/admin/upload/upload-actions';
 import { apiLink } from '../../env';
+import './TrackUploadForm.scss';
 
 const TrackUploadForm = ({ name, description, sellType, exclusivePrice, leaseStemsPrice, leaseMasterOnlyPrice, taggedVersion,untaggedVersion, coverArt, trackStems, dispatch }) => {
     const [uploading, setUploading] = useState(false);
+
+    const handleUploadToS3 = async (file, putUrl) => {
+        const options = {
+            params: {
+                Key: file.name,
+                ContentType: file.type
+            }
+        }
+        const urlResponse = await axios.get(putUrl, options);
+
+        await axios.put(urlResponse.data.putUrl, file, { headers: { 'Content-Type': file.type } });
+    }
 
     const handleSubmit = async evt => {
         setUploading(true);
@@ -38,82 +51,36 @@ const TrackUploadForm = ({ name, description, sellType, exclusivePrice, leaseSte
             coverArtFileName = '',
             stemsFileName = '';
 
-        ToastsStore.success('Uploading track files!');
+        ToastsStore.success('Uploading track!');
 
         try {
-            // TODO: this file upload stuff can be pulled out and put into a single function to call
-
-            // tagged version
             if (formData.taggedVersion) {
                 let file = formData.taggedVersion[0];
-                const options = {
-                    params: {
-                        Key: file.name,
-                        ContentType: file.type
-                    }
-                }
-                // url the tagged version is stored at
-                const urlResponse = await axios.get(s3GenPutUrl, options);
-                const { putUrl } = urlResponse.data;
-
-                await axios.put(putUrl, file, { headers: { 'Content-Type': file.type } });
+                await handleUploadToS3(file, s3GenPutUrl);
                 taggedVersionFileName = file.name;
-                ToastsStore.success('Tagged version uploaded to AWS S3 successfully.');
-            }
+                ToastsStore.success('Tagged version uploaded to AWS S3.');
+            } else throw 'No tagged version given!';
 
-
-            // untagged version
             if (formData.untaggedVersion) {
                 let file = formData.untaggedVersion[0];
-                const options = {
-                    params: {
-                        Key: file.name,
-                        ContentType: file.type
-                    }
-                }
-                // url the tagged version is stored at
-                const urlResponse = await axios.get(s3GenPutUrl, options);
-                const { putUrl } = urlResponse.data;
-
-                await axios.put(putUrl, file, { headers: { 'Content-Type': file.type } });
+                await handleUploadToS3(file, s3GenPutUrl);
                 untaggedVersionFileName = file.name;
-                ToastsStore.success('Untagged version uploaded to AWS S3 successfully.');
-            }
+                ToastsStore.success('Untagged version uploaded to AWS S3.');
+            } else throw 'No untagged version given!';
 
-            // cover art
             if (formData.coverArt) {
                 let file = formData.coverArt[0];
-                const options = {
-                    params: {
-                        Key: file.name,
-                        ContentType: file.type
-                    }
-                }
-                // url the tagged version is stored at
-                const urlResponse = await axios.get(s3GenPutUrl, options);
-                const { putUrl } = urlResponse.data;
-
-                await axios.put(putUrl, file, { headers: { 'Content-Type': file.type } });
+                await handleUploadToS3(file, s3GenPutUrl);
                 coverArtFileName = file.name;
-                ToastsStore.success('Cover art uploaded to AWS S3 successfully.');
-            }
+                ToastsStore.success('Cover art uploaded to AWS S3.');
+            } else throw 'No cover art given!';
 
-            // track stems
             if (formData.trackStems) {
                 let file = formData.trackStems[0];
-                const options = {
-                    params: {
-                        Key: file.name,
-                        ContentType: file.type
-                    }
-                }
-                const urlResponse = await axios.get(s3GenPutUrl, options);
-                const { putUrl } = urlResponse.data;
-
-                await axios.put(putUrl, file, { headers: { 'Content-Type': file.type } });
+                await handleUploadToS3(file, s3GenPutUrl);
                 stemsFileName = file.name;
-                ToastsStore.success('Track stems uploaded to s3 successfully.');
-            }
+                ToastsStore.success('Stems uploaded to s3.');
+            } else throw 'No stems given!';
             
         } catch (error) {
             ToastsStore.error('There was an error while uploading your track.');
@@ -121,7 +88,7 @@ const TrackUploadForm = ({ name, description, sellType, exclusivePrice, leaseSte
 
 
         try {
-            const createTrackUrl = apiLink + '/track/new';
+            const createTrackUrl = `${apiLink}/track/new`;
             const options = {
                 trackName: name,
                 taggedVersion: taggedVersionFileName,
@@ -133,7 +100,7 @@ const TrackUploadForm = ({ name, description, sellType, exclusivePrice, leaseSte
                 }
             }
             await axios.post(createTrackUrl, options);
-            ToastsStore.success('Track created successfully.');
+            ToastsStore.success('Track uploaded successfully!');
 
         } catch (error) {
             ToastsStore.error('There was an error while uploading your track.');
@@ -143,115 +110,90 @@ const TrackUploadForm = ({ name, description, sellType, exclusivePrice, leaseSte
     }
 
     return (
-        <div id="uploadTrackFormContainer">
             <form method="post" id="uploadTrackForm" onSubmit={handleSubmit}>
 
-                {/* name */}
-                <div className="mb-3">
-                    <label htmlFor="trackName" className="form-label">Track Name:</label>
-                    <input
-                        type="text"
-                        name="trackName"
-                        className={`form-control form-control-lg`}
-                        id="trackName"
-                        aria-describedby="trackName"
-                        onChange={evt => dispatch(setTrackName(evt.target.value))} 
-                        disabled={uploading ? true : false} />
-                </div>
-
-                {/* description */}
-                <div className="mb-3">
-                    <label htmlFor="trackDescription" className="form-label">Description:</label>
-                    <input
-                        type="text"
-                        name="trackDescription"
-                        className={`form-control form-control-lg`}
-                        id="trackDescription"
-                        aria-describedby="trackDescription"
-                        onChange={evt => dispatch(setTrackDescription(evt.target.value))}
-                        disabled={uploading ? true : false} />
-                    <div id="trackDescriptionHelp" className="form-text">A short description of the track.</div>
-                </div>
-
-
-                {/* filesSection */}
-                <div id="filesSection" className="mb-3">
-                    Files:
-
-                    {/* taggedVersion */}
-                    <div className="form-file form-file-lg mb-2">
+                <div id="textSection" className="mt-2 mb-4">
+                    <div className="mb-2">
+                        <label htmlFor="trackName" className="form-label">Track Name:</label>
                         <input
+                            type="text"
+                            name="trackName"
+                            className="form-control form-control-lg"
+                            id="trackName"
+                            aria-describedby="trackName"
+                            onChange={evt => dispatch(setTrackName(evt.target.value))} 
+                            disabled={uploading ? true : false} />
+                    </div>
+
+                    <div>
+                        <label htmlFor="trackDescription" className="form-label">Description:</label>
+                        <input
+                            type="text"
+                            name="trackDescription"
+                            className="form-control form-control-lg"
+                            id="trackDescription"
+                            aria-describedby="trackDescription"
+                            onChange={evt => dispatch(setTrackDescription(evt.target.value))}
+                            disabled={uploading ? true : false} />
+                        <div id="trackDescriptionHelp" className="form-text">A short description of the track.</div>
+                    </div>
+                </div>
+
+                <div id="filesSection" className="mb-4">
+                    <div class="mb-2">
+                        <label for="taggedVersion" class="form-label">Tagged Version</label>
+                        <input 
+                            class="form-control"
                             type="file"
-                            className={`form-file-input`}
                             id="taggedVersion"
                             name="taggedVersion"
                             accept="audio/*"
                             onChange={evt => dispatch(setTrackTaggedVersion(evt.target.files))}
                             disabled={uploading ? true : false} />
-                        <label className="form-file-label" htmlFor="taggedVersion">
-                            <span className="form-file-text">Upload Tagged Version...</span>
-                        </label>
                     </div>
 
-
-                    {/* untaggedVersion */}
-                    <div className="form-file form-file-lg mb-2">
-                        <input
+                    <div class="mb-2">
+                        <label for="untaggedVersion" class="form-label">Untagged Version</label>
+                        <input 
+                            class="form-control" 
                             type="file"
-                            className={`form-file-input`}
                             id="untaggedVersion"
                             name="untaggedVersion"
                             accept="audio/*"
                             onChange={evt => dispatch(setTrackUntaggedVersion(evt.target.files))}
                             disabled={uploading ? true : false} />
-                        <label className="form-file-label" htmlFor="untaggedVersion">
-                            <span className="form-file-text">Upload Untagged Version...</span>
-                        </label>
                     </div>
 
-
-                    {/* coverArt */}
-                    <div className="form-file form-file-lg mb-2">
-                        <input
+                    <div class="mb-2">
+                        <label for="coverArt" class="form-label">Cover Art</label>
+                        <input 
+                            class="form-control" 
                             type="file"
-                            className={`form-file-input`}
                             id="coverArt"
                             name="coverArt"
                             accept="image/*"
                             onChange={evt => dispatch(setTrackCoverArt(evt.target.files))} 
                             disabled={uploading ? true : false} />
-                        <label className="form-file-label" htmlFor="coverArt">
-                            <span className="form-file-text">Upload Cover Art...</span>
-                        </label>
                     </div>
 
-
-                    {/* trackStems */}
-                    <div className="form-file form-file-lg mb-2">
-                        <input
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Default file input example</label>
+                        <input 
+                            class="form-control" 
                             type="file"
-                            className={`form-file-input`}
                             id="trackStems"
                             name="trackStems"
                             accept=".zip,.rar,.7zip"
                             onChange={evt => dispatch(setTrackStems(evt.target.files))}
                             disabled={uploading ? true : false} />
-                        <label className="form-file-label" htmlFor="trackStems">
-                            <span className="form-file-text">Upload Track Stems...</span>
-                        </label>
                     </div>
                 </div>
 
-                {/* submit button */}
                 <input 
                     type="submit" 
                     className={`btn btn-primary ${uploading ? 'disabled' : ''}`} 
                     value={`${uploading ? 'Uploading Track...' : 'Publish Track'}`} />
             </form>
-            <form>
-
-            </form>
-        </div>
     );
 };
 

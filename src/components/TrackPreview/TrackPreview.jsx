@@ -13,9 +13,8 @@ const TrackPreview = ({track, currentPlayerTrack, dispatch}) => {
 
     // this watches the global track being played and sets local state accordingly
     useEffect(() => {
-        if (currentPlayerTrack === null && isPlaying) setPlayIcon('/play-btn-fill.svg');
-        else if (track.taggedVersionUrl === currentPlayerTrack) setPlayIcon('/pause-btn.svg');
-        else if (track.taggedVersionUrl !== currentPlayerTrack) setPlayIcon('/play-btn.svg');
+        if (track.taggedVersionUrl === currentPlayerTrack) setPlayIcon('/pause-btn.svg');
+        else setPlayIcon('/play-btn.svg');
     }, [currentPlayerTrack]);
 
     const handleClickPlayButton = () => {
