@@ -13,9 +13,10 @@ import bootstrap from 'bootstrap';
 
 // import app
 import App from './App';
+import { stripePk } from './env';
 
 // fetch stripe
-const stripePromise = loadStripe('pk_test_51Iay6NLYNexBDWiNphNRZ8WzbSwyELURFHzlCY48Eh2KoVeJL4t2O9gJ2U0ssSpQxw6sNp3K4jykqiMewc9At3K800AnQXVRip');
+const stripePromise = loadStripe(stripePk);
 
 ReactDOM.render(
     <Provider store={store}>
