@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { connect } from 'react-redux';
 import { ToastsStore } from 'react-toasts';
-import { Redirect } from 'react-router-dom';
 
 import CheckoutItem from '../components/CheckoutItem/CheckoutItem';
 import { setCartEmpty } from '../redux/cart/cart-actions';

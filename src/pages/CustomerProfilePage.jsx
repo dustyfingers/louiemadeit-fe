@@ -2,25 +2,24 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
 
 // import components
 import { apiLink } from '../env';
 
-const CustomerProfilePage = ({ currentUser }) => {
+// TODO: get this route working properly
+const CustomerProfilePage = ({ currentUser, history }) => {
     console.log({currentUser});
-    // useEffect(() => {
-    //     if (currentUser) {
-    //         let url = `${apiLink}/user/user/${currentUser.id}`;
+    useEffect(() => {
+        if (currentUser) {
+            let url = `${apiLink}/user/user/${currentUser.id}`;
 
-    //         console.log(url);
+            console.log(url);
     
-    //         axios.get(url).then(res => {
-    //             console.log(res);
-    //         });
-    //     }
-    // }, []);
-    if (currentUser === null) return <Redirect to="/sign-in" />;
+            axios.get(url).then(res => {
+                console.log(res);
+            });
+        } else history.push('/sign-in');
+    }, []);
 
     return (
         <div className="d-flex flex-column justify-content-center text-center">
