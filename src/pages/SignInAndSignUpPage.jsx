@@ -7,7 +7,7 @@ import SignUp from '../components/SignUp/SignUp';
 import SignIn from '../components/SignIn/SignIn';
 
 const SignInAndSignUpPage = ({ currentUser }) => {   
-    if(currentUser !== null) return <Redirect to="/" />;
+    if (currentUser !== null) return <Redirect to="/" />;
 
     return (
         <div className="w-100 d-flex flex-column justify-content-center align-items-center">

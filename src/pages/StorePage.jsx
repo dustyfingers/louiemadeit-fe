@@ -32,8 +32,7 @@ const StorePage = ({ displayedTracks, dispatch }) => {
 };
 
 const mapStateToProps = state => ({
-    displayedTracks: state.displayedTracks.displayedTracks,
-    currentUser: state.user.currentUser
+    displayedTracks: state.displayedTracks.displayedTracks
 });
 
 export default connect(mapStateToProps)(StorePage);

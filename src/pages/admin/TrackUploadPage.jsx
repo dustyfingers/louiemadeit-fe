@@ -5,8 +5,8 @@ import { Redirect } from "react-router";
 import TrackUploadForm from "../../components/TrackUploadForm/TrackUploadForm.jsx";
 
 const TrackUploadPage = ({ currentUser }) => {
-    if(currentUser === null) return <Redirect to="/sign-in" />;
-    if(!currentUser.isAdmin) return <Redirect to="/" />;
+    if (currentUser === null) return <Redirect to="/sign-in" />;
+    if (!currentUser.isAdmin) return <Redirect to="/" />;
 
     return (
         <div>
