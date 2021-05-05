@@ -29,10 +29,10 @@ const App = ({ currentUser, dispatch }) => {
     const checkAuth = async () => {
         try {
             let { data: { user } } = await axios.get(`${apiLink}/auth/current-user`);
-
-
             if (user !== null) await dispatch(setCurrentUser(user));
+
         } catch (error) {
+            ToastsStore.error("There was an error connecting to the server!");
         }
     }
 
