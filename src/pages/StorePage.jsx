@@ -4,7 +4,7 @@ import axios from 'axios';
 import { connect } from "react-redux";
 
 // import components
-import TrackPreview from '../components/TrackPreview/TrackPreview';
+import TrackPreviewCard from '../components/TrackPreviewCard/TrackPreviewCard';
 import { setShopTracks } from '../redux/shop-tracks/shop-tracks-actions';
 import { setDisplayedTracks } from '../redux/displayed-tracks/displayed-tracks-actions';
 import { apiLink } from '../env';
@@ -24,7 +24,7 @@ const StorePage = ({ displayedTracks, dispatch }) => {
             <h1>TRACKS</h1>
             <div className="d-flex flex-wrap justify-content-center pb-5">
                 {displayedTracks ? 
-                    (displayedTracks.length ? (displayedTracks.map(track => <TrackPreview track={track} key={track._id}/>)) : 'No tracks found...')
+                    (displayedTracks.length ? (displayedTracks.map(track => <TrackPreviewCard track={track} key={track._id}/>)) : 'No tracks found...')
                     : 'No tracks found...'}
             </div>
         </div>
