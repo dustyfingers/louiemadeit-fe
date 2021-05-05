@@ -11,11 +11,11 @@ else if (hostname === "www.louiemadeit.com") env = "prod";
 switch (env) {
     case "local":
         apiLink = "http://localhost:5000";
-        stripePk = "pk_test_51Iay6NLYNexBDWiN3YMGvPw9BeYI50NsNG3Kr9UtnwF9AL3eprpd8TiN2GvNWfjyv13Q2lFcVrtPAMSmd9xwHBaW00eHe9Pj3D";
+        stripePk = "pk_test_51Iay6NLYNexBDWiNibCpA8UpN74X44ZhbJaEVHD76t2ERmHgNn3XotNlNCDkac5tG63yriJM4IkHKDkoEpL1LsGB00rtH51v6B";
         break;
     case "test":
         apiLink = "https://louiemadeit-test.herokuapp.com";
-        stripePk = "pk_test_51Iay6NLYNexBDWiN3YMGvPw9BeYI50NsNG3Kr9UtnwF9AL3eprpd8TiN2GvNWfjyv13Q2lFcVrtPAMSmd9xwHBaW00eHe9Pj3D";
+        stripePk = "pk_test_51Iay6NLYNexBDWiNibCpA8UpN74X44ZhbJaEVHD76t2ERmHgNn3XotNlNCDkac5tG63yriJM4IkHKDkoEpL1LsGB00rtH51v6B";
         break;
     case "prod":
         apiLink = "https://louiemadeit.herokuapp.com";
@@ -24,7 +24,7 @@ switch (env) {
     //  default to test env
     default:
         apiLink = "https://louiemadeit-test.herokuapp.com";
-        stripePk = "pk_test_51Iay6NLYNexBDWiN3YMGvPw9BeYI50NsNG3Kr9UtnwF9AL3eprpd8TiN2GvNWfjyv13Q2lFcVrtPAMSmd9xwHBaW00eHe9Pj3D";
+        stripePk = "pk_test_51Iay6NLYNexBDWiNibCpA8UpN74X44ZhbJaEVHD76t2ERmHgNn3XotNlNCDkac5tG63yriJM4IkHKDkoEpL1LsGB00rtH51v6B";
 }
 
 export {
