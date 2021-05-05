@@ -1,4 +1,3 @@
-// import libs/other
 import React from 'react';
 
 const PurchaseCompletedPage = () => {

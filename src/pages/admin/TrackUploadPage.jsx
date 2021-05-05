@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
+import axios from "axios";
+import { ToastsStore } from 'react-toasts';
 import { connect } from "react-redux";
-import { Redirect } from "react-router";
 
 import TrackUploadForm from "../../components/TrackUploadForm/TrackUploadForm.jsx";
+import { apiLink } from "../../env";
 
-const TrackUploadPage = ({ currentUser }) => {
-    if (currentUser === null) return <Redirect to="/sign-in" />;
-    if (!currentUser.isAdmin) return <Redirect to="/" />;
+const TrackUploadPage = ({ history }) => {
+    const checkAuth = async () => {
+        try {
+            let { data: { user } } = await axios.get(`${apiLink}/auth/current-user`);
+            if (user === null) history.push("/sign-in");
+            if (!user.isAdmin) history.push("/");
+
+        } catch (error) {
+            ToastsStore.error('There was an error fetching this information.');
+        }
+    }
+
+    useEffect(() => { checkAuth() }, []);
 
     return (
         <div>
@@ -16,8 +28,4 @@ const TrackUploadPage = ({ currentUser }) => {
     );
 };
 
-const mapStateToProps = state => ({
-    currentUser: state.user.currentUser 
-});
-
-export default connect(mapStateToProps)(TrackUploadPage);
+export default connect()(TrackUploadPage);

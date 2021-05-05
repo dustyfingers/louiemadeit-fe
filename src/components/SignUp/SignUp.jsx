@@ -55,11 +55,11 @@ const SignUp = ({email, password, confirmPassword, dispatch}) => {
             <div id="emailHelp" className="form-text">I don't share your email with anyone else.</div>
         </div>
         <div className="mb-3">
-            <label htmlFor="passwordInput" className="form-label">Password</label>
+            <label htmlFor="signUpPasswordInput" className="form-label">Password</label>
             <input 
                 type="password" 
                 className="form-control" 
-                id="passwordInput" 
+                id="signUpPasswordInput" 
                 onChange={evt => dispatch(setPassword(evt.target.value))} />
         </div>
         <div className="mb-3">

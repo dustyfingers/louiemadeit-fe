@@ -25,14 +25,14 @@ import "./App.scss";
 
 axios.defaults.withCredentials = true;
 
-const App = ({ dispatch }) => {
+const App = ({ currentUser, dispatch }) => {
     const checkAuth = async () => {
         try {
             let { data: { user } } = await axios.get(`${apiLink}/auth/current-user`);
 
-            if (user !== undefined) dispatch(setCurrentUser(user));
+
+            if (user !== null) await dispatch(setCurrentUser(user));
         } catch (error) {
-            ToastsStore.error('There was an error logging you in.');
         }
     }
 
@@ -45,7 +45,7 @@ const App = ({ dispatch }) => {
             <div className="page-container container d-flex flex-column align-items-center justify-content-center">
                 <Switch>
                     <Route exact path="/" component={StorePage} />
-                    <Route path="/upload" component={UploadTrackPage} />
+                    <Route path="/upload" component={() => <UploadTrackPage user={currentUser}/>} />
                     <Route path="/sign-in" component={SignInAndSignUpPage} />
                     <Route path="/cart" component={CartPage} />
                     <Route path="/checkout" component={CheckoutPage} />
@@ -58,5 +58,8 @@ const App = ({ dispatch }) => {
         </div>
     );
 }
+const mapStateToProps = state => ({
+    currentUser: state.user.currentUser
+});
 
-export default connect()(App);
+export default connect(mapStateToProps)(App);

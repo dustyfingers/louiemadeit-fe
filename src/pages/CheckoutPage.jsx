@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import { ToastsStore } from 'react-toasts';
 
 import CheckoutItem from '../components/CheckoutItem/CheckoutItem';
@@ -15,9 +16,20 @@ const CheckoutPage = ({ cartItems, currentUser, dispatch, history }) => {
     const [processing, setProcessing] = useState('');
     const [disabled, setDisabled] = useState(false);
 
+    const checkAuth = async () => {
+        try {
+            let { data: { user } } = await axios.get(`${apiLink}/auth/current-user`);
+            if (user === null) history.push("/sign-in");
+
+        } catch (error) {
+            ToastsStore.error('There was an error fetching this information.');
+        }
+    }
+
     // Create PaymentIntent as soon as the page loads
     useEffect(() => {
-        if (cartItems.length && currentUser) {
+        checkAuth();
+        if (cartItems.length) {
             let cartInfo = [];
             cartItems.forEach(item => cartInfo.push({ trackID: item.trackID, priceID: item.priceID }));
     
@@ -31,7 +43,7 @@ const CheckoutPage = ({ cartItems, currentUser, dispatch, history }) => {
                 })
                 .then(res => res.json())
                 .then(data => setClientSecret(data.clientSecret));
-        } else history.push('/');
+        }
     }, []);
 
     const handleSubmit = async evt => {

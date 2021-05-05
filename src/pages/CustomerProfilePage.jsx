@@ -2,24 +2,24 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import { connect } from "react-redux";
+import { ToastsStore } from 'react-toasts';
 
 // import components
 import { apiLink } from '../env';
 
 // TODO: get this route working properly
-const CustomerProfilePage = ({ currentUser, history }) => {
-    console.log({currentUser});
-    useEffect(() => {
-        if (currentUser) {
-            let url = `${apiLink}/user/user/${currentUser.id}`;
+const CustomerProfilePage = ({ history }) => {
+    const checkAuth = async () => {
+        try {
+            let { data: { user } } = await axios.get(`${apiLink}/auth/current-user`);
+            if (user === null) history.push("/sign-in");
 
-            console.log(url);
-    
-            axios.get(url).then(res => {
-                console.log(res);
-            });
-        } else history.push('/sign-in');
-    }, []);
+        } catch (error) {
+            ToastsStore.error('There was an error fetching this information.');
+        }
+    }
+
+    useEffect(() => { checkAuth() }, []);
 
     return (
         <div className="d-flex flex-column justify-content-center text-center">
@@ -31,8 +31,4 @@ const CustomerProfilePage = ({ currentUser, history }) => {
     );
 };
 
-const mapStateToProps = state => ({
-    currentUser: state.user.currentUser
-});
-
-export default connect(mapStateToProps)(CustomerProfilePage);
+export default connect()(CustomerProfilePage);
