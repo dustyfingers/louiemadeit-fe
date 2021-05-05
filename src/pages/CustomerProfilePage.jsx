@@ -1,13 +1,10 @@
-// import libs/other
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import { connect } from "react-redux";
 import { ToastsStore } from 'react-toasts';
 
-// import components
 import { apiLink } from '../env';
 
-// TODO: get this route working properly
 const CustomerProfilePage = ({ history }) => {
     const checkAuth = async () => {
         try {
