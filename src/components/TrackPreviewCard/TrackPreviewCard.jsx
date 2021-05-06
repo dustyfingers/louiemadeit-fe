@@ -22,7 +22,7 @@ const TrackPreviewCard = ({track, currentPlayerTrack, dispatch}) => {
     };
 
     return (
-        <div className='card col-md-6 col-lg-3 mb-4'>
+        <div className='card col-md-6 col-lg-3 mb-4 track-preview-card'>
             <ProgressiveImage preview="/placeholder.jpg" image={track.coverArtUrl} alt={`${track.trackName}-cover`} />
             <div className='card-body'>
                 <p className='card-text'>{track.trackName}</p>
