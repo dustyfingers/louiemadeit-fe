@@ -10,7 +10,7 @@ const TrackUploadPage = ({ history }) => {
     const checkAuth = async () => {
         try {
             let { data: { user } } = await axios.get(`${apiLink}/auth/current-user`);
-            if (user === null) history.push("/sign-in");
+            if (user === null || user === undefined) history.push("/sign-in");
             if (!user.isAdmin) history.push("/");
 
         } catch (error) {
