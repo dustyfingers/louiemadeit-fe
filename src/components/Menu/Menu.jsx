@@ -35,7 +35,7 @@ const Menu = ({ history, currentUser, cartItems, dispatch }) => {
                         <li className="nav-item d-flex justify-content-end">
                             <span className="nav-link" onClick={() => history.push("/contact")}>contact.</span>
                         </li>
-                        {currentUser === null ?
+                        {currentUser === null || currentUser === undefined ?
                             <li className="nav-item d-flex justify-content-end">
                                 <span className="nav-link" onClick={() => history.push("/sign-in")}>sign in.</span>
                             </li> :
