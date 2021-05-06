@@ -25,11 +25,11 @@ import "./App.scss";
 
 axios.defaults.withCredentials = true;
 
-const App = ({ currentUser, dispatch }) => {
+const App = ({ dispatch }) => {
     const checkAuth = async () => {
         try {
             let { data: { user } } = await axios.get(`${apiLink}/auth/current-user`);
-            if (user !== null) await dispatch(setCurrentUser(user));
+            if (user !== null) dispatch(setCurrentUser(user));
 
         } catch (error) {
             ToastsStore.error("There was an error connecting to the server!");
@@ -58,8 +58,5 @@ const App = ({ currentUser, dispatch }) => {
         </div>
     );
 }
-const mapStateToProps = state => ({
-    currentUser: state.user.currentUser
-});
 
-export default connect(mapStateToProps)(App);
+export default connect()(App);

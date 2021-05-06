@@ -33,15 +33,15 @@ class ProgressiveImage extends React.Component {
   
     style = loading => {
       return {
-        transition: '0.5s filter linear',
-        filter: `${loading ? 'blur(50px)' : ''}`,
+        transition: '0.6s filter linear',
+        filter: `${loading ? 'blur(10px)' : ''}`,
       }
     }
   
     render() {
       const { currentImage, loading } = this.state
       const { alt } = this.props
-      return <img style={this.style(loading)} className='h-100 w-100 cover-art' src={currentImage} alt={alt} />
+      return <img style={this.style(loading)} className='h-100 w-100 cover-art card-img-top' src={currentImage} alt={alt} />
     }
   }
 
