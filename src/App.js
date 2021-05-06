@@ -8,7 +8,7 @@ import { ToastsContainer, ToastsStore } from 'react-toasts';
 // import pages, components
 import Menu from "./components/Menu/Menu";
 import Footer from "./components/Footer/Footer";
-import UploadTrackPage from "./pages/admin/TrackUploadPage.jsx";
+import TrackUploadPage from "./pages/admin/TrackUploadPage.jsx";
 import StorePage from './pages/StorePage';
 import SignInAndSignUpPage from "./pages/SignInAndSignUpPage";
 import CheckoutPage from './pages/CheckoutPage';
@@ -45,7 +45,7 @@ const App = ({ currentUser, dispatch }) => {
             <div className="page-container container d-flex flex-column align-items-center justify-content-center">
                 <Switch>
                     <Route exact path="/" component={StorePage} />
-                    <Route path="/upload" component={() => <UploadTrackPage user={currentUser}/>} />
+                    <Route path="/upload" component={TrackUploadPage} />
                     <Route path="/sign-in" component={SignInAndSignUpPage} />
                     <Route path="/cart" component={CartPage} />
                     <Route path="/checkout" component={CheckoutPage} />

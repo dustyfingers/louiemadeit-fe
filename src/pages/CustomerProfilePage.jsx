@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { connect } from "react-redux";
 import { ToastsStore } from 'react-toasts';
@@ -12,17 +12,30 @@ const CustomerProfilePage = ({ history }) => {
             if (user === null) history.push("/sign-in");
 
         } catch (error) {
-            ToastsStore.error('There was an error fetching this information.');
+            ToastsStore.error('There was an error verifying your credentials.');
+            history.push("/sign-in");
         }
     }
 
-    useEffect(() => { checkAuth() }, []);
+    const fetchCustomerData = () => {
+        try {
+
+        } catch (error) {
+            ToastsStore.error();
+        }
+        console.log('customer data');
+    }
+
+    useEffect(() => {
+        checkAuth();
+        fetchCustomerData();
+    }, []);
 
     return (
         <div className="d-flex flex-column justify-content-center text-center">
             <h1>CUSTOMER PROFILE</h1>
             <div className="d-flex flex-wrap justify-content-center pb-5">
-                CUSTOMER LICENSES HERE
+                CUSTOMER LICENSES HERE`
             </div>
         </div>
     );

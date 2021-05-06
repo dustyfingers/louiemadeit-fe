@@ -22,7 +22,8 @@ const CheckoutPage = ({ cartItems, currentUser, dispatch, history }) => {
             if (user === null) history.push("/sign-in");
 
         } catch (error) {
-            ToastsStore.error('There was an error fetching this information.');
+            ToastsStore.error('There was an error verifying your credentials.');
+            history.push("/sign-in");
         }
     }
 
