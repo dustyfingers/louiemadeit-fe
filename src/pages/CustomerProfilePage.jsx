@@ -20,7 +20,6 @@ const CustomerProfilePage = ({ history }) => {
     const fetchCustomerData = async () => {
         try {
             let data = await axios.get(`${apiLink}/user/123`);
-            console.log({data});
         } catch (error) {
             ToastsStore.error('There was an error fetching your profile...');
         }
