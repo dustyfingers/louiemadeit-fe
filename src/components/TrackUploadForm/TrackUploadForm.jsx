@@ -135,13 +135,12 @@ const TrackUploadForm = ({ name, description, sellType, exclusivePrice, leaseSte
                             aria-describedby="trackDescription"
                             onChange={evt => dispatch(setTrackDescription(evt.target.value))}
                             disabled={uploading ? true : false} />
-                        <div id="trackDescriptionHelp" className="form-text">A short description of the track.</div>
                     </div>
                 </div>
 
                 <div id="filesSection" className="mb-4">
                     <div className="mb-2">
-                        <label htmlFor="taggedVersion" className="form-label">Tagged Version</label>
+                        <label htmlFor="taggedVersion" className="form-label">Tagged Version:</label>
                         <input 
                             className="form-control"
                             type="file"
@@ -153,7 +152,7 @@ const TrackUploadForm = ({ name, description, sellType, exclusivePrice, leaseSte
                     </div>
 
                     <div className="mb-2">
-                        <label htmlFor="untaggedVersion" className="form-label">Untagged Version</label>
+                        <label htmlFor="untaggedVersion" className="form-label">Untagged Version:</label>
                         <input 
                             className="form-control" 
                             type="file"
@@ -165,7 +164,7 @@ const TrackUploadForm = ({ name, description, sellType, exclusivePrice, leaseSte
                     </div>
 
                     <div className="mb-2">
-                        <label htmlFor="coverArt" className="form-label">Cover Art</label>
+                        <label htmlFor="coverArt" className="form-label">Cover Art:</label>
                         <input 
                             className="form-control" 
                             type="file"
@@ -177,7 +176,7 @@ const TrackUploadForm = ({ name, description, sellType, exclusivePrice, leaseSte
                     </div>
 
                     <div className="mb-3">
-                        <label htmlFor="formFile" className="form-label">Stems</label>
+                        <label htmlFor="formFile" className="form-label">Stems:</label>
                         <input 
                             className="form-control" 
                             type="file"
