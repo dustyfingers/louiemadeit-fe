@@ -7,11 +7,6 @@ const INITIAL_STATE = {
 
 const cartReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case CartActionTypes.TOGGLE_CART_HIDDEN:
-            return {
-                ...state,
-                hidden: !state.hidden
-            }
         case CartActionTypes.ADD_CART_ITEM:
             return {
                 ...state,
@@ -21,6 +16,11 @@ const cartReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 cartItems: [...state.cartItems].filter(item => item !== action.payload)
+            }
+        case CartActionTypes.SET_CART_EMPTY:
+            return {
+                ...state,
+                cartItems: []
             }
         default:
             return state;

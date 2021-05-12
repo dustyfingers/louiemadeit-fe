@@ -5,26 +5,25 @@ import { connect } from "react-redux";
 
 import { setEmail, setPassword, setConfirmPassword } from "../../redux/auth/auth-actions";
 import { setCurrentUser } from "../../redux/user/user-actions";
+import { apiLink } from "../../env";
+import { ToastsStore } from "react-toasts";
 
 const SignUp = ({email, password, confirmPassword, dispatch}) => {
-
-    // TODO: handle sign up here
-    const handleSubmit = async evt => {
+    const handleSignUp = async evt => {
         evt.preventDefault();
 
         if (password === confirmPassword) {
             try {
-                // TODO: this link should change based on env
-                const url = "http://localhost:5000/user/new";
+                const url = `${apiLink}/auth/sign-up`;
                 const options = {
                     email,
                     password
                 };
         
                 const res = await axios.post(url, options);
-                console.log('response from sign up', res);
                 const currentUserObj = {
-                    email
+                    email: res.data.user.email,
+                    isAdmin: res.data.user.isAdmin
                 };
 
                 // dispatch an action to set app state with currentUserObj to log user in
@@ -35,16 +34,15 @@ const SignUp = ({email, password, confirmPassword, dispatch}) => {
                 dispatch(setPassword(null));
                 dispatch(setConfirmPassword(null));
             } catch (err) {
-                console.log(err);
+                ToastsStore.error('There was an error when creating a user with your information. Please try again.')
             }
         } else {
-            // TODO: dispatch an action to change the global state and make an error modal appear (using message-modal)
-            console.log("must give email and password!");
+            ToastsStore.warning("Must give email and password!");
         }
     }
 
     return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSignUp}>
         <h1>Sign Up</h1>
         <div className="mb-3">
             <label htmlFor="exampleInputEmail1" className="form-label">Email Address</label>
@@ -57,11 +55,11 @@ const SignUp = ({email, password, confirmPassword, dispatch}) => {
             <div id="emailHelp" className="form-text">I don't share your email with anyone else.</div>
         </div>
         <div className="mb-3">
-            <label htmlFor="passwordInput" className="form-label">Password</label>
+            <label htmlFor="signUpPasswordInput" className="form-label">Password</label>
             <input 
                 type="password" 
                 className="form-control" 
-                id="passwordInput" 
+                id="signUpPasswordInput" 
                 onChange={evt => dispatch(setPassword(evt.target.value))} />
         </div>
         <div className="mb-3">

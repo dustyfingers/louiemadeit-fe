@@ -5,15 +5,18 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 import { Elements } from '@stripe/react-stripe-js';
-import {loadStripe} from '@stripe/stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+
+// import bootstrap 
 import 'bootstrap/dist/css/bootstrap.css';
-import bootstrap from 'bootstrap'
+import bootstrap from 'bootstrap';
 
 // import app
 import App from './App';
+import { stripePk } from './env';
 
 // fetch stripe
-const stripePromise = loadStripe('pk_test_51Iay6NLYNexBDWiN3YMGvPw9BeYI50NsNG3Kr9UtnwF9AL3eprpd8TiN2GvNWfjyv13Q2lFcVrtPAMSmd9xwHBaW00eHe9Pj3D');
+const stripePromise = loadStripe(stripePk);
 
 ReactDOM.render(
     <Provider store={store}>

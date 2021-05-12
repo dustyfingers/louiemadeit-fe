@@ -2,48 +2,50 @@
 import React from "react";
 import axios from "axios";
 import { connect } from "react-redux";
+import { withRouter } from 'react-router-dom';
 
 import { setEmail, setPassword } from "../../redux/auth/auth-actions";
 import { setCurrentUser } from "../../redux/user/user-actions";
+import { apiLink } from "../../env";
+import { ToastsStore } from "react-toasts";
 
-const SignIn = ({email, password, dispatch}) => {
-    const handleSubmit = async evt => {
+const SignIn = ({email, password, dispatch, history}) => {
+    const handleSignIn = async evt => {
         evt.preventDefault();
-
-        console.log(password, email)
 
         if (password && email) {
             try {
-                // TODO: this link should change based on env
-                const url = "http://localhost:5000/auth/sign-in";
+                const url = `${apiLink}/auth/sign-in`;
                 const options = {
                     email,
                     password
                 };
         
                 const res = await axios.post(url, options);
-                console.log('response from sign in', res);
-                const currentUserObj = {
-                    email
-                };
 
                 // dispatch an action to set app state with currentUserObj to log user in
-                dispatch(setCurrentUser(currentUserObj));
+                dispatch(setCurrentUser({
+                    email: res.data.user.email,
+                    isAdmin: res.data.user.isAdmin
+                }));
+                ToastsStore.success('Signed in successfully!');
 
                 // dispatch actions to clear all the auth state
                 dispatch(setEmail(null));
                 dispatch(setPassword(null));
+
+                if (res.data.user.isAdmin) history.push('/upload');
+                else history.push('/');
             } catch (err) {
-                console.log(err);
+                ToastsStore.error('There was an error sigining you in. Please check your credentials and try again.');
             }
         } else {
-            // TODO: dispatch an action to change the global state and make an error modal appear (using message-modal)
-            console.log("must pass email and password!");
+            ToastsStore.warning("Must give email and password!");
         }
     }
 
     return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSignIn}>
         <h1>Sign In</h1>
         <div className="mb-3">
             <label htmlFor="exampleInputEmail1" className="form-label">Email Address</label>
@@ -76,4 +78,4 @@ const mapStateToProps = state => ({
     password: state.auth.password
 });
 
-export default connect(mapStateToProps)(SignIn);
+export default connect(mapStateToProps)(withRouter(SignIn));

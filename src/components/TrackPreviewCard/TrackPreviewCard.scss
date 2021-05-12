@@ -1,0 +1,11 @@
+.track-preview-card {
+  .card-img-top {
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+  }
+  .play-btn-icon,
+  .add-to-cart-icon {
+    max-width: 32px;
+    height: 24px;
+  }
+}

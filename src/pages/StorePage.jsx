@@ -4,31 +4,35 @@ import axios from 'axios';
 import { connect } from "react-redux";
 
 // import components
-import TrackPreview from '../components/TrackPreview/TrackPreview';
+import TrackPreviewCard from '../components/TrackPreviewCard/TrackPreviewCard';
 import { setShopTracks } from '../redux/shop-tracks/shop-tracks-actions';
+import { setDisplayedTracks } from '../redux/displayed-tracks/displayed-tracks-actions';
+import { apiLink } from '../env';
 
-const StorePage = ({shopTracks, dispatch}) => {
+const StorePage = ({ displayedTracks, dispatch }) => {
     useEffect(() => {
-        // TODO: this link should change based on env
-        let url = 'http://localhost:5000/track/all';
+        let url = `${apiLink}/track/all`;
 
         axios.get(url).then(res => {
             dispatch(setShopTracks(res.data.tracks));
+            dispatch(setDisplayedTracks(res.data.tracks));
         });
     }, []);
 
     return (
-        <div className="d-flex flex-column justify-content-center py-5 text-center">
+        <div className="d-flex flex-column justify-content-center text-center">
             <h1>TRACKS</h1>
-            <div className="d-flex flex-wrap justify-content-center">
-                {shopTracks ? shopTracks.map(track => <TrackPreview track={track} key={track.trackName}/>) : 'No tracks found...'}
+            <div className="d-flex flex-wrap justify-content-between align-items-center pb-5">
+                {displayedTracks ? 
+                    (displayedTracks.length ? (displayedTracks.map(track => <TrackPreviewCard track={track} key={track._id}/>)) : 'No tracks found...')
+                    : 'No tracks found...'}
             </div>
         </div>
     );
 };
 
 const mapStateToProps = state => ({
-    shopTracks: state.shopTracks.shopTracks
+    displayedTracks: state.displayedTracks.displayedTracks
 });
 
 export default connect(mapStateToProps)(StorePage);
