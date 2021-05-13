@@ -22,7 +22,7 @@ const StorePage = ({ displayedTracks, dispatch }) => {
     return (
         <div className="pb-5">
             <h1 className="text-center">TRACKS</h1>
-            <div className="container">
+            <div>
                 {displayedTracks ? 
                     (displayedTracks.length ? (<div className="row">{displayedTracks.map(track => <TrackPreviewCard track={track} key={track._id}/>)}</div>) : 'No tracks found...')
                     : 'No tracks found...'}
