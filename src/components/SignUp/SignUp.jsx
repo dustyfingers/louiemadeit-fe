@@ -36,8 +36,7 @@ const SignUp = ({history, email, password, confirmPassword, dispatch}) => {
 
                 history.push("/");
             } catch (error) {
-                console.log({error})
-                ToastsStore.error('There was an error when creating a user with your information. Please try again.')
+                ToastsStore.error('There was an error when creating a user with your information. Please try again.');
             }
         } else {
             ToastsStore.warning("Must give email and password!");
