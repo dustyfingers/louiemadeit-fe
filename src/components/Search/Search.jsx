@@ -28,7 +28,7 @@ const Search = ({ shopTracks, searchResults, dispatch}) => {
     return (
         <form className="ms-2 d-flex justify-content-end" onSubmit={handleSubmit}>
             <div className="search-container">
-                <input className="form-control me-2 dropdown-toggle" data-bs-toggle="dropdown-menu" type="search" placeholder="Search" aria-label="Search" onChange={handleInputChange} />
+                <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" onChange={handleInputChange} />
             </div>
             <button className="btn btn-outline-success ms-2" type="submit">Search</button>
         </form>
