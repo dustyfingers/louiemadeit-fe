@@ -22,9 +22,9 @@ const StorePage = ({ displayedTracks, dispatch }) => {
     return (
         <div className="d-flex flex-column justify-content-center text-center">
             <h1>TRACKS</h1>
-            <div className="d-flex flex-wrap justify-content-between align-items-center pb-5">
+            <div className="container pb-5">
                 {displayedTracks ? 
-                    (displayedTracks.length ? (displayedTracks.map(track => <TrackPreviewCard track={track} key={track._id}/>)) : 'No tracks found...')
+                    (displayedTracks.length ? (<div className="row">{displayedTracks.map(track => <TrackPreviewCard track={track} key={track._id}/>)}</div>) : 'No tracks found...')
                     : 'No tracks found...'}
             </div>
         </div>

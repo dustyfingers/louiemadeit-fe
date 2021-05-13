@@ -78,7 +78,7 @@ const CheckoutPage = ({ cartItems, currentUser, dispatch, history }) => {
     const handleChange = async evt => {
         setDisabled(evt.empty);
         if (evt.error) ToastsStore.error(evt.error.message);
-      };
+    };
 
     return (
         <div className="d-flex flex-column justify-content-center align-items-center w-100">
@@ -107,6 +107,7 @@ const CheckoutPage = ({ cartItems, currentUser, dispatch, history }) => {
                 <button
                     disabled={processing || disabled || succeeded}
                     id="submit"
+                    className="btn btn-primary"
                     >
                     <span id="button-text">
                         {processing ? "Processing Payment..." : "Complete Purchase"}
