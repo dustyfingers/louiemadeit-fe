@@ -1,14 +1,14 @@
-// import libs/other
 import React from "react";
 import axios from "axios";
 import { connect } from "react-redux";
+import { withRouter } from 'react-router-dom';
 
 import { setEmail, setPassword, setConfirmPassword } from "../../redux/auth/auth-actions";
 import { setCurrentUser } from "../../redux/user/user-actions";
 import { apiLink } from "../../env";
 import { ToastsStore } from "react-toasts";
 
-const SignUp = ({email, password, confirmPassword, dispatch}) => {
+const SignUp = ({history, email, password, confirmPassword, dispatch}) => {
     const handleSignUp = async evt => {
         evt.preventDefault();
 
@@ -33,7 +33,10 @@ const SignUp = ({email, password, confirmPassword, dispatch}) => {
                 dispatch(setEmail(null));
                 dispatch(setPassword(null));
                 dispatch(setConfirmPassword(null));
-            } catch (err) {
+
+                history.push("/");
+            } catch (error) {
+                console.log({error})
                 ToastsStore.error('There was an error when creating a user with your information. Please try again.')
             }
         } else {
@@ -82,4 +85,4 @@ const mapStateToProps = state => ({
     currentUser: state.user.currentUser
 });
 
-export default connect(mapStateToProps)(SignUp);
+export default connect(mapStateToProps)(withRouter(SignUp));

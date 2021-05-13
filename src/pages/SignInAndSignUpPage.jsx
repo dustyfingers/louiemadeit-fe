@@ -11,7 +11,7 @@ const SignInAndSignUpPage = ({ history }) => {
     const checkAuth = async () => {
         try {
             let { data: { user } } = await axios.get(`${apiLink}/auth/current-user`);
-            if (user !== null && user !== undefined) history.push("/");
+            if (user) history.push("/");
 
         } catch (error) {
             ToastsStore.error('There was an error verifying your credentials.');
