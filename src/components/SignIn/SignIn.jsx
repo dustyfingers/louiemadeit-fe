@@ -64,10 +64,6 @@ const SignIn = ({email, password, dispatch, history}) => {
                 id="passwordInput"
                 onChange={evt => dispatch(setPassword(evt.target.value))}  />
         </div>
-        <div className="mb-3 form-check">
-            <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-            <label className="form-check-label" htmlFor="exampleCheck1">Remember Me</label>
-        </div>
         <button type="submit" className="btn btn-primary">Sign In</button>
     </form>
     );
