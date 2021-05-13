@@ -6,23 +6,25 @@ import { setDisplayedTracks } from '../../redux/displayed-tracks/displayed-track
 import { setSearchResults } from '../../redux/search-results/search-results-actions';
 import './Search.scss';
 
-const Search = ({ shopTracks, searchResults, dispatch}) => {
+const Search = ({ shopTracks, searchResults, dispatch, searchQuery }) => {
     const handleSubmit = evt => {
         evt.preventDefault();
-        dispatch(setDisplayedTracks(searchResults));
+        if (searchQuery) dispatch(setDisplayedTracks(searchResults));
+        else dispatch(setDisplayedTracks(shopTracks));
+
     };
 
     const handleInputChange = evt => {
         const { value } = evt.target;
-        let results = [];
-
         dispatch(setSearchQuery(value));
 
-        shopTracks && shopTracks.forEach(track => {
-            if (track.trackName.includes(value) && !results.includes(track) && value !== '') results.push(track);
-        });
-
-        dispatch(setSearchResults(results));
+        if (value) {
+            let results = [];
+            shopTracks && shopTracks.forEach(track => {
+                if (track.trackName.includes(value) && !results.includes(track) && value !== '') results.push(track);
+            });
+            dispatch(setSearchResults(results));
+        }
     };
 
     return (
@@ -37,7 +39,8 @@ const Search = ({ shopTracks, searchResults, dispatch}) => {
 
 const mapStateToProps = state => ({
     shopTracks: state.shopTracks.shopTracks,
-    searchResults: state.searchResults.searchResults
+    searchResults: state.searchResults.searchResults,
+    searchQuery: state.searchQuery.searchQuery
 });
 
 export default connect(mapStateToProps)(Search);
