@@ -7,7 +7,6 @@ import { setSearchResults } from '../../redux/search-results/search-results-acti
 import './Search.scss';
 
 const Search = ({ shopTracks, searchResults, dispatch}) => {
-
     const handleSubmit = evt => {
         evt.preventDefault();
         dispatch(setDisplayedTracks(searchResults));
@@ -30,11 +29,6 @@ const Search = ({ shopTracks, searchResults, dispatch}) => {
         <form className="ms-2 d-flex justify-content-end" onSubmit={handleSubmit}>
             <div className="search-container">
                 <input className="form-control me-2 dropdown-toggle" data-bs-toggle="dropdown-menu" type="search" placeholder="Search" aria-label="Search" onChange={handleInputChange} />
-                {searchResults && (
-                    <div className="search-dropdown">
-                        {searchResults.map(track => (<li key={track._id}><a className="dropdown-item" href="#">{track.trackName}</a></li>))}
-                    </div>
-                )}
             </div>
             <button className="btn btn-outline-success ms-2" type="submit">Search</button>
         </form>
