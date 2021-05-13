@@ -20,9 +20,9 @@ const StorePage = ({ displayedTracks, dispatch }) => {
     }, []);
 
     return (
-        <div className="d-flex flex-column justify-content-center text-center">
-            <h1>TRACKS</h1>
-            <div className="container pb-5">
+        <div className="pb-5">
+            <h1 className="text-center">TRACKS</h1>
+            <div className="container">
                 {displayedTracks ? 
                     (displayedTracks.length ? (<div className="row">{displayedTracks.map(track => <TrackPreviewCard track={track} key={track._id}/>)}</div>) : 'No tracks found...')
                     : 'No tracks found...'}
