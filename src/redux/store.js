@@ -9,9 +9,6 @@ let middlewares, store;
 if (env == "local") {
     middlewares = [logger];
     store = createStore(rootReducer, applyMiddleware(...middlewares));
-} else {
-    store = createStore(rootReducer);
-}
-
+} else store = createStore(rootReducer);
 
 export default store;
