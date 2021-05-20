@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import TrackPreviewCard from '../components/TrackPreviewCard/TrackPreviewCard';
 import { setShopTracks } from '../redux/shop-tracks/shop-tracks-actions';
 import { setDisplayedTracks } from '../redux/displayed-tracks/displayed-tracks-actions';
+import { setCurrentTrack } from '../redux/player/player-actions';
 import { apiLink } from '../env';
 
 const StorePage = ({ displayedTracks, dispatch }) => {
@@ -18,6 +19,9 @@ const StorePage = ({ displayedTracks, dispatch }) => {
             dispatch(setDisplayedTracks(res.data.tracks));
         });
     }, []);
+
+    // equivalent to onComponentDidUnmount()
+    useEffect(() => () => dispatch(setCurrentTrack('')), []);
 
     return (
         <div className="pb-5">
