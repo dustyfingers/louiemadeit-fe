@@ -33,9 +33,6 @@ const Menu = ({ history, currentUser, cartItems, dispatch }) => {
 
                 <div className="collapse navbar-collapse" id="navbarDropdown">
                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li className="nav-item d-flex justify-content-end">
-                            <span className="nav-link" onClick={() => history.push("/contact")}>contact.</span>
-                        </li>
                         {currentUser === null || currentUser === undefined ?
                             <li className="nav-item d-flex justify-content-end">
                                 <span className="nav-link" onClick={() => history.push("/sign-in")}>sign in.</span>
