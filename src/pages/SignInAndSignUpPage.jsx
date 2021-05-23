@@ -8,18 +8,12 @@ import SignIn from '../components/SignIn/SignIn';
 import { apiLink } from "../env";
 
 const SignInAndSignUpPage = ({ history }) => {
-    const checkAuth = async () => {
-        try {
-            let { data: { user } } = await axios.get(`${apiLink}/auth/current-user`);
-            if (user) history.push("/");
-
-        } catch (error) {
-            ToastsStore.error('There was an error verifying your credentials.');
-            history.push("/sign-in");
-        }
+    const checkForUser = async () => {
+        let { data: { user } } = await axios.get(`${apiLink}/auth/current-user`);
+        if (user) history.push("/");
     }
 
-    useEffect(() => { checkAuth() }, []);
+    useEffect(() => { checkForUser() }, []);
     
     return (
         <div className="w-100 d-flex flex-column justify-content-center align-items-center">
