@@ -16,20 +16,8 @@ const CheckoutPage = ({ cartItems, currentUser, dispatch, history }) => {
     const [processing, setProcessing] = useState('');
     const [disabled, setDisabled] = useState(false);
 
-    const checkAuth = async () => {
-        try {
-            let { data: { user } } = await axios.get(`${apiLink}/auth/current-user`);
-            if (user === null || user === undefined) history.push("/sign-in");
-
-        } catch (error) {
-            ToastsStore.error('There was an error verifying your credentials.');
-            history.push("/sign-in");
-        }
-    }
-
     // Create PaymentIntent as soon as the page loads
     useEffect(() => {
-        checkAuth();
         if (cartItems.length) {
             let cartInfo = [];
             cartItems.forEach(item => cartInfo.push({ trackID: item.trackID, priceID: item.priceID }));
