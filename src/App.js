@@ -1,25 +1,22 @@
-// import libs/other
 import React, { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import axios from "axios";
 import { connect } from "react-redux";
 import { ToastsContainer, ToastsStore } from 'react-toasts';
 
-// import pages, components
 import Menu from "./components/Menu/Menu";
 import Footer from "./components/Footer/Footer";
-import TrackUploadPage from "./pages/admin/TrackUploadPage.jsx";
+
 import StorePage from './pages/StorePage';
 import SignInAndSignUpPage from "./pages/SignInAndSignUpPage";
-import CheckoutPage from './pages/CheckoutPage';
 import CartPage from './pages/CartPage';
-import PurchaseCompletedPage from './pages/PurchaseCompletedPage';
-import CustomerProfilePage from './pages/CustomerProfilePage';
+import CheckoutPage from './pages/protected/CheckoutPage';
+import PurchaseCompletedPage from './pages/protected/PurchaseCompletedPage';
+import CustomerProfilePage from './pages/protected/CustomerProfilePage';
+import TrackUploadPage from "./pages/admin/TrackUploadPage.jsx";
 
-// import redux actions
 import { setCurrentUser } from "./redux/user/user-actions";
 
-// env vars & global styles
 import { apiLink } from "./env";
 import "./App.scss";
 

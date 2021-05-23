@@ -3,7 +3,7 @@ import axios from 'axios';
 import { connect } from "react-redux";
 import { ToastsStore } from 'react-toasts';
 
-import { apiLink } from '../env';
+import { apiLink } from '../../env';
 
 const CustomerProfilePage = ({ history }) => {
     const checkAuth = async () => {

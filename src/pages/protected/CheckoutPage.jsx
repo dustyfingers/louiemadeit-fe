@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { ToastsStore } from 'react-toasts';
 
-import CheckoutItem from '../components/CheckoutItem/CheckoutItem';
-import { setCartEmpty } from '../redux/cart/cart-actions';
-import { apiLink } from '../env';
+import CheckoutItem from '../../components/CheckoutItem/CheckoutItem';
+import { setCartEmpty } from '../../redux/cart/cart-actions';
+import { apiLink } from '../../env';
 
 const CheckoutPage = ({ cartItems, currentUser, dispatch, history }) => {
     const stripe = useStripe();
