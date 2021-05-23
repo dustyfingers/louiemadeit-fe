@@ -2,15 +2,19 @@ import React from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom';
+import { ToastsStore } from "react-toasts";
 
 import { setEmail, setPassword, setConfirmPassword } from "../../redux/auth/auth-actions";
 import { setCurrentUser } from "../../redux/user/user-actions";
 import { apiLink } from "../../env";
-import { ToastsStore } from "react-toasts";
 
 const SignUp = ({history, email, password, confirmPassword, dispatch}) => {
     const handleSignUp = async evt => {
         evt.preventDefault();
+        if (!email) {
+            ToastsStore.warning("You've got to give me an email, silly!");
+            return;
+        }
 
         if (password === confirmPassword) {
             try {
@@ -34,12 +38,14 @@ const SignUp = ({history, email, password, confirmPassword, dispatch}) => {
                 dispatch(setPassword(null));
                 dispatch(setConfirmPassword(null));
 
+                ToastsStore.success("Hooray! User created successfully!");
+
                 history.push("/");
             } catch (error) {
                 ToastsStore.error('There was an error when creating a user with your information. Please try again.');
             }
         } else {
-            ToastsStore.warning("Must give email and password!");
+            ToastsStore.warning("Passwords must match!");
         }
     }
 

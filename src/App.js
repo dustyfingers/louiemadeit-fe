@@ -47,7 +47,7 @@ const App = ({ dispatch, currentUser }) => {
                     <Route path="/cart" component={CartPage} />
                     <ProtectedRoute path="/checkout" user={currentUser} redirectTo="/sign-in" component={CheckoutPage} />
                     <ProtectedRoute path="/purchase-completed" user={currentUser} redirectTo="/sign-in" component={PurchaseCompletedPage} />
-                    <ProtectedRoute path="/customer/:user_id" user={currentUser} redirectTo="/sign-in" component={CustomerProfilePage} />
+                    <ProtectedRoute path="/user/:user_id" user={currentUser} redirectTo="/sign-in" component={CustomerProfilePage} />
                     <ProtectedRoute path="/upload" user={currentUser} redirectTo="/sign-in" component={TrackUploadPage} adminOnly />
                 </Switch>
             </div>

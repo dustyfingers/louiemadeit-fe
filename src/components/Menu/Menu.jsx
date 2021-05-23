@@ -34,16 +34,16 @@ const Menu = ({ history, currentUser, cartItems, dispatch }) => {
                 <div className="collapse navbar-collapse" id="navbarDropdown">
                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                         {!currentUser ?
-                            <li className="nav-item">
+                            <li className="nav-item d-flex justify-content-end">
                                 <span className="nav-link" onClick={() => history.push("/sign-in")}>sign in.</span>
                             </li> :
 
-                            <div className="d-flex">
+                            <div className="d-flex justify-content-end">
                                 <li className="nav-item">
                                     <span className="nav-link" onClick={handleSignOut}>sign out.</span>
                                 </li>
                                 <li className="nav-item">
-                                    <span className="nav-link" onClick={() => history.push("/licenses")}>licenses.</span>
+                                    <span className="nav-link" onClick={() => history.push(`/user/${currentUser.id}`)}>{currentUser.email}</span>
                                 </li>
                             </div>
                         }

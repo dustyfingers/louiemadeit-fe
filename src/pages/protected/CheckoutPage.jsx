@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { connect } from 'react-redux';
 import { ToastsStore } from 'react-toasts';
+import axios from 'axios';
 
 import CheckoutItem from '../../components/CheckoutItem/CheckoutItem';
 import { setCartEmpty } from '../../redux/cart/cart-actions';
@@ -15,24 +16,21 @@ const CheckoutPage = ({ cartItems, currentUser, dispatch, history }) => {
     const [processing, setProcessing] = useState('');
     const [disabled, setDisabled] = useState(false);
 
-    // Create PaymentIntent as soon as the page loads
-    useEffect(() => {
+    const createPaymentIntent = async () => {
         if (cartItems.length) {
-            let cartInfo = [];
-            cartItems.forEach(item => cartInfo.push({ trackID: item.trackID, priceID: item.priceID }));
-    
-            window
-                .fetch(`${apiLink}/stripe/new-payment-intent`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({items: cartInfo, user: currentUser.email })
-                })
-                .then(res => res.json())
-                .then(data => setClientSecret(data.clientSecret));
+            try {
+                let cartInfo = [];
+                cartItems.forEach(item => cartInfo.push({trackID: item.trackID, priceID: item.priceID}));
+                const data = await axios.post(`${apiLink}/stripe/new-payment-intent`, {items: cartInfo});
+                setClientSecret(data.data.clientSecret);
+            } catch {
+                ToastsStore.error("There was an error creating the payment intent. Please hard re-load the page.");
+            }
         }
-    }, []);
+    }
+
+    // create PaymentIntent as soon as the page loads
+    useEffect(() => { createPaymentIntent() }, []);
 
     const handleSubmit = async evt => {
         try {
@@ -46,6 +44,7 @@ const CheckoutPage = ({ cartItems, currentUser, dispatch, history }) => {
                     card: elements.getElement(CardElement)
                 }
             });
+            console.log({payload});
             if (payload.error) {
                 ToastsStore.error('There was an error completing your payment. Please try again.');
                 setProcessing(false);
@@ -58,6 +57,7 @@ const CheckoutPage = ({ cartItems, currentUser, dispatch, history }) => {
             }
         } catch (error) {
             ToastsStore.error('There was an error completing your payment. Please try again.');
+            setProcessing(false);
         }
 
     };

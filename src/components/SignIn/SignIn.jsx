@@ -3,11 +3,11 @@ import React from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom';
+import { ToastsStore } from "react-toasts";
 
 import { setEmail, setPassword } from "../../redux/auth/auth-actions";
 import { setCurrentUser } from "../../redux/user/user-actions";
 import { apiLink } from "../../env";
-import { ToastsStore } from "react-toasts";
 
 const SignIn = ({email, password, dispatch, history}) => {
     const handleSignIn = async evt => {
@@ -40,7 +40,7 @@ const SignIn = ({email, password, dispatch, history}) => {
                 ToastsStore.error('There was an error sigining you in. Please check your credentials and try again.');
             }
         } else {
-            ToastsStore.warning("Must give email and password!");
+            ToastsStore.warning("Must give both email and password!");
         }
     }
 
