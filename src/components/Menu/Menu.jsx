@@ -33,13 +33,19 @@ const Menu = ({ history, currentUser, cartItems, dispatch }) => {
 
                 <div className="collapse navbar-collapse" id="navbarDropdown">
                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-                        {currentUser === null || currentUser === undefined ?
-                            <li className="nav-item d-flex justify-content-end">
+                        {!currentUser ?
+                            <li className="nav-item">
                                 <span className="nav-link" onClick={() => history.push("/sign-in")}>sign in.</span>
                             </li> :
-                            <li className="nav-item d-flex justify-content-end">
-                                <span className="nav-link" onClick={handleSignOut}>sign out.</span>
-                            </li>
+
+                            <div className="d-flex">
+                                <li className="nav-item">
+                                    <span className="nav-link" onClick={handleSignOut}>sign out.</span>
+                                </li>
+                                <li className="nav-item">
+                                    <span className="nav-link" onClick={() => history.push("/licenses")}>licenses.</span>
+                                </li>
+                            </div>
                         }
                         <li className="nav-item cart-counter-wrapper" onClick={() => history.push("/cart")}>
                             <span className="nav-link d-flex justify-content-end"><img src="/bag.svg" height='24px' width='24px' alt="shopping cart"/></span>

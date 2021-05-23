@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import { ToastsStore } from 'react-toasts';
 
 import CheckoutItem from '../../components/CheckoutItem/CheckoutItem';

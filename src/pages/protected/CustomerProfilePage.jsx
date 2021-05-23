@@ -5,10 +5,14 @@ import { ToastsStore } from 'react-toasts';
 
 import { apiLink } from '../../env';
 
-const CustomerProfilePage = ({ history }) => {
+const CustomerProfilePage = () => {
+    const [customer, setCustomer] = useState({});
+
     const fetchCustomerData = async () => {
         try {
             let data = await axios.get(`${apiLink}/user/123`);
+            setCustomer(data);
+            console.log({data});
         } catch (error) {
             ToastsStore.error('There was an error fetching your profile...');
         }

@@ -6,7 +6,6 @@ const ProtectedRoute = ({ component: Component, user, redirectTo, adminOnly, ...
     return (
         <Route {...rest} render={
             props => {
-                console.log({userInProtectedRoute: user})
                 if (adminOnly) {
                     if (user && user.isAdmin) return <Component {...rest} {...props} />
                     else {
