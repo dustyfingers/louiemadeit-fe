@@ -45,12 +45,10 @@ const App = ({ dispatch, currentUser }) => {
                     <Route exact path="/" component={StorePage} />
                     <Route path="/sign-in" component={SignInAndSignUpPage} />
                     <Route path="/cart" component={CartPage} />
-                    {/* user must be signed in */}
                     <ProtectedRoute path="/checkout" user={currentUser} redirectTo="/sign-in" component={CheckoutPage} />
-                    <ProtectedRoute path="/purchase-completed" user={currentUser} redirectTo="/sign-in"component={PurchaseCompletedPage} />
+                    <ProtectedRoute path="/purchase-completed" user={currentUser} redirectTo="/sign-in" component={PurchaseCompletedPage} />
                     <ProtectedRoute path="/customer/:user_id" user={currentUser} redirectTo="/sign-in" component={CustomerProfilePage} />
-                    {/* admin only */}
-                    <Route path="/upload" component={TrackUploadPage} />
+                    <ProtectedRoute path="/upload" user={currentUser} redirectTo="/sign-in" component={TrackUploadPage} adminOnly />
                 </Switch>
             </div>
             <ToastsContainer store={ToastsStore} classNames='toast' />
