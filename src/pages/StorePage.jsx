@@ -11,13 +11,16 @@ import { setCurrentTrack } from '../redux/player/player-actions';
 import { apiLink } from '../env';
 
 const StorePage = ({ displayedTracks, dispatch }) => {
-    useEffect(() => {
+    const fetchTracks = async () => {
         let url = `${apiLink}/track/all`;
 
-        axios.get(url).then(res => {
-            dispatch(setShopTracks(res.data.tracks));
-            dispatch(setDisplayedTracks(res.data.tracks));
-        });
+        const res = await axios.get(url);
+        dispatch(setShopTracks(res.data.tracks));
+        dispatch(setDisplayedTracks(res.data.tracks));
+    }
+
+    useEffect(() => {
+        if (!displayedTracks) fetchTracks();
     }, []);
 
     // equivalent to onComponentDidUnmount()
@@ -29,7 +32,7 @@ const StorePage = ({ displayedTracks, dispatch }) => {
             <div>
                 {displayedTracks ? 
                     (displayedTracks.length ? (<div className="row">{displayedTracks.map(track => <TrackPreviewCard track={track} key={track._id}/>)}</div>) : 'No tracks found...')
-                    : 'No tracks found...'}
+                    : 'Fetching tracks from server...'}
             </div>
         </div>
     );

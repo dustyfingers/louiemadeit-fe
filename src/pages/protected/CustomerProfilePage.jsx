@@ -23,7 +23,7 @@ const CustomerProfilePage = () => {
     return (
         <div className="d-flex flex-column justify-content-center text-center">
             <h1>CUSTOMER PROFILE</h1>
-            <div className="d-flex flex-wrap justify-content-center pb-5">
+            <div>
                 {orders.map(order => <p key={order.id}>{order.id}</p>)}
             </div>
         </div>
