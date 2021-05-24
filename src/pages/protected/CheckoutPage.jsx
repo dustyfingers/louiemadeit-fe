@@ -44,7 +44,6 @@ const CheckoutPage = ({ cartItems, currentUser, dispatch, history }) => {
                     card: elements.getElement(CardElement)
                 }
             });
-            console.log({payload});
             if (payload.error) {
                 ToastsStore.error('There was an error completing your payment. Please try again.');
                 setProcessing(false);
