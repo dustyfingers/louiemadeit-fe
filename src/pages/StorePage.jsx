@@ -29,7 +29,7 @@ const StorePage = ({ displayedTracks, dispatch }) => {
             <div>
                 {displayedTracks ? 
                     (displayedTracks.length ? (<div className="row">{displayedTracks.map(track => <TrackPreviewCard track={track} key={track._id}/>)}</div>) : 'No tracks found...')
-                    : 'Wakey Wakey server...'}
+                    : 'Wakey wakey server...'}
             </div>
         </div>
     );

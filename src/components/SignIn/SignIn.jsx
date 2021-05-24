@@ -45,7 +45,7 @@ const SignIn = ({email, password, dispatch, history}) => {
     }
 
     return (
-    <form onSubmit={handleSignIn}>
+    <form onSubmit={handleSignIn} className="w-100 p-5">
         <h1>Sign In</h1>
         <div className="mb-3">
             <label htmlFor="exampleInputEmail1" className="form-label">Email Address</label>
