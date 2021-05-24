@@ -13,15 +13,12 @@ import { apiLink } from '../env';
 const StorePage = ({ displayedTracks, dispatch }) => {
     const fetchTracks = async () => {
         let url = `${apiLink}/track/all`;
-
         const res = await axios.get(url);
         dispatch(setShopTracks(res.data.tracks));
         dispatch(setDisplayedTracks(res.data.tracks));
     }
 
-    useEffect(() => {
-        if (!displayedTracks) fetchTracks();
-    }, []);
+    useEffect(() => { if (!displayedTracks) fetchTracks() }, []);
 
     // equivalent to onComponentDidUnmount()
     useEffect(() => () => dispatch(setCurrentTrack('')), []);
@@ -32,7 +29,7 @@ const StorePage = ({ displayedTracks, dispatch }) => {
             <div>
                 {displayedTracks ? 
                     (displayedTracks.length ? (<div className="row">{displayedTracks.map(track => <TrackPreviewCard track={track} key={track._id}/>)}</div>) : 'No tracks found...')
-                    : 'Fetching tracks from server...'}
+                    : 'Wakey Wakey server...'}
             </div>
         </div>
     );
