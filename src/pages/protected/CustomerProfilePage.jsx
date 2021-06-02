@@ -12,7 +12,6 @@ const CustomerProfilePage = () => {
         try {
             const { data: { purchasedTracks } } = await axios.get(`${apiLink}/stripe/purchased-tracks`);
             setTracks(purchasedTracks);
-            console.log({purchasedTracks})
         } catch (error) {
             ToastsStore.error('There was an error fetching your profile...');
         }
