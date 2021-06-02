@@ -11,9 +11,8 @@ import {
     setTrackUntaggedVersion,
     setTrackCoverArt,
     setTrackStems
-} from '../../redux/admin/upload/upload-actions';
-import { apiLink } from '../../env';
-import './TrackUploadForm.scss';
+} from '../redux/admin/upload/upload-actions';
+import { apiLink } from '../env';
 
 const TrackUploadForm = ({ name, description, sellType, exclusivePrice, leaseStemsPrice, leaseMasterOnlyPrice, taggedVersion,untaggedVersion, coverArt, trackStems, dispatch }) => {
     const [uploading, setUploading] = useState(false);

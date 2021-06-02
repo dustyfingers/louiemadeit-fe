@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import { ToastsStore } from 'react-toasts';
+import axios from 'axios';
 
-import CheckoutItem from '../components/CheckoutItem/CheckoutItem';
-import { setCartEmpty } from '../redux/cart/cart-actions';
-import { apiLink } from '../env';
+import CheckoutItem from '../../components/CheckoutItem/CheckoutItem';
+import { setCartEmpty } from '../../redux/cart/cart-actions';
+import { apiLink } from '../../env';
 
 const CheckoutPage = ({ cartItems, currentUser, dispatch, history }) => {
     const stripe = useStripe();
@@ -16,36 +16,21 @@ const CheckoutPage = ({ cartItems, currentUser, dispatch, history }) => {
     const [processing, setProcessing] = useState('');
     const [disabled, setDisabled] = useState(false);
 
-    const checkAuth = async () => {
-        try {
-            let { data: { user } } = await axios.get(`${apiLink}/auth/current-user`);
-            if (user === null || user === undefined) history.push("/sign-in");
-
-        } catch (error) {
-            ToastsStore.error('There was an error verifying your credentials.');
-            history.push("/sign-in");
+    const createPaymentIntent = async () => {
+        if (cartItems.length) {
+            try {
+                let cartInfo = [];
+                cartItems.forEach(item => cartInfo.push({trackID: item.trackID, priceID: item.priceID}));
+                const data = await axios.post(`${apiLink}/stripe/new-payment-intent`, {items: cartInfo});
+                setClientSecret(data.data.clientSecret);
+            } catch {
+                ToastsStore.error("There was an error creating the payment intent. Please hard re-load the page.");
+            }
         }
     }
 
-    // Create PaymentIntent as soon as the page loads
-    useEffect(() => {
-        checkAuth();
-        if (cartItems.length) {
-            let cartInfo = [];
-            cartItems.forEach(item => cartInfo.push({ trackID: item.trackID, priceID: item.priceID }));
-    
-            window
-                .fetch(`${apiLink}/stripe/new-payment-intent`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({items: cartInfo, user: currentUser.email })
-                })
-                .then(res => res.json())
-                .then(data => setClientSecret(data.clientSecret));
-        }
-    }, []);
+    // create PaymentIntent as soon as the page loads
+    useEffect(() => { createPaymentIntent() }, []);
 
     const handleSubmit = async evt => {
         try {
@@ -71,6 +56,7 @@ const CheckoutPage = ({ cartItems, currentUser, dispatch, history }) => {
             }
         } catch (error) {
             ToastsStore.error('There was an error completing your payment. Please try again.');
+            setProcessing(false);
         }
 
     };
@@ -78,7 +64,7 @@ const CheckoutPage = ({ cartItems, currentUser, dispatch, history }) => {
     const handleChange = async evt => {
         setDisabled(evt.empty);
         if (evt.error) ToastsStore.error(evt.error.message);
-      };
+    };
 
     return (
         <div className="d-flex flex-column justify-content-center align-items-center w-100">
@@ -107,6 +93,7 @@ const CheckoutPage = ({ cartItems, currentUser, dispatch, history }) => {
                 <button
                     disabled={processing || disabled || succeeded}
                     id="submit"
+                    className="btn btn-primary"
                     >
                     <span id="button-text">
                         {processing ? "Processing Payment..." : "Complete Purchase"}

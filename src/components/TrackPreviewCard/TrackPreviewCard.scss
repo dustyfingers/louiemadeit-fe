@@ -1,4 +1,7 @@
 .track-preview-card {
+  border: none;
+  border-bottom: 1px solid grey;
+  border-radius: 0;
   .card-img-top {
     border-top-left-radius: 0 !important;
     border-top-right-radius: 0 !important;

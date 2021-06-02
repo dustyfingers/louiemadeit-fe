@@ -14,11 +14,11 @@ const CartPage = ({cartItems, currentUser, history}) => {
                 </div>
                 <div className={`${cartItems.length && 'ps-4'}`}>
                     {cartItems.length ? 
-                        (<button 
+                        (<button className="btn btn-primary" 
                             onClick={currentUser ? () => history.push("/checkout") : () => history.push("/sign-in")}>
                                 {currentUser ? 'GO TO CHECKOUT' : 'SIGN IN TO PURCHASE'}
                         </button>) : 
-                        (<button onClick={() => history.push("/")}>GO TO STORE</button>)}
+                        (<button className="btn btn-primary" onClick={() => history.push("/")}>GO TO STORE</button>)}
                 </div>
             </div>
         </div>

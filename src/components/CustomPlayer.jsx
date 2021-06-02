@@ -3,8 +3,7 @@ import React from "react";
 import ReactAudioPlayer from "react-audio-player";
 import { connect } from "react-redux";
 
-import "./CustomPlayer.scss";
-import { setCurrentTrack } from "../../redux/player/player-actions";
+import { setCurrentTrack } from "../redux/player/player-actions";
 
 const CustomPlayer = ({currentTrack}) => {
     return (

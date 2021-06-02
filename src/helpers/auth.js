@@ -1,1 +1,0 @@
-// TODO: checkAuth helper here

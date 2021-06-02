@@ -6,16 +6,16 @@ import { ToastsStore } from 'react-toasts';
 
 import './Menu.scss';
 import { setCurrentUser } from '../../redux/user/user-actions';
-import Search from '../Search/Search';
+import Search from '../Search';
 import { apiLink } from '../../env';
 
 const Menu = ({ history, currentUser, cartItems, dispatch }) => {
-    
     const handleSignOut = async () => {
         try {
             await axios.post(`${apiLink}/auth/sign-out`);
-            dispatch(setCurrentUser(null));
             ToastsStore.success('Signed out successfully.');
+            history.push("/");
+            dispatch(setCurrentUser(null));
         } catch (error) {
             ToastsStore.error('There was an error signing you out.')
         }
@@ -32,16 +32,19 @@ const Menu = ({ history, currentUser, cartItems, dispatch }) => {
 
                 <div className="collapse navbar-collapse" id="navbarDropdown">
                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li className="nav-item d-flex justify-content-end">
-                            <span className="nav-link" onClick={() => history.push("/contact")}>contact.</span>
-                        </li>
-                        {currentUser === null || currentUser === undefined ?
+                        {!currentUser ?
                             <li className="nav-item d-flex justify-content-end">
                                 <span className="nav-link" onClick={() => history.push("/sign-in")}>sign in.</span>
                             </li> :
-                            <li className="nav-item d-flex justify-content-end">
-                                <span className="nav-link" onClick={handleSignOut}>sign out.</span>
-                            </li>
+
+                            <div className="d-flex flex-column flex-md-row align-items-end justify-content-end">
+                                <li className="nav-item">
+                                    <span className="nav-link" onClick={handleSignOut}>sign out.</span>
+                                </li>
+                                <li className="nav-item">
+                                    <span className="nav-link" onClick={() => history.push(`/user/${currentUser.id}`)}>{currentUser.email}</span>
+                                </li>
+                            </div>
                         }
                         <li className="nav-item cart-counter-wrapper" onClick={() => history.push("/cart")}>
                             <span className="nav-link d-flex justify-content-end"><img src="/bag.svg" height='24px' width='24px' alt="shopping cart"/></span>

@@ -1,16 +1,20 @@
-// import libs/other
 import React from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-
-import { setEmail, setPassword, setConfirmPassword } from "../../redux/auth/auth-actions";
-import { setCurrentUser } from "../../redux/user/user-actions";
-import { apiLink } from "../../env";
+import { withRouter } from 'react-router-dom';
 import { ToastsStore } from "react-toasts";
 
-const SignUp = ({email, password, confirmPassword, dispatch}) => {
+import { setEmail, setPassword, setConfirmPassword } from "../redux/auth/auth-actions";
+import { setCurrentUser } from "../redux/user/user-actions";
+import { apiLink } from "../env";
+
+const SignUp = ({history, email, password, confirmPassword, dispatch}) => {
     const handleSignUp = async evt => {
         evt.preventDefault();
+        if (!email) {
+            ToastsStore.warning("You've got to give me an email, silly!");
+            return;
+        }
 
         if (password === confirmPassword) {
             try {
@@ -33,23 +37,27 @@ const SignUp = ({email, password, confirmPassword, dispatch}) => {
                 dispatch(setEmail(null));
                 dispatch(setPassword(null));
                 dispatch(setConfirmPassword(null));
-            } catch (err) {
-                ToastsStore.error('There was an error when creating a user with your information. Please try again.')
+
+                ToastsStore.success("Hooray! User created successfully!");
+
+                history.push("/");
+            } catch (error) {
+                ToastsStore.error('There was an error when creating a user with your information. Please try again.');
             }
         } else {
-            ToastsStore.warning("Must give email and password!");
+            ToastsStore.warning("Passwords must match!");
         }
     }
 
     return (
-    <form onSubmit={handleSignUp}>
+    <form onSubmit={handleSignUp} className="w-100 px-5">
         <h1>Sign Up</h1>
         <div className="mb-3">
-            <label htmlFor="exampleInputEmail1" className="form-label">Email Address</label>
+            <label htmlFor="signUpEmailInput" className="form-label">Email Address</label>
             <input 
                 type="email" 
                 className="form-control" 
-                id="exampleInputEmail1" 
+                id="signUpEmailInput" 
                 aria-describedby="emailHelp"
                 onChange={evt => dispatch(setEmail(evt.target.value))} />
             <div id="emailHelp" className="form-text">I don't share your email with anyone else.</div>
@@ -82,4 +90,4 @@ const mapStateToProps = state => ({
     currentUser: state.user.currentUser
 });
 
-export default connect(mapStateToProps)(SignUp);
+export default connect(mapStateToProps)(withRouter(SignUp));

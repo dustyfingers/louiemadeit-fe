@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 
 import './TrackPreviewCard.scss';
 import { setCurrentTrack } from '../../redux/player/player-actions';
-import AddToCartModal from '../AddToCartModal/AddToCartModal';
-import ProgressiveImage from '../ProgressiveImage/ProgressiveImage';
+import AddToCartModal from '../AddToCartModal';
+import ProgressiveImage from '../ProgressiveImage';
 
 const TrackPreviewCard = ({track, currentPlayerTrack, dispatch}) => {
     const [isPlaying, setIsPlaying] = useState(false);
@@ -22,21 +22,23 @@ const TrackPreviewCard = ({track, currentPlayerTrack, dispatch}) => {
     };
 
     return (
-        <div className='card  col-lg-3 mx-1 mb-4 track-preview-card'>
-            <ProgressiveImage preview="/placeholder.jpg" image={track.coverArtUrl} alt={`${track.trackName}-cover`} />
-            <div className='card-body'>
-                <p className='card-text'>{track.trackName}</p>
-                <div className='track-card-btns d-flex align-items-end justify-content-between'>
-                    <span type='button' className='play-btn' onClick={handleClickPlayButton}>
-                        {isPlaying ? 
-                            (<img className='play-btn-icon' alt='currently playing' src={playIcon}/>) :
-                            (<img className='play-btn-icon' alt='not currently playing' src={playIcon}/>)
-                        }
-                    </span>
-                    <AddToCartModal track={track} />
-                    <span type='button' className='add-to-cart-btn' data-bs-toggle="modal" data-bs-target={`#add${track.trackName.replace(/ /g, "_")}ToCartModal`}>
-                        <img className='add-to-cart-icon' alt='add to cart' src='/bag-plus.svg' />
-                    </span>
+        <div className="col-md-4">
+            <div className='card mx-1 mb-4 track-preview-card'>
+                <ProgressiveImage preview="/placeholder.jpg" image={track.coverArtUrl} alt={`${track.trackName}-cover`} />
+                <div className='card-body'>
+                    <p className='card-text'>{track.trackName}</p>
+                    <div className='track-card-btns d-flex align-items-end justify-content-between'>
+                        <span type='button' className='play-btn' onClick={handleClickPlayButton}>
+                            {isPlaying ? 
+                                (<img className='play-btn-icon' alt='currently playing' src={playIcon}/>) :
+                                (<img className='play-btn-icon' alt='not currently playing' src={playIcon}/>)
+                            }
+                        </span>
+                        <AddToCartModal track={track} />
+                        <span type='button' className='add-to-cart-btn' data-bs-toggle="modal" data-bs-target={`#add${track.trackName.replace(/ /g, "_")}ToCartModal`}>
+                            <img className='add-to-cart-icon' alt='add to cart' src='/bag-plus.svg' />
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
