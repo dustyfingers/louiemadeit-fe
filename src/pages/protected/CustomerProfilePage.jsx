@@ -25,9 +25,15 @@ const CustomerProfilePage = () => {
             <h1>CUSTOMER PROFILE</h1>
             <div>
                 {tracks ? 
-                    (tracks.length ? tracks.map((track, idx) => <p key={idx}>{track.trackName}</p>) : 'No tracks purchased.') : 
-                    'Fetching purchased tracks...'}
-                
+                    (tracks.length ? tracks.map((track, idx) => {
+                        return <div key={idx}>
+                            <p>TITLE: {track.trackName}</p>
+                            <p>TAGGED: <a href={track.taggedGetUrl} rel="noopener noreferrer" target="_blank">{track.trackName}</a></p>
+                            <p>UNTAGGED: <a href={track.untaggedGetUrl} rel="noopener noreferrer" target="_blank">{track.trackName}</a></p>
+                            <p>STEMS: <a href={track.stemsGetUrl} rel="noopener noreferrer" target="_blank">{track.trackName}</a></p>
+                        </div>}) : 
+                    'No tracks purchased.') : 
+                'Fetching purchased tracks...'}
             </div>
         </div>
     );
