@@ -4,9 +4,9 @@ import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom';
 import { ToastsStore } from "react-toasts";
 
-import { setEmail, setPassword, setConfirmPassword } from "../../redux/auth/auth-actions";
-import { setCurrentUser } from "../../redux/user/user-actions";
-import { apiLink } from "../../env";
+import { setEmail, setPassword, setConfirmPassword } from "../redux/auth/auth-actions";
+import { setCurrentUser } from "../redux/user/user-actions";
+import { apiLink } from "../env";
 
 const SignUp = ({history, email, password, confirmPassword, dispatch}) => {
     const handleSignUp = async evt => {
@@ -53,11 +53,11 @@ const SignUp = ({history, email, password, confirmPassword, dispatch}) => {
     <form onSubmit={handleSignUp} className="w-100 px-5">
         <h1>Sign Up</h1>
         <div className="mb-3">
-            <label htmlFor="exampleInputEmail1" className="form-label">Email Address</label>
+            <label htmlFor="signUpEmailInput" className="form-label">Email Address</label>
             <input 
                 type="email" 
                 className="form-control" 
-                id="exampleInputEmail1" 
+                id="signUpEmailInput" 
                 aria-describedby="emailHelp"
                 onChange={evt => dispatch(setEmail(evt.target.value))} />
             <div id="emailHelp" className="form-text">I don't share your email with anyone else.</div>

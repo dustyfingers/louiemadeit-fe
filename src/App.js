@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { ToastsContainer, ToastsStore } from 'react-toasts';
 
 import Menu from "./components/Menu/Menu";
-import Footer from "./components/Footer/Footer";
+import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 import StorePage from './pages/StorePage';

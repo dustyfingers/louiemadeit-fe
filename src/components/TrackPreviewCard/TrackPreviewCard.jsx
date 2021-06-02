@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 
 import './TrackPreviewCard.scss';
 import { setCurrentTrack } from '../../redux/player/player-actions';
-import AddToCartModal from '../AddToCartModal/AddToCartModal';
-import ProgressiveImage from '../ProgressiveImage/ProgressiveImage';
+import AddToCartModal from '../AddToCartModal';
+import ProgressiveImage from '../ProgressiveImage';
 
 const TrackPreviewCard = ({track, currentPlayerTrack, dispatch}) => {
     const [isPlaying, setIsPlaying] = useState(false);

@@ -1,10 +1,9 @@
 import React from'react';
 import { connect } from 'react-redux';
 
-import { setSearchQuery } from '../../redux/search/search-actions';
-import { setDisplayedTracks } from '../../redux/displayed-tracks/displayed-tracks-actions'; 
-import { setSearchResults } from '../../redux/search-results/search-results-actions';
-import './Search.scss';
+import { setSearchQuery } from '../redux/search/search-actions';
+import { setDisplayedTracks } from '../redux/displayed-tracks/displayed-tracks-actions'; 
+import { setSearchResults } from '../redux/search-results/search-results-actions';
 
 const Search = ({ shopTracks, searchResults, dispatch, searchQuery }) => {
     const handleSubmit = evt => {

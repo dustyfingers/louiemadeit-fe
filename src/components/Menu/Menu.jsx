@@ -6,7 +6,7 @@ import { ToastsStore } from 'react-toasts';
 
 import './Menu.scss';
 import { setCurrentUser } from '../../redux/user/user-actions';
-import Search from '../Search/Search';
+import Search from '../Search';
 import { apiLink } from '../../env';
 
 const Menu = ({ history, currentUser, cartItems, dispatch }) => {

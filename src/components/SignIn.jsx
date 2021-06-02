@@ -5,9 +5,9 @@ import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom';
 import { ToastsStore } from "react-toasts";
 
-import { setEmail, setPassword } from "../../redux/auth/auth-actions";
-import { setCurrentUser } from "../../redux/user/user-actions";
-import { apiLink } from "../../env";
+import { setEmail, setPassword } from "../redux/auth/auth-actions";
+import { setCurrentUser } from "../redux/user/user-actions";
+import { apiLink } from "../env";
 
 const SignIn = ({email, password, dispatch, history}) => {
     const handleSignIn = async evt => {
@@ -45,20 +45,20 @@ const SignIn = ({email, password, dispatch, history}) => {
     <form onSubmit={handleSignIn} className="w-100 px-5 pt-5 pt-md-0">
         <h1>Sign In</h1>
         <div className="mb-3">
-            <label htmlFor="exampleInputEmail1" className="form-label">Email Address</label>
+            <label htmlFor="signInEmailInput" className="form-label">Email Address</label>
             <input 
                 type="email" 
                 className="form-control" 
-                id="emailInput" 
+                id="signInEmailInput" 
                 aria-describedby="emailHelp"
                 onChange={evt => dispatch(setEmail(evt.target.value))}  />
         </div>
         <div className="mb-3">
-            <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
+            <label htmlFor="signInPasswordInput" className="form-label">Password</label>
             <input 
                 type="password" 
                 className="form-control" 
-                id="passwordInput"
+                id="signInPasswordInput"
                 onChange={evt => dispatch(setPassword(evt.target.value))}  />
         </div>
         <button type="submit" className="btn btn-primary">Sign In</button>

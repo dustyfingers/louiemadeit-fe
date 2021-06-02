@@ -1,6 +1,6 @@
 import React from "react";
 
-import TrackUploadForm from "../../components/TrackUploadForm/TrackUploadForm.jsx";
+import TrackUploadForm from "../../components/TrackUploadForm.jsx";
 
 const TrackUploadPage = () => {
     return (

@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import axios from "axios";
-import { ToastsStore } from 'react-toasts';
 
-import SignUp from '../components/SignUp/SignUp';
-import SignIn from '../components/SignIn/SignIn';
+import SignUp from '../components/SignUp';
+import SignIn from '../components/SignIn';
 import { apiLink } from "../env";
 
 const SignInAndSignUpPage = ({ history }) => {

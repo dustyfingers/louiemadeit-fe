@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Modal } from "bootstrap";
 import { ToastsStore } from 'react-toasts';
 
-import { addCartItem } from '../../redux/cart/cart-actions';
+import { addCartItem } from '../redux/cart/cart-actions';
 
 const AddToCartModal = ({track, cartItems, dispatch}) => {
     const modalRef = useRef();
