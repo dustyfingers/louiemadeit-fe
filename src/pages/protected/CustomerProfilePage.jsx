@@ -27,10 +27,10 @@ const CustomerProfilePage = () => {
                 {tracks ? 
                     (tracks.length ? tracks.map((track, idx) => {
                         return <div key={idx}>
-                            <p>TITLE: {track.trackName}</p>
-                            <p>TAGGED: <a href={track.taggedGetUrl} rel="noopener noreferrer" target="_blank">{track.trackName}</a></p>
-                            <p>UNTAGGED: <a href={track.untaggedGetUrl} rel="noopener noreferrer" target="_blank">{track.trackName}</a></p>
-                            <p>STEMS: <a href={track.stemsGetUrl} rel="noopener noreferrer" target="_blank">{track.trackName}</a></p>
+                            <p>{track.trackName}</p>
+                            <p><a href={track.taggedGetUrl} rel="noopener noreferrer" target="_blank">TAGGED FILES</a></p>
+                            <p><a href={track.untaggedGetUrl} rel="noopener noreferrer" target="_blank">UNTAGGED FILES</a></p>
+                            {track.stemsGetUrl ? (<p><a href={track.stemsGetUrl} rel="noopener noreferrer" target="_blank">STEM FILES</a></p>) : ''}
                         </div>}) : 
                     'No tracks purchased.') : 
                 'Fetching purchased tracks...'}

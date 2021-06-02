@@ -27,7 +27,6 @@ const SignIn = ({email, password, dispatch, history}) => {
                 ToastsStore.error('There was an error sigining you in. Please check your credentials and try again.');
             }
         } else {
-            console.log(password, email);
             ToastsStore.warning("Must give both email and password!");
         }
     }
