@@ -10,7 +10,7 @@ import Search from '../Search/Search';
 import { apiLink } from '../../env';
 
 const Menu = ({ history, currentUser, cartItems, dispatch }) => {
-    
+    console.log(currentUser);
     const handleSignOut = async () => {
         try {
             await axios.post(`${apiLink}/auth/sign-out`);

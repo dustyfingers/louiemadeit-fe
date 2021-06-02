@@ -21,20 +21,17 @@ const SignIn = ({email, password, dispatch, history}) => {
                     password
                 };
         
-                const res = await axios.post(url, options);
+                const { data: { user } } = await axios.post(url, options);
 
                 // dispatch an action to set app state with currentUserObj to log user in
-                dispatch(setCurrentUser({
-                    email: res.data.user.email,
-                    isAdmin: res.data.user.isAdmin
-                }));
+                dispatch(setCurrentUser(user));
                 ToastsStore.success('Signed in successfully!');
 
                 // dispatch actions to clear all the auth state
                 dispatch(setEmail(null));
                 dispatch(setPassword(null));
 
-                if (res.data.user.isAdmin) history.push('/upload');
+                if (user.isAdmin) history.push('/upload');
                 else history.push('/');
             } catch (err) {
                 ToastsStore.error('There was an error sigining you in. Please check your credentials and try again.');
