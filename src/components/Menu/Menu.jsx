@@ -10,13 +10,12 @@ import Search from '../Search';
 import { apiLink } from '../../env';
 
 const Menu = ({ history, currentUser, cartItems, dispatch }) => {
-    console.log(currentUser);
     const handleSignOut = async () => {
         try {
             await axios.post(`${apiLink}/auth/sign-out`);
-            dispatch(setCurrentUser(null));
             ToastsStore.success('Signed out successfully.');
             history.push("/");
+            dispatch(setCurrentUser(null));
         } catch (error) {
             ToastsStore.error('There was an error signing you out.')
         }

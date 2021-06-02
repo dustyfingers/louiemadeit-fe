@@ -15,28 +15,19 @@ const SignIn = ({email, password, dispatch, history}) => {
 
         if (password && email) {
             try {
-                const url = `${apiLink}/auth/sign-in`;
-                const options = {
-                    email,
-                    password
-                };
-        
-                const { data: { user } } = await axios.post(url, options);
-
-                // dispatch an action to set app state with currentUserObj to log user in
-                dispatch(setCurrentUser(user));
-                ToastsStore.success('Signed in successfully!');
-
-                // dispatch actions to clear all the auth state
-                dispatch(setEmail(null));
-                dispatch(setPassword(null));
+                const { data: { user } } = await axios.post(`${apiLink}/auth/sign-in`, { email, password });
 
                 if (user.isAdmin) history.push('/upload');
                 else history.push('/');
+                dispatch(setCurrentUser(user));
+                dispatch(setEmail(null));
+                dispatch(setPassword(null));
+                ToastsStore.success('Signed in successfully!');
             } catch (err) {
                 ToastsStore.error('There was an error sigining you in. Please check your credentials and try again.');
             }
         } else {
+            console.log(password, email);
             ToastsStore.warning("Must give both email and password!");
         }
     }
