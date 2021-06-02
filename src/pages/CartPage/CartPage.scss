@@ -1,0 +1,14 @@
+.cart-summary {
+  width: 100%;
+}
+
+$breakpoint-tablet: 768px;
+@media (min-width: $breakpoint-tablet) {
+  .cart-items {
+    width: 75%;
+  }
+
+  .cart-summary {
+    width: 25%;
+  }
+}

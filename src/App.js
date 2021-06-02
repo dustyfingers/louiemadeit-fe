@@ -10,7 +10,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 import StorePage from './pages/StorePage';
 import SignInAndSignUpPage from "./pages/SignInAndSignUpPage";
-import CartPage from './pages/CartPage';
+import CartPage from './pages/CartPage/CartPage';
 import CheckoutPage from './pages/protected/CheckoutPage';
 import PurchaseCompletedPage from './pages/protected/PurchaseCompletedPage';
 import CustomerProfilePage from './pages/protected/CustomerProfilePage';
