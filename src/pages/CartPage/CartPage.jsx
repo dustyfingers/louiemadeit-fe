@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import CartItem from '../../components/CartItem/CartItem';
 
 import './CartPage.scss';
 
-const CartPage = ({cartItems, currentUser, history}) => {
+const CartPage = ({cartItems, currentUser, history ,location}) => {
     const [cartTotal, setCartTotal] = useState(0);
 
     const calculateCartTotal = () => {
@@ -15,7 +15,7 @@ const CartPage = ({cartItems, currentUser, history}) => {
         setCartTotal(total);
     }
     
-    useEffect(() => { calculateCartTotal() }, [cartItems]);
+    useEffect(() => calculateCartTotal(), [cartItems]);
 
     return (
         <div className="d-flex flex-column align-items-center mb-5">
@@ -27,22 +27,17 @@ const CartPage = ({cartItems, currentUser, history}) => {
                 <div className={`${cartItems.length && 'ps-4 cart-summary'}`}>
                     {cartItems.length ? 
                         (<div className="d-flex flex-column">
-                            <p>Items in Cart:</p>
-                            {cartItems.map(item => {
-                                const { trackName, price } = item;
-                                return <p className="d-flex justify-content-between">
-                                    <span>{trackName}</span> <span className="price">{price}</span>
-                                </p>;
-                            })}
+                            <p>ITEMS IN CART:</p>
+                            {cartItems.map(({trackName, price}, idx) => <p className="d-flex justify-content-between" key={idx}><span>{trackName}</span> <span>${price}</span></p>)}
                             <hr />
-                            <p className="d-flex justify-content-between">TOTAL: <span className="price">{cartTotal}</span></p>
-                            <button
+                            <p className="d-flex justify-content-between">TOTAL: <span>${cartTotal}</span></p>
+                            <Link
                                 className="btn btn-primary" 
-                                onClick={currentUser ? () => history.push("/checkout") : () => history.push("/sign-in")}>
+                                to={currentUser ?  "/checkout" : {pathname: '/sign-in', state: {from: location}}}>
                                 {currentUser ? 'GO TO CHECKOUT' : 'SIGN IN TO PURCHASE'}
-                        </button>
+                        </Link>
                         </div>) : 
-                        (<button className="btn btn-primary" onClick={() => history.push("/")}>GO TO STORE</button>)}
+                        (<Link className="btn btn-primary" to="/">GO TO STORE</Link>)}
                 </div>
             </div>
         </div>

@@ -6,10 +6,16 @@ import SignUp from '../components/SignUp';
 import SignIn from '../components/SignIn';
 import { apiLink } from "../env";
 
-const SignInAndSignUpPage = ({ history }) => {
+const SignInAndSignUpPage = ({ history, location }) => {
+    let from = location.state ? location.state.from.pathname: '/';
+    console.log({from})
+
     const checkForUser = async () => {
         let { data: { user } } = await axios.get(`${apiLink}/auth/current-user`);
-        if (user) history.push("/");
+        if (user) {
+            if (user.isAdmin && from === '/upload') history.push(from);
+            else if (from) history.push(from);
+        }
     }
 
     useEffect(() => { checkForUser() }, []);

@@ -7,7 +7,7 @@ import { removeCartItem } from '../../redux/cart/cart-actions';
 const CartItem = ({item, dispatch}) => {
     const handleDeleteCartItemButtonPressed = () => {
         dispatch(removeCartItem(item));
-        ToastsStore.success('Item removed from cart...');
+        ToastsStore.success('Track removed from cart...');
     }
     
     return (

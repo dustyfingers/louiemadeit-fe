@@ -7,6 +7,7 @@ const ProtectedRoute = ({ component: Component, user, redirectTo, adminOnly, ...
         <Route {...rest} render={
             props => {
                 if (adminOnly) {
+                    console.log(props.location)
                     if (user && user.isAdmin) return <Component {...rest} {...props} />
                     else {
                         ToastsStore.error('There was an error verifying your credentials.');
