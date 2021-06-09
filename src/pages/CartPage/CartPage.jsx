@@ -6,7 +6,7 @@ import CartItem from '../../components/CartItem/CartItem';
 
 import './CartPage.scss';
 
-const CartPage = ({cartItems, currentUser, history ,location}) => {
+const CartPage = ({ cartItems, currentUser, location }) => {
     const [cartTotal, setCartTotal] = useState(0);
 
     const calculateCartTotal = () => {

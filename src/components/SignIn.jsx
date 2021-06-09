@@ -9,16 +9,16 @@ import { setEmail, setPassword } from "../redux/auth/auth-actions";
 import { setCurrentUser } from "../redux/user/user-actions";
 import { apiLink } from "../env";
 
-const SignIn = ({email, password, dispatch, history}) => {
+const SignIn = ({ email, password, dispatch, history, location }) => {
     const handleSignIn = async evt => {
         evt.preventDefault();
 
         if (password && email) {
             try {
                 const { data: { user } } = await axios.post(`${apiLink}/auth/sign-in`, { email, password });
-
+                const from = location.state ? location.state.from.pathname : '/';
                 if (user.isAdmin) history.push('/upload');
-                else history.push('/');
+                else history.push(from);
                 dispatch(setCurrentUser(user));
                 dispatch(setEmail(null));
                 dispatch(setPassword(null));
