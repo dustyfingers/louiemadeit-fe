@@ -3,18 +3,28 @@ import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { connect } from 'react-redux';
 import { ToastsStore } from 'react-toasts';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 import CheckoutItem from '../../components/CheckoutItem/CheckoutItem';
 import { setCartEmpty } from '../../redux/cart/cart-actions';
 import { apiLink } from '../../env';
 
-const CheckoutPage = ({ cartItems, currentUser, dispatch, history }) => {
+import './CheckoutPage.scss';
+
+const CheckoutPage = ({ cartItems, currentUser, dispatch, history, location }) => {
     const stripe = useStripe();
     const elements = useElements();
     const [clientSecret, setClientSecret] = useState('');
     const [succeeded, setSucceeded] = useState(false);
     const [processing, setProcessing] = useState('');
     const [disabled, setDisabled] = useState(false);
+    const [cartTotal, setCartTotal] = useState(0);
+
+    const calculateCartTotal = () => {
+        let total = 0;
+        cartItems.forEach(item => total += item.price);
+        setCartTotal(total);
+    }
 
     const createPaymentIntent = async () => {
         if (cartItems.length) {
@@ -29,9 +39,6 @@ const CheckoutPage = ({ cartItems, currentUser, dispatch, history }) => {
         }
     }
 
-    // create PaymentIntent as soon as the page loads
-    useEffect(() => { createPaymentIntent() }, []);
-
     const handleSubmit = async evt => {
         try {
             evt.preventDefault();
@@ -39,11 +46,8 @@ const CheckoutPage = ({ cartItems, currentUser, dispatch, history }) => {
     
             if (!stripe || !elements) return;
     
-            const payload = await stripe.confirmCardPayment(clientSecret, {
-                payment_method: {
-                    card: elements.getElement(CardElement)
-                }
-            });
+            const payload = await stripe.confirmCardPayment(clientSecret, { payment_method: { card: elements.getElement(CardElement) } });
+
             if (payload.error) {
                 ToastsStore.error('There was an error completing your payment. Please try again.');
                 setProcessing(false);
@@ -66,40 +70,58 @@ const CheckoutPage = ({ cartItems, currentUser, dispatch, history }) => {
         if (evt.error) ToastsStore.error(evt.error.message);
     };
 
+
+    useEffect(() => {
+        createPaymentIntent();
+        calculateCartTotal();
+    }, []);
+
     return (
         <div className="d-flex flex-column justify-content-center align-items-center w-100">
-            <div className="cart-items">
-                {cartItems.length ? cartItems.map(item => <CheckoutItem key={item.trackID} item={item}/>) : 'No items in cart...'}
+            <div className="w-100 cart-items d-flex flex-column align-items-center justify-content-center py-2 text-center">
+                {cartItems.length ? cartItems.map(item => <CheckoutItem key={item.trackID} item={item}/>) : 'No items in your cart.'}
             </div>
-            <form onSubmit={handleSubmit} className="w-50 d-flex flex-column">
-                <CardElement 
-                    onChange={handleChange} 
-                    options={{
-                        style: {
-                            base: {
-                                color: "#32325d",
-                                fontSmoothing: "antialiased",
-                                fontSize: "16px",
-                                "::placeholder": {
-                                    color: "#32325d"
+            <div className="w-100 cart-summary d-flex align-items-center justify-content-center" >
+                {cartItems.length ? 
+                    (<div className="d-flex flex-column">
+                        <p>ITEMS IN CART:</p>
+                        {cartItems.map(({trackName, price}, idx) => <p className="d-flex justify-content-between" key={idx}><span>{trackName}</span> <span>${price}</span></p>)}
+                        <hr />
+                        <p className="d-flex justify-content-between">TOTAL: <span>${cartTotal}</span></p>
+                    </div>) : 
+                    (<Link className="btn btn-primary" to="/">GO TO STORE</Link>)}
+            </div>
+            {cartItems.length ? 
+                (<div className="w-100 mb-5 d-flex align-items-center justify-content-center">
+                    <form onSubmit={handleSubmit} className="w-100 d-flex flex-column checkout-form">
+                        <CardElement 
+                            onChange={handleChange} 
+                            options={{
+                                style: {
+                                    base: {
+                                        color: "#32325d",
+                                        fontSmoothing: "antialiased",
+                                        fontSize: "16px",
+                                        "::placeholder": {
+                                            color: "#32325d"
+                                        }
+                                    },
+                                    invalid: {
+                                        color: "#fa755a",
+                                        iconColor: "#fa755a"
+                                    }
                                 }
-                            },
-                            invalid: {
-                                color: "#fa755a",
-                                iconColor: "#fa755a"
-                            }
-                        }
-                    }} />
-                <button
-                    disabled={processing || disabled || succeeded}
-                    id="submit"
-                    className="btn btn-primary"
-                    >
-                    <span id="button-text">
-                        {processing ? "Processing Payment..." : "Complete Purchase"}
-                    </span>
-                </button>
-            </form>
+                            }} />
+                        <button
+                            disabled={processing || disabled || succeeded}
+                            id="submit"
+                            className="btn btn-primary" >
+                            <span id="button-text">
+                                {processing ? `Processing Payment for $${cartTotal}...` : `Complete Purchase for $${cartTotal}`}
+                            </span>
+                        </button>
+                    </form>
+                </div>) : ''}
         </div>
     );
 };

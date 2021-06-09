@@ -35,7 +35,7 @@ const CartPage = ({ cartItems, currentUser, location }) => {
                                 className="btn btn-primary" 
                                 to={currentUser ?  "/checkout" : {pathname: '/sign-in', state: {from: location}}}>
                                 {currentUser ? 'GO TO CHECKOUT' : 'SIGN IN TO PURCHASE'}
-                        </Link>
+                            </Link>
                         </div>) : 
                         (<Link className="btn btn-primary" to="/">GO TO STORE</Link>)}
                 </div>

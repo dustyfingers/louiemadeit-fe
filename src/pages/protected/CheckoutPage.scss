@@ -1,14 +1,11 @@
-.cart-summary {
+.cart-summary,
+.checkout-form {
   width: 100% !important;
 }
 
 $breakpoint-tablet: 768px;
 @media (min-width: $breakpoint-tablet) {
-  .cart-items {
+  .checkout-form {
     width: 75% !important;
-  }
-
-  .cart-summary {
-    width: 25% !important;
   }
 }
