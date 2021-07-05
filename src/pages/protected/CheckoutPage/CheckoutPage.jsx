@@ -77,51 +77,54 @@ const CheckoutPage = ({ cartItems, currentUser, dispatch, history, location }) =
     }, []);
 
     return (
-        <div className="d-flex flex-column justify-content-center align-items-center w-100">
-            <div className="w-100 cart-items d-flex flex-column align-items-center justify-content-center py-2 text-center">
-                {cartItems.length ? cartItems.map(item => <CheckoutItem key={item.trackID} item={item}/>) : 'No items in your cart.'}
+        <div className="d-flex flex-column justify-content-center align-items-center">
+            <div className={` top-section d-flex flex-column ${cartItems.length && 'flex-md-row'} justify-content-${cartItems.length ? 'around' : 'center'}`}>
+                <div className="cart-items py-2 text-center">
+                    {cartItems.length ? cartItems.map(item => <CheckoutItem key={item.trackID} item={item}/>) : 'No items in your cart.'}
+                </div>
+                <div className="cart-summary" >
+                    {cartItems.length ? 
+                        (<div className="d-flex flex-column">
+                            <p>ITEMS IN CART:</p>
+                            {cartItems.map(({trackName, price}, idx) => <p className="d-flex justify-content-between" key={idx}><span>{trackName}</span> <span>${price}</span></p>)}
+                            <hr />
+                            <p className="d-flex justify-content-between">TOTAL: <span>${cartTotal}</span></p>
+                            
+                            {cartItems.length ? 
+                                (<div className="checkout-sectionmb-5 d-flex">
+                                    <form onSubmit={handleSubmit} className="w-100 d-flex flex-column checkout-form">
+                                        <CardElement 
+                                            onChange={handleChange} 
+                                            options={{
+                                                style: {
+                                                    base: {
+                                                        color: "#32325d",
+                                                        fontSmoothing: "antialiased",
+                                                        fontSize: "16px",
+                                                        "::placeholder": {
+                                                            color: "#32325d"
+                                                        }
+                                                    },
+                                                    invalid: {
+                                                        color: "#fa755a",
+                                                        iconColor: "#fa755a"
+                                                    }
+                                                }
+                                            }} />
+                                        <button
+                                            disabled={processing || disabled || succeeded}
+                                            id="submit"
+                                            className="btn btn-primary" >
+                                            <span id="button-text">
+                                                {processing ? `Processing Payment for $${cartTotal}...` : `Complete Purchase for $${cartTotal}`}
+                                            </span>
+                                        </button>
+                                    </form>
+                                </div>) : ''}
+                        </div>) : 
+                        (<Link className="btn btn-primary" to="/">GO TO STORE</Link>)}
+                </div>
             </div>
-            <div className="w-100 cart-summary d-flex align-items-center justify-content-center" >
-                {cartItems.length ? 
-                    (<div className="d-flex flex-column">
-                        <p>ITEMS IN CART:</p>
-                        {cartItems.map(({trackName, price}, idx) => <p className="d-flex justify-content-between" key={idx}><span>{trackName}</span> <span>${price}</span></p>)}
-                        <hr />
-                        <p className="d-flex justify-content-between">TOTAL: <span>${cartTotal}</span></p>
-                    </div>) : 
-                    (<Link className="btn btn-primary" to="/">GO TO STORE</Link>)}
-            </div>
-            {cartItems.length ? 
-                (<div className="w-100 mb-5 d-flex align-items-center justify-content-center">
-                    <form onSubmit={handleSubmit} className="w-100 d-flex flex-column checkout-form">
-                        <CardElement 
-                            onChange={handleChange} 
-                            options={{
-                                style: {
-                                    base: {
-                                        color: "#32325d",
-                                        fontSmoothing: "antialiased",
-                                        fontSize: "16px",
-                                        "::placeholder": {
-                                            color: "#32325d"
-                                        }
-                                    },
-                                    invalid: {
-                                        color: "#fa755a",
-                                        iconColor: "#fa755a"
-                                    }
-                                }
-                            }} />
-                        <button
-                            disabled={processing || disabled || succeeded}
-                            id="submit"
-                            className="btn btn-primary" >
-                            <span id="button-text">
-                                {processing ? `Processing Payment for $${cartTotal}...` : `Complete Purchase for $${cartTotal}`}
-                            </span>
-                        </button>
-                    </form>
-                </div>) : ''}
         </div>
     );
 };
