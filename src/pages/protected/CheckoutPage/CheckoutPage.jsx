@@ -5,9 +5,9 @@ import { ToastsStore } from 'react-toasts';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-import CheckoutItem from '../../components/CheckoutItem/CheckoutItem';
-import { setCartEmpty } from '../../redux/cart/cart-actions';
-import { apiLink } from '../../env';
+import CheckoutItem from '../../../components/CheckoutItem/CheckoutItem';
+import { setCartEmpty } from '../../../redux/cart/cart-actions';
+import { apiLink } from '../../../env';
 
 import './CheckoutPage.scss';
 
