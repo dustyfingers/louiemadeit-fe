@@ -6,7 +6,7 @@ import { setCurrentTrack } from '../../redux/player/player-actions';
 import AddToCartModal from '../AddToCartModal';
 import ProgressiveImage from '../ProgressiveImage';
 
-const TrackPreviewCard = ({track, currentPlayerTrack, dispatch}) => {
+const TrackPreviewCard = ({ track, currentPlayerTrack, dispatch }) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [playIcon, setPlayIcon] = useState('/play-btn.svg');
 

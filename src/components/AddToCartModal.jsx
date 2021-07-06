@@ -5,7 +5,7 @@ import { ToastsStore } from 'react-toasts';
 
 import { addCartItem } from '../redux/cart/cart-actions';
 
-const AddToCartModal = ({track, cartItems, dispatch}) => {
+const AddToCartModal = ({ track, cartItems, dispatch }) => {
     const modalRef = useRef();
 
     const handleAddToCartButtonClicked = (priceID, price) => {

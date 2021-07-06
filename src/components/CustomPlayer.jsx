@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 import { setCurrentTrack } from "../redux/player/player-actions";
 
-const CustomPlayer = ({currentTrack}) => {
+const CustomPlayer = ({ currentTrack }) => {
     return (
         currentTrack && (<ReactAudioPlayer
             src={currentTrack}
