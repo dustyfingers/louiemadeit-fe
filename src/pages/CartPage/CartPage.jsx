@@ -20,7 +20,7 @@ const CartPage = ({ cartItems, currentUser, location }) => {
     return (
         <div className="d-flex flex-column align-items-center mb-5">
             <h1>CART</h1>
-            <div className={`d-flex flex-column ${cartItems.length && 'flex-md-row'} align-items-center justify-content-${cartItems.length ? 'around' : 'center'}`}>
+            <div className={`d-flex flex-column ${cartItems.length && 'flex-md-row'} align-items-${cartItems.length ? 'start' : 'center'} justify-content-${cartItems.length ? 'around' : 'center'}`}>
                 <div className="cart-items py-2 text-center">
                     {cartItems.length ? cartItems.map(item => (<CartItem item={item} key={item._id}/>)) : 'No items in your cart.'}
                 </div>
