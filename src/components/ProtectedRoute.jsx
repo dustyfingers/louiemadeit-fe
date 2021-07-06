@@ -14,7 +14,7 @@ const ProtectedRoute = ({ component: Component, user, redirectTo, adminOnly, ...
                         {
                             pathname: redirectTo,
                             state: {
-                            from: props.location
+                                from: props.location
                             }
                         }
                         } />
@@ -27,7 +27,7 @@ const ProtectedRoute = ({ component: Component, user, redirectTo, adminOnly, ...
                         {
                             pathname: redirectTo,
                             state: {
-                            from: props.location
+                                from: props.location
                             }
                         }
                         } />

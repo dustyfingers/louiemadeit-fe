@@ -33,7 +33,7 @@ const CartPage = ({ cartItems, currentUser, location }) => {
                         <p className="d-flex justify-content-between">TOTAL: <span>${cartTotal}</span></p>
                         <Link
                             className="btn btn-primary" 
-                            to={currentUser ?  "/checkout" : {pathname: '/sign-in', state: {from: location}}}>
+                            to={currentUser ?  {pathname: '/checkout', state: {from: location}} : {pathname: '/sign-in', state: {from: location}}}>
                             {currentUser ? 'GO TO CHECKOUT' : 'SIGN IN TO PURCHASE'}
                         </Link>
                     </div>
