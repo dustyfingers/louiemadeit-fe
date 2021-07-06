@@ -78,6 +78,7 @@ const CheckoutPage = ({ cartItems, currentUser, dispatch, history, location }) =
 
     return (
         <div className="d-flex flex-column justify-content-center align-items-center">
+            <h1>CHECKOUT</h1>
             <div className={` top-section d-flex flex-column ${cartItems.length && 'flex-md-row'} justify-content-${cartItems.length ? 'around' : 'center'}`}>
                 <div className="cart-items py-2 text-center">
                     {cartItems.length ? cartItems.map(item => <CheckoutItem key={item.trackID} item={item}/>) : 'No items in your cart.'}

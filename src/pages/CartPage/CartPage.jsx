@@ -20,25 +20,24 @@ const CartPage = ({ cartItems, currentUser, location }) => {
     return (
         <div className="d-flex flex-column align-items-center mb-5">
             <h1>CART</h1>
-            <div className={`d-flex flex-column ${cartItems.length && 'flex-md-row'} justify-content-${cartItems.length ? 'around' : 'center'}`}>
+            <div className={`d-flex flex-column ${cartItems.length && 'flex-md-row'} align-items-center justify-content-${cartItems.length ? 'around' : 'center'}`}>
                 <div className="cart-items py-2 text-center">
                     {cartItems.length ? cartItems.map(item => (<CartItem item={item} key={item._id}/>)) : 'No items in your cart.'}
                 </div>
+                {cartItems.length ? (
                 <div className="cart-summary">
-                    {cartItems.length ? 
-                        (<div className="d-flex flex-column">
-                            <p>ITEMS IN CART:</p>
-                            {cartItems.map(({trackName, price}, idx) => <p className="d-flex justify-content-between" key={idx}><span>{trackName}</span> <span>${price}</span></p>)}
-                            <hr />
-                            <p className="d-flex justify-content-between">TOTAL: <span>${cartTotal}</span></p>
-                            <Link
-                                className="btn btn-primary" 
-                                to={currentUser ?  "/checkout" : {pathname: '/sign-in', state: {from: location}}}>
-                                {currentUser ? 'GO TO CHECKOUT' : 'SIGN IN TO PURCHASE'}
-                            </Link>
-                        </div>) : 
-                        (<Link className="btn btn-primary" to="/">GO TO STORE</Link>)}
-                </div>
+                    <div className="d-flex flex-column">
+                        <p>ITEMS IN CART:</p>
+                        {cartItems.map(({trackName, price}, idx) => <p className="d-flex justify-content-between" key={idx}><span>{trackName}</span> <span>${price}</span></p>)}
+                        <hr />
+                        <p className="d-flex justify-content-between">TOTAL: <span>${cartTotal}</span></p>
+                        <Link
+                            className="btn btn-primary" 
+                            to={currentUser ?  "/checkout" : {pathname: '/sign-in', state: {from: location}}}>
+                            {currentUser ? 'GO TO CHECKOUT' : 'SIGN IN TO PURCHASE'}
+                        </Link>
+                    </div>
+                </div>) : (<Link className="btn btn-primary" to="/">GO TO STORE</Link>)}
             </div>
         </div>
     );
