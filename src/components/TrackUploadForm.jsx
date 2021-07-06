@@ -14,7 +14,19 @@ import {
 } from '../redux/admin/upload/upload-actions';
 import { apiLink } from '../env';
 
-const TrackUploadForm = ({ name, description, sellType, exclusivePrice, leaseStemsPrice, leaseMasterOnlyPrice, taggedVersion,untaggedVersion, coverArt, trackStems, dispatch }) => {
+const TrackUploadForm = ({ 
+    name, 
+    description, 
+    sellType, 
+    exclusivePrice, 
+    leaseStemsPrice, 
+    leaseMasterOnlyPrice, 
+    taggedVersion,
+    untaggedVersion, 
+    coverArt, 
+    trackStems, 
+    dispatch 
+}) => {
     const [uploading, setUploading] = useState(false);
 
     const handleUploadToS3 = async (file, putUrl) => {

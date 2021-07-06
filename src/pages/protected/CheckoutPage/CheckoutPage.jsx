@@ -11,7 +11,7 @@ import { apiLink } from '../../../env';
 
 import './CheckoutPage.scss';
 
-const CheckoutPage = ({ cartItems, currentUser, dispatch, history, location }) => {
+const CheckoutPage = ({ cartItems, dispatch, history, location }) => {
     const from = location.state ? location.state.from.pathname : '/';
     if (from !== '/cart') history.push('/');
     const stripe = useStripe();
