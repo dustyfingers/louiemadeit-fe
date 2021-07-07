@@ -37,7 +37,7 @@ const Menu = ({ history, currentUser, cartItems, dispatch }) => {
                                 <span className="nav-link" onClick={() => history.push("/sign-in")}>sign in.</span>
                             </li> :
 
-                            <div className="d-flex flex-column flex-md-row align-items-end justify-content-end">
+                            <div className="d-flex flex-column flex-lg-row align-items-end justify-content-end">
                                 <li className="nav-item">
                                     <span className="nav-link" onClick={handleSignOut}>sign out.</span>
                                 </li>

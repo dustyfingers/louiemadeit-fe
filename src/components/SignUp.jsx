@@ -8,7 +8,7 @@ import { setEmail, setPassword, setConfirmPassword } from "../redux/auth/auth-ac
 import { setCurrentUser } from "../redux/user/user-actions";
 import { apiLink } from "../env";
 
-const SignUp = ({history, email, password, confirmPassword, dispatch}) => {
+const SignUp = ({ history, email, password, confirmPassword, dispatch }) => {
     const handleSignUp = async evt => {
         evt.preventDefault();
         if (!email) {

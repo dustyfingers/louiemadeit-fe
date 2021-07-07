@@ -29,9 +29,9 @@ const Search = ({ shopTracks, searchResults, dispatch, searchQuery }) => {
     return (
         <form className="ms-2 d-flex justify-content-end" onSubmit={handleSubmit}>
             <div className="search-container">
-                <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" onChange={handleInputChange} />
+                <input className="form-control me-2" type="search" placeholder="find a beat by title" aria-label="Search" onChange={handleInputChange} />
             </div>
-            <button className="btn btn-outline-success ms-2" type="submit">Search</button>
+            <button className="btn btn-outline-success ms-2" type="submit">search</button>
         </form>
     );
 };

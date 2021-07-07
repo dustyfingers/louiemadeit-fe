@@ -5,12 +5,12 @@ import { ToastsStore } from 'react-toasts';
 
 import { addCartItem } from '../redux/cart/cart-actions';
 
-const AddToCartModal = ({track, cartItems, dispatch}) => {
+const AddToCartModal = ({ track, cartItems, dispatch }) => {
     const modalRef = useRef();
 
     const handleAddToCartButtonClicked = (priceID, price) => {
         if (cartItems.some(item => item._id === track._id)) {
-            ToastsStore.warning('Item already in cart!');
+            ToastsStore.warning('Track already in cart!');
         } else {
             dispatch(addCartItem({
                 trackName: track.trackName, 
@@ -19,7 +19,7 @@ const AddToCartModal = ({track, cartItems, dispatch}) => {
                 coverArtUrl: track.coverArtUrl, 
                 _id: track._id 
             }));
-            ToastsStore.success('Item added to cart!');
+            ToastsStore.success('Track added to cart!');
             
             const modalElement = modalRef.current;
             const bsModal = Modal.getInstance(modalElement);

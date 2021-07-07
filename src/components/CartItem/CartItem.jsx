@@ -4,10 +4,12 @@ import { ToastsStore } from 'react-toasts';
 
 import { removeCartItem } from '../../redux/cart/cart-actions';
 
-const CartItem = ({item, dispatch}) => {
+import './CartItem.scss';
+
+const CartItem = ({ item, dispatch }) => {
     const handleDeleteCartItemButtonPressed = () => {
         dispatch(removeCartItem(item));
-        ToastsStore.success('Item removed from cart...');
+        ToastsStore.success('Track removed from cart...');
     }
     
     return (
@@ -18,7 +20,7 @@ const CartItem = ({item, dispatch}) => {
                     <div>
                         <h5 className="card-title">{item.trackName} - {item.price}</h5>
                     </div>
-                    <div className="d-flex align-items-center justify-content-end">
+                    <div className="d-flex align-items-center justify-content-end remove-cart-item-btn">
                         <img 
                             src="/x-square.svg" 
                             height='24px' 
