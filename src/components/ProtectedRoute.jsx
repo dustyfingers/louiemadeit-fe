@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { ToastsStore } from 'react-toasts';
 
 const ProtectedRoute = ({ component: Component, user, redirectTo, adminOnly, ...rest }) => {
     return (
