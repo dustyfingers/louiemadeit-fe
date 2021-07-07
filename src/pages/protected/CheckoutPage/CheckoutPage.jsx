@@ -85,7 +85,7 @@ const CheckoutPage = ({ cartItems, dispatch, history, location }) => {
                 <div className="cart-items py-2 text-center">
                     {cartItems.length ? cartItems.map(item => <CheckoutItem key={item.trackID} item={item}/>) : 'No items in your cart.'}
                 </div>
-                <div className="cart-summary" >
+                <div className="cart-summary w-100" >
                     {cartItems.length ? 
                         (<div className="d-flex flex-column">
                             <p>ITEMS IN CART:</p>
@@ -94,7 +94,7 @@ const CheckoutPage = ({ cartItems, dispatch, history, location }) => {
                             <p className="d-flex justify-content-between">TOTAL: <span>${cartTotal}</span></p>
                             
                             {cartItems.length ? 
-                                (<div className="checkout-sectionmb-5 d-flex">
+                                (<div className="checkout-section mt-3 d-flex">
                                     <form onSubmit={handleSubmit} className="w-100 d-flex flex-column checkout-form">
                                         <CardElement 
                                             onChange={handleChange} 

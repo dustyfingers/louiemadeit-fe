@@ -9,7 +9,6 @@ const ProtectedRoute = ({ component: Component, user, redirectTo, adminOnly, ...
                 if (adminOnly) {
                     if (user && user.isAdmin) return <Component {...rest} {...props} />
                     else {
-                        ToastsStore.error('There was an error verifying your credentials.');
                         return <Redirect to={
                         {
                             pathname: redirectTo,
@@ -22,7 +21,6 @@ const ProtectedRoute = ({ component: Component, user, redirectTo, adminOnly, ...
                 } else {
                     if (user) return <Component {...rest} {...props} />
                     else {
-                        ToastsStore.error('There was an error verifying your credentials.');
                         return <Redirect to={
                         {
                             pathname: redirectTo,

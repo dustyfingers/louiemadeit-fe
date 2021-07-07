@@ -25,7 +25,7 @@ const CartPage = ({ cartItems, currentUser, location }) => {
                     {cartItems.length ? cartItems.map(item => (<CartItem item={item} key={item._id}/>)) : 'No items in your cart.'}
                 </div>
                 {cartItems.length ? (
-                <div className="cart-summary">
+                <div className="cart-summary w-100">
                     <div className="d-flex flex-column">
                         <p>ITEMS IN CART:</p>
                         {cartItems.map(({trackName, price}, idx) => <p className="d-flex justify-content-between" key={idx}><span>{trackName}</span> <span>${price}</span></p>)}
