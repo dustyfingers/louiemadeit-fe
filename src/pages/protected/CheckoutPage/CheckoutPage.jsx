@@ -117,7 +117,7 @@ const CheckoutPage = ({ cartItems, dispatch, history, location }) => {
                                         <button
                                             disabled={processing || disabled || succeeded}
                                             id="submit"
-                                            className="btn btn-primary" >
+                                            className="btn btn-primary mt-3" >
                                             <span id="button-text">
                                                 {processing ? `Processing Payment for $${cartTotal}...` : `Complete Purchase for $${cartTotal}`}
                                             </span>
