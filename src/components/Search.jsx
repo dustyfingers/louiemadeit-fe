@@ -10,7 +10,6 @@ const Search = ({ shopTracks, searchResults, dispatch, searchQuery }) => {
         evt.preventDefault();
         if (searchQuery) dispatch(setDisplayedTracks(searchResults));
         else dispatch(setDisplayedTracks(shopTracks));
-
     };
 
     const handleInputChange = evt => {

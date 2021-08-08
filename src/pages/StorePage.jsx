@@ -10,7 +10,7 @@ import { setDisplayedTracks } from '../redux/displayed-tracks/displayed-tracks-a
 import { setCurrentTrack } from '../redux/player/player-actions';
 import { apiLink } from '../env';
 
-const StorePage = ({ displayedTracks, dispatch }) => {
+const StorePage = ({ displayedTracks, currentTrack, dispatch }) => {
     const fetchTracks = async () => {
         let url = `${apiLink}/track/all`;
         const res = await axios.get(url);
@@ -18,17 +18,28 @@ const StorePage = ({ displayedTracks, dispatch }) => {
         dispatch(setDisplayedTracks(res.data.tracks));
     }
 
-    useEffect(() => { if (!displayedTracks) fetchTracks() }, []);
+    useEffect(() => { if (!displayedTracks) fetchTracks(); }, []);
 
     // equivalent to onComponentDidUnmount()
     useEffect(() => () => dispatch(setCurrentTrack('')), []);
+
+    // change page title dynamically on song change
+    // TODO: make the title change to the name of the track, not the link to it
+    useEffect(() => {
+        if (currentTrack) document.title = currentTrack;
+        else document.title = "louiemadeit - shop";
+    }, [currentTrack]);
 
     return (
         <div className="pb-5">
             <h1 className="text-center">TRACKS</h1>
             <div>
                 {displayedTracks ? 
-                    (displayedTracks.length ? (<div className="row">{displayedTracks.map(track => <TrackPreviewCard track={track} key={track._id}/>)}</div>) : 'No tracks found...')
+                    (displayedTracks.length ? (
+                        <div className="row">
+                            {displayedTracks.map(track => <TrackPreviewCard track={track} key={track._id}/>)}
+                        </div>) 
+                        : 'No tracks found...')
                     : 'Wakey wakey server...'}
             </div>
         </div>
@@ -36,7 +47,8 @@ const StorePage = ({ displayedTracks, dispatch }) => {
 };
 
 const mapStateToProps = state => ({
-    displayedTracks: state.displayedTracks.displayedTracks
+    displayedTracks: state.displayedTracks.displayedTracks,
+    currentTrack: state.player.currentTrack
 });
 
 export default connect(mapStateToProps)(StorePage);
