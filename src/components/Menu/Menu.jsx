@@ -23,7 +23,7 @@ const Menu = ({ history, currentUser, cartItems, dispatch }) => {
     }
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-light fixed-top" id="TopMenu">
+        <nav className={`navbar navbar-expand-${currentUser && currentUser.isAdmin ? 'xl': 'lg'} navbar-light fixed-top`} id="TopMenu">
             <div className="container">
                 <Link to="/" id="logo"><h1>louiemadeit.</h1></Link>
 
@@ -38,7 +38,7 @@ const Menu = ({ history, currentUser, cartItems, dispatch }) => {
                                 <span className="nav-link" onClick={() => history.push("/sign-in")}>sign in.</span>
                             </li> 
                             :
-                            <div className="d-flex flex-column flex-lg-row align-items-end justify-content-end">
+                            <div className={`d-flex flex-column flex-${currentUser && currentUser.isAdmin ? 'xl': 'lg'}-row align-items-end justify-content-end`}>
                                 <li className="nav-item">
                                     <span className="nav-link" onClick={handleSignOut}>sign out.</span>
                                 </li>
