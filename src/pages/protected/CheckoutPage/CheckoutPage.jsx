@@ -32,7 +32,10 @@ const CheckoutPage = ({ cartItems, dispatch, history, location }) => {
         if (cartItems.length) {
             try {
                 let cartInfo = [];
-                cartItems.forEach(item => cartInfo.push({trackID: item.trackID, priceID: item.priceID}));
+                cartItems.forEach(({ type, trackID, packID, priceID }) => {
+                    if (type ==='track') cartInfo.push({trackID, priceID})
+                    else if (type ==='pack') cartInfo.push({packID, priceID})
+                });
                 const data = await axios.post(`${apiLink}/stripe/new-payment-intent`, {items: cartInfo});
                 setClientSecret(data.data.clientSecret);
             } catch {
@@ -43,10 +46,9 @@ const CheckoutPage = ({ cartItems, dispatch, history, location }) => {
 
     const handleSubmit = async evt => {
         try {
+            if (!stripe || !elements) return;
             evt.preventDefault();
             setProcessing(true);
-    
-            if (!stripe || !elements) return;
     
             const payload = await stripe.confirmCardPayment(clientSecret, { payment_method: { card: elements.getElement(CardElement) } });
 
@@ -83,13 +85,13 @@ const CheckoutPage = ({ cartItems, dispatch, history, location }) => {
             <h1>CHECKOUT</h1>
             <div className={` top-section d-flex flex-column ${cartItems.length && 'flex-md-row'} align-items-${cartItems.length ? 'start' : 'center'} justify-content-${cartItems.length ? 'around' : 'center'}`}>
                 <div className="cart-items py-2 text-center">
-                    {cartItems.length ? cartItems.map(item => <CheckoutItem key={item.trackID} item={item}/>) : 'No items in your cart.'}
+                    {cartItems.length ? cartItems.map(item => <CheckoutItem key={item._id} item={item}/>) : 'No items in your cart.'}
                 </div>
                 <div className="cart-summary w-100" >
                     {cartItems.length ? 
                         (<div className="d-flex flex-column">
                             <p>ITEMS IN CART:</p>
-                            {cartItems.map(({trackName, price}, idx) => <p className="d-flex justify-content-between" key={idx}><span>{trackName}</span> <span>${price}</span></p>)}
+                            {cartItems.map(({type, trackName, packName, price, _id}) => <p className="d-flex justify-content-between" key={_id}><span>{type === 'track' ? trackName : packName}</span> <span>${price}</span></p>)}
                             <hr />
                             <p className="d-flex justify-content-between">TOTAL: <span>${cartTotal}</span></p>
                             
