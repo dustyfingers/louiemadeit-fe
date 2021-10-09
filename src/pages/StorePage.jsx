@@ -59,7 +59,7 @@ const StorePage = ({ displayedTracks, displayedPacks, currentTrack, dispatch }) 
                         <div className="row">
                             {displayedPacks.map(pack => <PackPreviewCard pack={pack} key={pack._id}/>)}
                         </div>) 
-                        : 'No tracks found...')
+                        : 'No packs found...')
                     : 'Wakey wakey server...'}
             </div>
         </div>

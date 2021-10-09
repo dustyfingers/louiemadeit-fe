@@ -9,16 +9,15 @@ import '../styles/shared/preview-card.scss'
 // TODO: needs to show price and have add to cart functionality
 const PackPreviewCard = ({ pack, dispatch, cartItems }) => {
 
-    const handleAddToCartButtonClicked = (priceID, price) => {
-        console.log('handling add to cart!')
+    const handleAddToCartButtonClicked = () => {
         if (cartItems.some(item => item._id === pack._id)) {
             ToastsStore.warning('Sample pack already in cart!');
         } else {
             dispatch(addCartItem({
                 packName: pack.packName, 
                 packID: pack.stripeProduct, 
-                price, 
-                priceID, 
+                price: pack.price, 
+                priceID: pack.stripePrice, 
                 coverArtUrl: pack.coverArtUrl, 
                 _id: pack._id 
             }));
