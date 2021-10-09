@@ -18,7 +18,7 @@ import PackUploadPage from './pages/protected/admin/PackUploadPage'
 import { setCurrentUser } from './redux/user/user-actions'
 import { useWillMount } from './hooks/useWillMount'
 import { apiLink } from './env'
-import './App.scss'
+import './styles/global/App.scss'
 
 axios.defaults.withCredentials = true
 

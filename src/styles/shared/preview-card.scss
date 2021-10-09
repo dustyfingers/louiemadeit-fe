@@ -1,0 +1,14 @@
+.preview-card {
+  border: none;
+  border-bottom: 1px solid grey;
+  border-radius: 0;
+  .preview-card-img-top {
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+  }
+  .play-btn-icon,
+  .add-to-cart-icon {
+    max-width: 32px;
+    height: 24px;
+  }
+}

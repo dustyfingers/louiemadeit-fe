@@ -47,7 +47,7 @@ const StorePage = ({ displayedTracks, displayedPacks, currentTrack, dispatch }) 
                 {displayedTracks ? 
                     (displayedTracks.length ? (
                         <div className="row">
-                            {displayedTracks.map(track => <TrackPreviewCard type='track' track={track} key={track._id}/>)}
+                            {displayedTracks.map(track => <TrackPreviewCard track={track} key={track._id}/>)}
                         </div>) 
                         : 'No tracks found...')
                     : 'Wakey wakey server...'}
@@ -57,7 +57,7 @@ const StorePage = ({ displayedTracks, displayedPacks, currentTrack, dispatch }) 
                 {displayedPacks ? 
                     (displayedPacks.length ? (
                         <div className="row">
-                            {displayedPacks.map(pack => <PackPreviewCard type='pack' pack={pack}/>)}
+                            {displayedPacks.map(pack => <PackPreviewCard pack={pack} key={pack._id}/>)}
                         </div>) 
                         : 'No tracks found...')
                     : 'Wakey wakey server...'}
