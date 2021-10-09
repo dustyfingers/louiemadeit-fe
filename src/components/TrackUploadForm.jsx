@@ -94,12 +94,13 @@ const TrackUploadForm = ({
             } else throw 'No stems given!';
             
         } catch (error) {
+            console.log(error)
             ToastsStore.error('There was an error while uploading your track.');
         }
 
 
         try {
-            const createTrackUrl = `${apiLink}/track/new`;
+            const createTrackUrl = `${apiLink}/tracks/new`;
             const options = {
                 trackName: name,
                 taggedVersion: taggedVersionFileName,

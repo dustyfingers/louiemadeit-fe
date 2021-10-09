@@ -12,7 +12,7 @@ import { apiLink } from '../env';
 
 const StorePage = ({ displayedTracks, currentTrack, dispatch }) => {
     const fetchTracks = async () => {
-        let url = `${apiLink}/track/all`;
+        let url = `${apiLink}/tracks/all`;
         const res = await axios.get(url);
         dispatch(setShopTracks(res.data.tracks));
         dispatch(setDisplayedTracks(res.data.tracks));

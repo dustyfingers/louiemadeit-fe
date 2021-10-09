@@ -99,7 +99,7 @@ const TrackUploadForm = ({
 
 
         try {
-            const createTrackUrl = `${apiLink}/track/new`
+            const createTrackUrl = `${apiLink}/tracks/new`
             const options = {
                 trackName: name,
                 taggedVersion: taggedVersionFileName,
