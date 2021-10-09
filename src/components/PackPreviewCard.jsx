@@ -19,7 +19,8 @@ const PackPreviewCard = ({ pack, dispatch, cartItems }) => {
                 price: pack.price, 
                 priceID: pack.stripePrice, 
                 coverArtUrl: pack.coverArtUrl, 
-                _id: pack._id 
+                _id: pack._id,
+                type: 'pack'
             }));
             ToastsStore.success('Sample pack added to cart!');
         }

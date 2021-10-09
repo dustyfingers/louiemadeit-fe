@@ -15,9 +15,10 @@ const AddToCartModal = ({ track, cartItems, dispatch }) => {
             dispatch(addCartItem({
                 trackName: track.trackName, 
                 trackID: track.stripeProduct, 
-                price, priceID, 
+                priceID, price,  
                 coverArtUrl: track.coverArtUrl, 
-                _id: track._id 
+                _id: track._id,
+                type: 'track'
             }));
             ToastsStore.success('Track added to cart!');
             

@@ -22,13 +22,13 @@ const CartPage = ({ cartItems, currentUser, location }) => {
             <h1>CART</h1>
             <div className={`d-flex flex-column ${cartItems.length && 'flex-md-row'} align-items-${cartItems.length ? 'start' : 'center'} justify-content-${cartItems.length ? 'around' : 'center'}`}>
                 <div className="cart-items py-2 text-center">
-                    {cartItems.length ? cartItems.map(item => (<CartItem item={item} key={item._id}/>)) : 'No items in your cart.'}
+                    {cartItems.length ? cartItems.map(item => (<CartItem type={item.type} item={item} key={item._id}/>)) : 'No items in your cart.'}
                 </div>
                 {cartItems.length ? (
                 <div className="cart-summary w-100">
                     <div className="d-flex flex-column">
                         <p>ITEMS IN CART:</p>
-                        {cartItems.map(({trackName, price}, idx) => <p className="d-flex justify-content-between" key={idx}><span>{trackName}</span> <span>${price}</span></p>)}
+                        {cartItems.map((item, idx) => <p className="d-flex justify-content-between" key={item._id}><span>{item.type === 'track' ? item.trackName : item.packName}</span> <span>${item.price}</span></p>)}
                         <hr />
                         <p className="d-flex justify-content-between">TOTAL: <span>${cartTotal}</span></p>
                         <Link
