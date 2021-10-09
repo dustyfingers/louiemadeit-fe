@@ -1,4 +1,4 @@
-const UploadActionTypes = {
+const TrackActionTypes = {
     SET_TRACK_NAME: 'SET_TRACK_NAME',
     SET_TRACK_DESCRIPTION: 'SET_TRACK_DESCRIPTION',
     SET_TAGGED_VERSION: 'SET_TAGGED_VERSION',
@@ -7,4 +7,4 @@ const UploadActionTypes = {
     SET_TRACK_STEMS: 'SET_TRACK_STEMS'
 };
 
-export default UploadActionTypes;
+export default TrackActionTypes;

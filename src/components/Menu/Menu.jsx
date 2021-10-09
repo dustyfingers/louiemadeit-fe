@@ -22,8 +22,6 @@ const Menu = ({ history, currentUser, cartItems, dispatch }) => {
         }
     }
 
-    console.log(currentUser)
-
     return (
         <nav className="navbar navbar-expand-lg navbar-light fixed-top" id="TopMenu">
             <div className="container">

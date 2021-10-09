@@ -1,4 +1,4 @@
-import UploadActionTypes from './upload-types';
+import TrackActionTypes from './track-types';
 
 const INITIAL_STATE = {
     name: null,
@@ -15,32 +15,32 @@ const INITIAL_STATE = {
 
 const uploadReducer = (currentState = INITIAL_STATE, action) => {
     switch (action.type) {
-        case UploadActionTypes.SET_TRACK_NAME:
+        case TrackActionTypes.SET_TRACK_NAME:
             return {
                 ...currentState,
                 name: action.payload
             };
-        case UploadActionTypes.SET_TRACK_DESCRIPTION:
+        case TrackActionTypes.SET_TRACK_DESCRIPTION:
             return {
                 ...currentState,
                 description: action.payload
             };
-        case UploadActionTypes.SET_TAGGED_VERSION:
+        case TrackActionTypes.SET_TAGGED_VERSION:
             return {
                 ...currentState,
                 taggedVersion: action.payload
             };
-        case UploadActionTypes.SET_UNTAGGED_VERSION:
+        case TrackActionTypes.SET_UNTAGGED_VERSION:
             return {
                 ...currentState,
                 untaggedVersion: action.payload
             };
-        case UploadActionTypes.SET_COVER_ART:
+        case TrackActionTypes.SET_COVER_ART:
             return {
                 ...currentState,
                 coverArt: action.payload
             };
-        case UploadActionTypes.SET_TRACK_STEMS:
+        case TrackActionTypes.SET_TRACK_STEMS:
             return {
                 ...currentState,
                 trackStems: action.payload

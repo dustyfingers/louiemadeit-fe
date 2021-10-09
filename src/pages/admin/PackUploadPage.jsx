@@ -4,7 +4,7 @@ import PackUploadForm from "../../components/PackUploadForm.jsx";
 
 const PackUploadPage = () => {
     return (
-        <div>
+        <div className="d-flex flex-column align-items-center">
             <h1>Upload a Pack</h1>
             <PackUploadForm />
         </div>
