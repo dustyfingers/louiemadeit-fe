@@ -25,6 +25,7 @@ axios.defaults.withCredentials = true
 const App = ({ dispatch, currentUser }) => {
     const checkAuth = async () => {
         try {
+            console.log('calling current user from app')
             let { data: { user } } = await axios.get(`${apiLink}/auth/current-user`)
             if (user) dispatch(setCurrentUser(user))
             else dispatch(setCurrentUser(null))
@@ -33,7 +34,9 @@ const App = ({ dispatch, currentUser }) => {
         }
     }
 
-    useWillMount( () => checkAuth())
+    useWillMount(() => checkAuth())
+
+    useEffect(() => console.log('app mounted'), [])
 
     return (
         <div className="position-relative">
