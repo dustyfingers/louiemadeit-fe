@@ -17,8 +17,7 @@ const SignIn = ({ email, password, dispatch, history, location }) => {
             try {
                 const { data: { user } } = await axios.post(`${apiLink}/auth/sign-in`, { email, password });
                 const from = location.state ? location.state.from.pathname : '/';
-                if (user.isAdmin) history.push('/upload');
-                else history.push(from);
+                history.push(from);
                 dispatch(setCurrentUser(user));
                 dispatch(setEmail(null));
                 dispatch(setPassword(null));
