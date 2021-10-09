@@ -55,7 +55,7 @@ const PackUploadForm = ({
             await axios.post(`${apiLink}/packs/new`, {
                 packName: name,
                 coverArt: coverArtFileName,
-                zipFile: zipFileName,
+                zip: zipFileName,
                 meta: { description }
             })
             ToastsStore.success('Pack created successfully!')
