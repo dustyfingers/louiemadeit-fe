@@ -6,10 +6,10 @@ const AdminMenu = ({ history, currentUser }) => {
     return (
         <>
             <li className="nav-item">
-                <span className="nav-link" onClick={() => history.push(`/upload-track`)}>Upload Track</span>
+                <span className="nav-link" onClick={() => history.push(`/upload-track`)}>new track</span>
             </li>
             <li className="nav-item">
-                <span className="nav-link" onClick={() => history.push(`/upload-pack`)}>Upload Pack</span>
+                <span className="nav-link" onClick={() => history.push(`/upload-pack`)}>new pack</span>
             </li>
         </>
     )
