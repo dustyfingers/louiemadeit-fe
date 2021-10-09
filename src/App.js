@@ -7,7 +7,6 @@ import { ToastsContainer, ToastsStore } from 'react-toasts'
 import Menu from './components/Menu/Menu'
 import Footer from './components/Footer'
 import ProtectedRoute from './components/ProtectedRoute'
-
 import StorePage from './pages/StorePage'
 import SignInAndSignUpPage from './pages/SignInAndSignUpPage'
 import CartPage from './pages/CartPage/CartPage'
@@ -16,9 +15,8 @@ import PurchaseCompletedPage from './pages/protected/PurchaseCompletedPage'
 import CustomerProfilePage from './pages/protected/CustomerProfilePage'
 import TrackUploadPage from './pages/admin/TrackUploadPage'
 import PackUploadPage from './pages/admin/PackUploadPage'
-
 import { setCurrentUser } from './redux/user/user-actions'
-
+import { useWillMount } from './hooks/useWillMount'
 import { apiLink } from './env'
 import './App.scss'
 
@@ -35,8 +33,7 @@ const App = ({ dispatch, currentUser }) => {
         }
     }
 
-    // check for current user on app load
-    useEffect(() => { checkAuth() }, [])
+    useWillMount( () => checkAuth())
 
     return (
         <div className="position-relative">
