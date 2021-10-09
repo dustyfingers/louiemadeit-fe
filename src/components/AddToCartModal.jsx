@@ -28,8 +28,7 @@ const AddToCartModal = ({ track, cartItems, dispatch }) => {
     };
 
     return (
-    <div ref={modalRef}
-    className="modal fade" id={`add${track.trackName.replace(/ /g, "_")}ToCartModal`} tabIndex="-1" aria-labelledby="addToCartModalLabel" aria-hidden="true">
+    <div ref={modalRef} className="modal fade" id={`add${track.trackName.replace(/ /g, "_")}ToCartModal`} tabIndex="-1" aria-labelledby="addToCartModalLabel" aria-hidden="true">
         <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div className="modal-content">
                 <div className="modal-header">

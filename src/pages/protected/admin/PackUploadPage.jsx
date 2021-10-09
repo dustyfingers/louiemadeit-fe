@@ -1,6 +1,6 @@
 import React from "react";
 
-import PackUploadForm from "../../components/PackUploadForm.jsx";
+import PackUploadForm from "../../../components/PackUploadForm.jsx";
 
 const PackUploadPage = () => {
     return (
