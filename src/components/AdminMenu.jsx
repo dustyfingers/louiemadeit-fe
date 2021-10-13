@@ -2,7 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-const AdminMenu = ({ history, currentUser }) => {
+const AdminMenu = ({ history }) => {
     return (
         <>
             <li className="nav-item">
@@ -16,7 +16,6 @@ const AdminMenu = ({ history, currentUser }) => {
 }
 
 const mapStateToProps = state => ({
-    currentUser: state.user.currentUser,
     cartItems: state.cart.cartItems
 })
 

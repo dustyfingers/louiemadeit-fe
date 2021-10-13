@@ -16,27 +16,23 @@ import CustomerProfilePage from './pages/protected/CustomerProfilePage'
 import TrackUploadPage from './pages/protected/admin/TrackUploadPage'
 import PackUploadPage from './pages/protected/admin/PackUploadPage'
 import { setCurrentUser } from './redux/user/user-actions'
-import { useWillMount } from './hooks/useWillMount'
 import { apiLink } from './env'
 import './styles/global/App.scss'
+
 
 axios.defaults.withCredentials = true
 
 const App = ({ dispatch, currentUser }) => {
-    const checkAuth = async () => {
+    const handleUserCheck = async () => {
         try {
-            console.log('calling current user from app')
             let { data: { user } } = await axios.get(`${apiLink}/auth/current-user`)
-            if (user) dispatch(setCurrentUser(user))
-            else dispatch(setCurrentUser(null))
+            if (user && !currentUser) dispatch(setCurrentUser(user))
         } catch (error) {
             ToastsStore.error("There was an error connecting to the server!")
         }
     }
 
-    useWillMount(() => checkAuth())
-
-    useEffect(() => console.log('app mounted'), [])
+    useEffect(() => { handleUserCheck() }, [])
 
     return (
         <div className="position-relative">

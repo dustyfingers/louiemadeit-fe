@@ -1,17 +1,19 @@
-import React, { useEffect } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import React from 'react'
+import { Route } from 'react-router-dom'
+import { connect } from 'react-redux'
 
-const ProtectedRoute = ({ component: Component, user, redirectTo, adminOnly, ...rest }) => {
-    useEffect(() => console.log('ProtectedRoute mounted'), [])
+import PageNotFound  from './404'
+
+const ProtectedRoute = ({ component: Component, user, redirectTo, adminOnly, dispatch, ...rest }) => {
     return (
         <Route {...rest} 
             render={ props => {
                 if (adminOnly) {
                     if (user && user.isAdmin) return <Component {...rest} {...props} />
-                    else return <Redirect to={{ pathname: redirectTo, state: { from: props.location} }} />
+                    else return <PageNotFound />
                 } else {
                     if (user) return <Component {...rest} {...props} />
-                    else return <Redirect to={{ pathname: redirectTo, state: { from: props.location} }} />
+                    else return <PageNotFound />
                 }
             }
             }
@@ -19,4 +21,4 @@ const ProtectedRoute = ({ component: Component, user, redirectTo, adminOnly, ...
     )
 }
 
-export default ProtectedRoute;
+export default connect()(ProtectedRoute);
