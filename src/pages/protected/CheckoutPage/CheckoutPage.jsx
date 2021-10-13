@@ -60,6 +60,7 @@ const CheckoutPage = ({ cartItems, dispatch, history, location }) => {
                 setSucceeded(true);
                 ToastsStore.success('Payment successful. Thank you!');
                 dispatch(setCartEmpty());
+                localStorage.setItem('louiemadeit_cart', JSON.stringify([]));
                 history.push("/purchase-completed");
             }
         } catch (error) {
