@@ -1,9 +1,9 @@
-import CartActionTypes from './cart-types';
+import CartActionTypes from './cart-types'
 
 const INITIAL_STATE = {
     hidden: true,
     cartItems: []
-};
+}
 
 const cartReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
@@ -17,14 +17,20 @@ const cartReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 cartItems: [...state.cartItems].filter(item => item !== action.payload)
             }
+        case CartActionTypes.SET_CART_FULL:
+            console.log(action.payload)
+            return {
+                ...state,
+                cartItems: action.payload
+            }
         case CartActionTypes.SET_CART_EMPTY:
             return {
                 ...state,
                 cartItems: []
             }
         default:
-            return state;
+            return state
     }
-};
+}
 
-export default cartReducer;
+export default cartReducer

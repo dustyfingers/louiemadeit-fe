@@ -9,6 +9,9 @@ import './CartItem.scss';
 const CartItem = ({ item, item: { type, trackName, packName, coverArtUrl, price}, dispatch }) => {
     const handleDeleteCartItemButtonPressed = () => {
         dispatch(removeCartItem(item));
+        let localCart = JSON.parse(localStorage.getItem('louiemadeit_cart'))
+        localCart = localCart.filter(localCartItem => localCartItem._id !== item._id)
+        localStorage.setItem('louiemadeit_cart', JSON.stringify(localCart))
         ToastsStore.success('Item removed from cart...');
     }
     

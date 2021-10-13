@@ -18,7 +18,7 @@ import PackUploadPage from './pages/protected/admin/PackUploadPage'
 import { setCurrentUser } from './redux/user/user-actions'
 import { apiLink } from './env'
 import './styles/global/App.scss'
-
+import { setCartFull } from './redux/cart/cart-actions'
 
 axios.defaults.withCredentials = true
 
@@ -32,7 +32,16 @@ const App = ({ dispatch, currentUser }) => {
         }
     }
 
-    useEffect(() => { handleUserCheck() }, [])
+    const handleCartCheck = () => {
+        let localCart = localStorage.getItem('louiemadeit_cart')
+        if (localCart) dispatch(setCartFull(JSON.parse(localCart)))
+        else localStorage.setItem('louiemadeit_cart', JSON.stringify([]))
+    }
+
+    useEffect(() => { 
+        handleUserCheck()
+        handleCartCheck()
+     }, [])
 
     return (
         <div className="position-relative">

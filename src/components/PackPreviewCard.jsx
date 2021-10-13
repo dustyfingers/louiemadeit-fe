@@ -13,7 +13,7 @@ const PackPreviewCard = ({ pack, dispatch, cartItems }) => {
         if (cartItems.some(item => item._id === pack._id)) {
             ToastsStore.warning('Sample pack already in cart!');
         } else {
-            dispatch(addCartItem({
+            const cartItem = {
                 packName: pack.packName, 
                 packID: pack.stripeProduct, 
                 price: pack.price, 
@@ -21,7 +21,13 @@ const PackPreviewCard = ({ pack, dispatch, cartItems }) => {
                 coverArtUrl: pack.coverArtUrl, 
                 _id: pack._id,
                 type: 'pack'
-            }));
+            }
+            dispatch(addCartItem(cartItem));
+
+            let localCart = JSON.parse(localStorage.getItem('louiemadeit_cart'))
+            localCart.push(cartItem)
+            localStorage.setItem('louiemadeit_cart', JSON.stringify(localCart))
+
             ToastsStore.success('Sample pack added to cart!');
         }
     };
