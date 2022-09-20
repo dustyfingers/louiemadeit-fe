@@ -1,8 +1,8 @@
-import React from'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
 import { setSearchQuery } from '../redux/search/search-actions';
-import { setDisplayedTracks } from '../redux/displayed-tracks/displayed-tracks-actions'; 
+import { setDisplayedTracks } from '../redux/displayed-tracks/displayed-tracks-actions';
 import { setSearchResults } from '../redux/search-results/search-results-actions';
 
 const Search = ({ shopTracks, searchResults, dispatch, searchQuery }) => {
@@ -18,9 +18,15 @@ const Search = ({ shopTracks, searchResults, dispatch, searchQuery }) => {
 
         if (value) {
             let results = [];
-            shopTracks && shopTracks.forEach(track => {
-                if (track.trackName.includes(value) && !results.includes(track) && value !== '') results.push(track);
-            });
+            shopTracks &&
+                shopTracks.forEach(track => {
+                    if (
+                        track.trackName.includes(value) &&
+                        !results.includes(track) &&
+                        value !== ''
+                    )
+                        results.push(track);
+                });
             dispatch(setSearchResults(results));
         }
     };
@@ -28,9 +34,17 @@ const Search = ({ shopTracks, searchResults, dispatch, searchQuery }) => {
     return (
         <form className="ms-2 d-flex justify-content-end" onSubmit={handleSubmit}>
             <div className="search-container">
-                <input className="form-control me-2" type="search" placeholder="find a beat by title" aria-label="Search" onChange={handleInputChange} />
+                <input
+                    className="form-control me-2"
+                    type="search"
+                    placeholder="find a beat by title"
+                    aria-label="Search"
+                    onChange={handleInputChange}
+                />
             </div>
-            <button className="btn btn-outline-success ms-2" type="submit">search</button>
+            <button className="btn btn-outline-success ms-2" type="submit">
+                search
+            </button>
         </form>
     );
 };
@@ -38,7 +52,7 @@ const Search = ({ shopTracks, searchResults, dispatch, searchQuery }) => {
 const mapStateToProps = state => ({
     shopTracks: state.shopTracks.shopTracks,
     searchResults: state.searchResults.searchResults,
-    searchQuery: state.searchQuery.searchQuery
+    searchQuery: state.searchQuery.searchQuery,
 });
 
 export default connect(mapStateToProps)(Search);

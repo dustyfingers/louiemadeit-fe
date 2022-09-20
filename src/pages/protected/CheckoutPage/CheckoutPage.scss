@@ -1,11 +1,11 @@
 $breakpoint-tablet: 768px;
 @media (min-width: $breakpoint-tablet) {
-  .cart-items {
-    max-width: 75% !important;
-  }
+    .cart-items {
+        max-width: 75% !important;
+    }
 
-  .cart-summary {
-    max-width: 25% !important;
-    padding-left: 1rem;
-  }
+    .cart-summary {
+        max-width: 25% !important;
+        padding-left: 1rem;
+    }
 }

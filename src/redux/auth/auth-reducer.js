@@ -3,7 +3,7 @@ import AuthActionTypes from './auth-types';
 const INITIAL_STATE = {
     email: null,
     password: null,
-    confirmPassword: null
+    confirmPassword: null,
 };
 
 const authReducer = (currentState = INITIAL_STATE, action) => {
@@ -11,18 +11,18 @@ const authReducer = (currentState = INITIAL_STATE, action) => {
         case AuthActionTypes.SET_EMAIL:
             return {
                 ...currentState,
-                email: action.payload
-            }
+                email: action.payload,
+            };
         case AuthActionTypes.SET_PASSWORD:
             return {
                 ...currentState,
-                password: action.payload
-            }
+                password: action.payload,
+            };
         case AuthActionTypes.SET_CONFIRM_PASSWORD:
             return {
                 ...currentState,
-                confirmPassword: action.payload
-            }
+                confirmPassword: action.payload,
+            };
         default:
             return currentState;
     }

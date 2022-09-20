@@ -10,7 +10,7 @@ const INITIAL_STATE = {
     taggedVersion: null,
     untaggedVersion: null,
     coverArt: null,
-    trackStems: null
+    trackStems: null,
 };
 
 const uploadReducer = (currentState = INITIAL_STATE, action) => {
@@ -18,32 +18,32 @@ const uploadReducer = (currentState = INITIAL_STATE, action) => {
         case TrackActionTypes.SET_TRACK_NAME:
             return {
                 ...currentState,
-                name: action.payload
+                name: action.payload,
             };
         case TrackActionTypes.SET_TRACK_DESCRIPTION:
             return {
                 ...currentState,
-                description: action.payload
+                description: action.payload,
             };
         case TrackActionTypes.SET_TAGGED_VERSION:
             return {
                 ...currentState,
-                taggedVersion: action.payload
+                taggedVersion: action.payload,
             };
         case TrackActionTypes.SET_UNTAGGED_VERSION:
             return {
                 ...currentState,
-                untaggedVersion: action.payload
+                untaggedVersion: action.payload,
             };
         case TrackActionTypes.SET_COVER_ART:
             return {
                 ...currentState,
-                coverArt: action.payload
+                coverArt: action.payload,
             };
         case TrackActionTypes.SET_TRACK_STEMS:
             return {
                 ...currentState,
-                trackStems: action.payload
+                trackStems: action.payload,
             };
         default:
             return currentState;

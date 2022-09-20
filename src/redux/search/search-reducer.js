@@ -1,7 +1,7 @@
 import SearchActionTypes from './search-types';
 
 const INITIAL_STATE = {
-    searchQuery: null
+    searchQuery: null,
 };
 
 const searchQueryReducer = (currentState = INITIAL_STATE, action) => {
@@ -9,8 +9,8 @@ const searchQueryReducer = (currentState = INITIAL_STATE, action) => {
         case SearchActionTypes.SET_SEARCH_QUERY:
             return {
                 ...currentState,
-                searchQuery: action.payload
-            }
+                searchQuery: action.payload,
+            };
         default:
             return currentState;
     }

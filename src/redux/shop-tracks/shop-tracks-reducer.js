@@ -1,7 +1,7 @@
 import ShopTracksActionTypes from './shop-tracks-types';
 
 const INITIAL_STATE = {
-    shopTracks: null
+    shopTracks: null,
 };
 
 const shopTracksReducer = (currentState = INITIAL_STATE, action) => {
@@ -9,8 +9,8 @@ const shopTracksReducer = (currentState = INITIAL_STATE, action) => {
         case ShopTracksActionTypes.SET_SHOP_TRACKS:
             return {
                 ...currentState,
-                shopTracks: action.payload
-            }
+                shopTracks: action.payload,
+            };
         default:
             return currentState;
     }

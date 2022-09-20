@@ -1,7 +1,7 @@
 import PlayerActionTypes from './player-types';
 
 const INITIAL_STATE = {
-    currentTrack: null
+    currentTrack: null,
 };
 
 const playerReducer = (currentState = INITIAL_STATE, action) => {
@@ -9,8 +9,8 @@ const playerReducer = (currentState = INITIAL_STATE, action) => {
         case PlayerActionTypes.SET_CURRENT_TRACK:
             return {
                 ...currentState,
-                currentTrack: action.payload
-            }
+                currentTrack: action.payload,
+            };
         default:
             return currentState;
     }

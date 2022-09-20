@@ -1,24 +1,24 @@
 #TopMenu {
-  .nav-item {
-    cursor: pointer;
-  }
-
-  .cart-counter-wrapper {
-    position: relative;
-
-    .cart-counter {
-      font-family: "Roboto Mono";
-      position: absolute;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      top: 1px;
-      right: -6px;
-      background-color: red;
-      border-radius: 100%;
-      width: 1.05rem;
-      height: 1.05rem;
-      color: white;
+    .nav-item {
+        cursor: pointer;
     }
-  }
+
+    .cart-counter-wrapper {
+        position: relative;
+
+        .cart-counter {
+            font-family: 'Roboto Mono';
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            top: 1px;
+            right: -6px;
+            background-color: red;
+            border-radius: 100%;
+            width: 1.05rem;
+            height: 1.05rem;
+            color: white;
+        }
+    }
 }

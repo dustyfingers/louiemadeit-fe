@@ -6,36 +6,50 @@ import { removeCartItem } from '../../redux/cart/cart-actions';
 
 import './CartItem.scss';
 
-const CartItem = ({ item, item: { type, trackName, packName, coverArtUrl, price}, dispatch }) => {
+const CartItem = ({
+    item,
+    item: { type, trackName, packName, coverArtUrl, price },
+    dispatch,
+}) => {
     const handleDeleteCartItemButtonPressed = () => {
         dispatch(removeCartItem(item));
-        let localCart = JSON.parse(localStorage.getItem('louiemadeit_cart'))
-        localCart = localCart.filter(localCartItem => localCartItem._id !== item._id)
-        localStorage.setItem('louiemadeit_cart', JSON.stringify(localCart))
+        let localCart = JSON.parse(localStorage.getItem('louiemadeit_cart'));
+        localCart = localCart.filter(localCartItem => localCartItem._id !== item._id);
+        localStorage.setItem('louiemadeit_cart', JSON.stringify(localCart));
         ToastsStore.success('Item removed from cart...');
-    }
-    
+    };
+
     return (
         <div className="card border-light mb-3">
             <div className="row g-0">
-                <div className="col-md-4"><img className="h-100 w-100" alt={type === 'track' ? trackName : packName} src={coverArtUrl}/></div>
+                <div className="col-md-4">
+                    <img
+                        className="h-100 w-100"
+                        alt={type === 'track' ? trackName : packName}
+                        src={coverArtUrl}
+                    />
+                </div>
                 <div className="card-body col-md-8 d-flex justify-content-between">
                     <div>
-                        <h5 className="card-title">{type === 'track' ? trackName : packName} - {price}</h5>
+                        <h5 className="card-title">
+                            {type === 'track' ? trackName : packName} - {price}
+                        </h5>
                     </div>
                     <div className="d-flex align-items-center justify-content-end remove-cart-item-btn">
-                        <img 
-                            src="/x-square.svg" 
-                            height='24px' 
-                            width='24px' 
-                            alt={`remove ${type === 'track' ? trackName : packName} from cart`} 
-                            onClick={handleDeleteCartItemButtonPressed} />
+                        <img
+                            src="/x-square.svg"
+                            height="24px"
+                            width="24px"
+                            alt={`remove ${
+                                type === 'track' ? trackName : packName
+                            } from cart`}
+                            onClick={handleDeleteCartItemButtonPressed}
+                        />
                     </div>
                 </div>
             </div>
         </div>
     );
 };
-
 
 export default connect()(CartItem);

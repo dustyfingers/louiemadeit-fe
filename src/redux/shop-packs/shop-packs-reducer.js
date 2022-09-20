@@ -1,19 +1,19 @@
-import ShopPacksActionTypes from './shop-packs-types'
+import ShopPacksActionTypes from './shop-packs-types';
 
 const INITIAL_STATE = {
-    shopPacks: null
-}
+    shopPacks: null,
+};
 
 const shopPacksReducer = (currentState = INITIAL_STATE, action) => {
     switch (action.type) {
         case ShopPacksActionTypes.SET_SHOP_PACKS:
             return {
                 ...currentState,
-                shopPacks: action.payload
-            }
+                shopPacks: action.payload,
+            };
         default:
-            return currentState
+            return currentState;
     }
-}
+};
 
-export default shopPacksReducer
+export default shopPacksReducer;

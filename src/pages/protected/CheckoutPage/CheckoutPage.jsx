@@ -24,36 +24,44 @@ const CheckoutPage = ({ cartItems, dispatch, history, location }) => {
 
     const calculateCartTotal = () => {
         let total = 0;
-        cartItems.forEach(item => total += item.price);
+        cartItems.forEach(item => (total += item.price));
         setCartTotal(total);
-    }
+    };
 
     const createPaymentIntent = async () => {
         if (cartItems.length) {
             try {
                 let cartInfo = [];
                 cartItems.forEach(({ type, trackID, packID, priceID }) => {
-                    if (type ==='track') cartInfo.push({trackID, priceID})
-                    else if (type ==='pack') cartInfo.push({packID, priceID})
+                    if (type === 'track') cartInfo.push({ trackID, priceID });
+                    else if (type === 'pack') cartInfo.push({ packID, priceID });
                 });
-                const data = await axios.post(`${apiLink}/stripe/new-payment-intent`, {items: cartInfo});
+                const data = await axios.post(`${apiLink}/stripe/new-payment-intent`, {
+                    items: cartInfo,
+                });
                 setClientSecret(data.data.clientSecret);
             } catch {
-                ToastsStore.error("There was an error creating the payment intent. Please hard re-load the page.");
+                ToastsStore.error(
+                    'There was an error creating the payment intent. Please hard re-load the page.'
+                );
             }
         }
-    }
+    };
 
     const handleSubmit = async evt => {
         try {
             if (!stripe || !elements) return;
             evt.preventDefault();
             setProcessing(true);
-    
-            const payload = await stripe.confirmCardPayment(clientSecret, { payment_method: { card: elements.getElement(CardElement) } });
+
+            const payload = await stripe.confirmCardPayment(clientSecret, {
+                payment_method: { card: elements.getElement(CardElement) },
+            });
 
             if (payload.error) {
-                ToastsStore.error('There was an error completing your payment. Please try again.');
+                ToastsStore.error(
+                    'There was an error completing your payment. Please try again.'
+                );
                 setProcessing(false);
             } else {
                 setProcessing(false);
@@ -61,20 +69,20 @@ const CheckoutPage = ({ cartItems, dispatch, history, location }) => {
                 ToastsStore.success('Payment successful. Thank you!');
                 dispatch(setCartEmpty());
                 localStorage.setItem('louiemadeit_cart', JSON.stringify([]));
-                history.push("/purchase-completed");
+                history.push('/purchase-completed');
             }
         } catch (error) {
-            ToastsStore.error('There was an error completing your payment. Please try again.');
+            ToastsStore.error(
+                'There was an error completing your payment. Please try again.'
+            );
             setProcessing(false);
         }
-
     };
 
     const handleChange = async evt => {
         setDisabled(evt.empty);
         if (evt.error) ToastsStore.error(evt.error.message);
     };
-
 
     useEffect(() => {
         createPaymentIntent();
@@ -84,51 +92,89 @@ const CheckoutPage = ({ cartItems, dispatch, history, location }) => {
     return (
         <div className="d-flex flex-column justify-content-center align-items-center mb-5">
             <h1>CHECKOUT</h1>
-            <div className={` top-section d-flex flex-column ${cartItems.length && 'flex-md-row'} align-items-${cartItems.length ? 'start' : 'center'} justify-content-${cartItems.length ? 'around' : 'center'}`}>
+            <div
+                className={` top-section d-flex flex-column ${
+                    cartItems.length && 'flex-md-row'
+                } align-items-${cartItems.length ? 'start' : 'center'} justify-content-${
+                    cartItems.length ? 'around' : 'center'
+                }`}
+            >
                 <div className="cart-items py-2 text-center">
-                    {cartItems.length ? cartItems.map(item => <CheckoutItem key={item._id} item={item}/>) : 'No items in your cart.'}
+                    {cartItems.length
+                        ? cartItems.map(item => (
+                              <CheckoutItem key={item._id} item={item} />
+                          ))
+                        : 'No items in your cart.'}
                 </div>
-                <div className="cart-summary w-100" >
-                    {cartItems.length ? 
-                        (<div className="d-flex flex-column">
+                <div className="cart-summary w-100">
+                    {cartItems.length ? (
+                        <div className="d-flex flex-column">
                             <p>ITEMS IN CART:</p>
-                            {cartItems.map(({type, trackName, packName, price, _id}) => <p className="d-flex justify-content-between" key={_id}><span>{type === 'track' ? trackName : packName}</span> <span>${price}</span></p>)}
+                            {cartItems.map(
+                                ({ type, trackName, packName, price, _id }) => (
+                                    <p
+                                        className="d-flex justify-content-between"
+                                        key={_id}
+                                    >
+                                        <span>
+                                            {type === 'track' ? trackName : packName}
+                                        </span>{' '}
+                                        <span>${price}</span>
+                                    </p>
+                                )
+                            )}
                             <hr />
-                            <p className="d-flex justify-content-between">TOTAL: <span>${cartTotal}</span></p>
-                            
-                            {cartItems.length ? 
-                                (<div className="checkout-section mt-3 d-flex">
-                                    <form onSubmit={handleSubmit} className="w-100 d-flex flex-column checkout-form">
-                                        <CardElement 
-                                            onChange={handleChange} 
+                            <p className="d-flex justify-content-between">
+                                TOTAL: <span>${cartTotal}</span>
+                            </p>
+
+                            {cartItems.length ? (
+                                <div className="checkout-section mt-3 d-flex">
+                                    <form
+                                        onSubmit={handleSubmit}
+                                        className="w-100 d-flex flex-column checkout-form"
+                                    >
+                                        <CardElement
+                                            onChange={handleChange}
                                             options={{
                                                 style: {
                                                     base: {
-                                                        color: "#32325d",
-                                                        fontSmoothing: "antialiased",
-                                                        fontSize: "16px",
-                                                        "::placeholder": {
-                                                            color: "#32325d"
-                                                        }
+                                                        color: '#32325d',
+                                                        fontSmoothing: 'antialiased',
+                                                        fontSize: '16px',
+                                                        '::placeholder': {
+                                                            color: '#32325d',
+                                                        },
                                                     },
                                                     invalid: {
-                                                        color: "#fa755a",
-                                                        iconColor: "#fa755a"
-                                                    }
-                                                }
-                                            }} />
+                                                        color: '#fa755a',
+                                                        iconColor: '#fa755a',
+                                                    },
+                                                },
+                                            }}
+                                        />
                                         <button
                                             disabled={processing || disabled || succeeded}
                                             id="submit"
-                                            className="btn btn-primary mt-3" >
+                                            className="btn btn-primary mt-3"
+                                        >
                                             <span id="button-text">
-                                                {processing ? `Processing Payment for $${cartTotal}...` : `Complete Purchase for $${cartTotal}`}
+                                                {processing
+                                                    ? `Processing Payment for $${cartTotal}...`
+                                                    : `Complete Purchase for $${cartTotal}`}
                                             </span>
                                         </button>
                                     </form>
-                                </div>) : ''}
-                        </div>) : 
-                        (<Link className="btn btn-primary" to="/">GO TO STORE</Link>)}
+                                </div>
+                            ) : (
+                                ''
+                            )}
+                        </div>
+                    ) : (
+                        <Link className="btn btn-primary" to="/">
+                            GO TO STORE
+                        </Link>
+                    )}
                 </div>
             </div>
         </div>
@@ -137,7 +183,7 @@ const CheckoutPage = ({ cartItems, dispatch, history, location }) => {
 
 const mapStateToProps = state => ({
     cartItems: state.cart.cartItems,
-    currentUser: state.user.currentUser
+    currentUser: state.user.currentUser,
 });
 
 export default connect(mapStateToProps)(CheckoutPage);
